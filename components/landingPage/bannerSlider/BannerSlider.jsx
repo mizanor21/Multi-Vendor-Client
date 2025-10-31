@@ -1,76 +1,225 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-
-// Import Swiper styles
+import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 import "swiper/css";
+import "swiper/css/effect-creative";
 import "swiper/css/pagination";
-import "swiper/css/navigation";
-
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
-
+import { Autoplay, EffectCreative, Pagination } from "swiper/modules";
 import { Image } from "@heroui/image";
 import { useGetAllActiveSlidersQuery } from "@/app/api/sliderSlice";
-
 import { useWindowSize } from "@uidotdev/usehooks";
 
 export default function BannerSlider() {
+  const [swiperRef, setSwiperRef] = useState(null);
+  const [isAutoplayRunning, setIsAutoplayRunning] = useState(true);
+  const [activeIndex, setActiveIndex] = useState(0);
   const size = useWindowSize();
-  // console.log("current window size is: ", size?.width);
+  
   const { data: getAllActiveSliders } = useGetAllActiveSlidersQuery();
+  const sliders = getAllActiveSliders?.data?.sliders || [];
 
-  // Determine margin-top based on window width
   const getMarginTop = () => {
-    if (size?.width === undefined) {
-      // Return a default or null if width is not yet available (e.g., during SSR)
-      return "0px";
-    } else if (size.width < 640) {
-      // Small screens (e.g., mobile)
-      return "90px"; // Example value for small screens
-    } else if (size.width >= 640 && size.width < 768) {
-      // Medium-small screens (sm breakpoint)
-      return "180px"; // Example value for sm screens
-    } else if (size.width >= 768 && size.width < 1024) {
-      // Medium screens (md breakpoint)
-      return "50px"; // Example value for md screens
-    } else {
-      // Large screens (lg breakpoint and up)
-      return "50px"; // Example value for lg screens
+    if (size?.width === undefined) return "0px";
+    if (size.width < 640) return "90px";
+    if (size.width >= 640 && size.width < 768) return "180px";
+    if (size.width >= 768 && size.width < 1024) return "50px";
+    return "50px";
+  };
+
+  const toggleAutoplay = () => {
+    if (swiperRef) {
+      if (isAutoplayRunning) {
+        swiperRef.autoplay.stop();
+      } else {
+        swiperRef.autoplay.start();
+      }
+      setIsAutoplayRunning(!isAutoplayRunning);
     }
   };
 
+  const goNext = () => {
+    if (swiperRef) swiperRef.slideNext();
+  };
+
+  const goPrev = () => {
+    if (swiperRef) swiperRef.slidePrev();
+  };
+
   return (
-    // Apply the dynamically calculated margin-top using the style prop
     <div
-      className="container mx-auto mb-3 p-3"
+      className=""
       style={{ marginTop: getMarginTop() }}
     >
-      <Swiper
-        autoHeight={true}
-        spaceBetween={30}
-        centeredSlides={true}
-        autoplay={{
-          delay: 2500,
-          disableOnInteraction: false,
-        }}
-        pagination={{
-          clickable: true,
-        }}
-        navigation={true}
-        modules={[Autoplay, Pagination, Navigation]}
-        className="mySwiper p-3"
-      >
-        {getAllActiveSliders?.data?.sliders?.map((slider) => (
-          <SwiperSlide key={slider?._id || slider?.image} className="">
-            <Image
-              alt={slider?.image}
-              src={slider?.image}
-              width="100%"
-              className=""
-            />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      <div className="relative group">
+        {/* Main Swiper */}
+        <Swiper
+          onSwiper={setSwiperRef}
+          onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
+          spaceBetween={30}
+          effect="creative"
+          creativeEffect={{
+            prev: {
+              shadow: true,
+              translate: ["-20%", 0, -1],
+            },
+            next: {
+              translate: ["100%", 0, 0],
+            },
+          }}
+          autoplay={{
+            delay: 4000,
+            disableOnInteraction: false,
+          }}
+          pagination={{
+            clickable: true,
+            dynamicBullets: true,
+          }}
+          modules={[Autoplay, EffectCreative, Pagination]}
+          className=" overflow-hidden"
+        >
+          {sliders.map((slider, index) => (
+            <SwiperSlide key={slider?._id || index}>
+              <div className="relative w-full aspect-[21/9] lg:aspect-[21/8] overflow-hidden">
+                {/* Image with overlay gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10" />
+                
+                <Image
+                  alt={slider?.title || `Slide ${index + 1}`}
+                  src={slider?.image}
+                  className="w-full h-full object-cover rounded-none transform transition-transform duration-700 group-hover:scale-105"
+                />
+
+                {/* Content overlay */}
+                {slider?.title && (
+                  <div className="absolute bottom-0 left-0 right-0 z-20 p-8 lg:p-12 transform translate-y-0 transition-transform duration-500">
+                    <div className="max-w-2xl">
+                      <h2 className="text-white text-3xl lg:text-5xl font-bold mb-3 drop-shadow-lg animate-fade-in">
+                        {slider.title}
+                      </h2>
+                      {slider?.description && (
+                        <p className="text-white/90 text-base lg:text-lg mb-6 drop-shadow-md animate-fade-in-delay">
+                          {slider.description}
+                        </p>
+                      )}
+                      {slider?.buttonText && (
+                        <button className="bg-white text-gray-900 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-all duration-300 hover:scale-105 shadow-xl animate-fade-in-delay-2">
+                          {slider.buttonText}
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+
+        {/* Custom Navigation Buttons */}
+        <button
+          onClick={goPrev}
+          className="hidden lg:flex absolute left-6 top-1/2 -translate-y-1/2 z-30 items-center justify-center w-12 h-12 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white hover:bg-white/30 transition-all duration-300 opacity-0 group-hover:opacity-100 hover:scale-110"
+          aria-label="Previous slide"
+        >
+          <ChevronLeft className="w-6 h-6" />
+        </button>
+
+        <button
+          onClick={goNext}
+          className="hidden lg:flex absolute right-6 top-1/2 -translate-y-1/2 z-30 items-center justify-center w-12 h-12 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white hover:bg-white/30 transition-all duration-300 opacity-0 group-hover:opacity-100 hover:scale-110"
+          aria-label="Next slide"
+        >
+          <ChevronRight className="w-6 h-6" />
+        </button>
+
+        {/* Control Panel */}
+        <div className="absolute top-6 right-6 z-30 flex items-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          {/* Autoplay Toggle */}
+          <button
+            onClick={toggleAutoplay}
+            className="flex items-center justify-center w-10 h-10 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white hover:bg-white/30 transition-all duration-300 hover:scale-110"
+            aria-label={isAutoplayRunning ? "Pause autoplay" : "Start autoplay"}
+          >
+            {isAutoplayRunning ? (
+              <Pause className="w-4 h-4" />
+            ) : (
+              <Play className="w-4 h-4 ml-0.5" />
+            )}
+          </button>
+
+          {/* Slide Counter */}
+          <div className="px-4 py-2 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-sm font-medium">
+            {activeIndex + 1} / {sliders.length}
+          </div>
+        </div>
+      </div>
+
+      {/* Thumbnail Navigation (Optional) */}
+      {sliders.length > 1 && (
+        <div className="hidden lg:flex gap-3 mt-3 justify-center">
+          {sliders.map((slider, index) => (
+            <button
+              key={slider?._id || index}
+              onClick={() => swiperRef?.slideTo(index)}
+              className={`relative w-14 h-8 rounded-lg overflow-hidden border-2 transition-all duration-300 ${
+                activeIndex === index
+                  ? "border-blue-500 scale-105 shadow-lg"
+                  : "border-transparent opacity-60 hover:opacity-100 hover:scale-105"
+              }`}
+            >
+              <Image
+                src={slider?.image}
+                alt={`Thumbnail ${index + 1}`}
+                className="w-full h-full object-cover"
+              />
+            </button>
+          ))}
+        </div>
+      )}
+
+      <style jsx global>{`
+        @keyframes fade-in {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .animate-fade-in {
+          animation: fade-in 0.6s ease-out;
+        }
+
+        .animate-fade-in-delay {
+          animation: fade-in 0.6s ease-out 0.2s both;
+        }
+
+        .animate-fade-in-delay-2 {
+          animation: fade-in 0.6s ease-out 0.4s both;
+        }
+
+        /* Custom pagination styles */
+        .swiper-pagination-bullet {
+          background: white !important;
+          opacity: 0.5 !important;
+          width: 10px !important;
+          height: 10px !important;
+          transition: all 0.3s ease !important;
+        }
+
+        .swiper-pagination-bullet-active {
+          opacity: 1 !important;
+          width: 30px !important;
+          border-radius: 5px !important;
+        }
+
+        .swiper-pagination {
+          bottom: 20px !important;
+        }
+      `}</style>
     </div>
   );
 }
