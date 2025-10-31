@@ -87,7 +87,7 @@ export default function BannerSlider() {
                 <Image
                   alt={slider?.title || `Slide ${index + 1}`}
                   src={slider?.image}
-                  className="w-full h-full object-cover rounded-none transform transition-transform duration-700 group-hover:scale-105"
+                  className="w-screen h-full object-cover rounded-none transform transition-transform duration-700 group-hover:scale-105"
                 />
 
                 {/* Content overlay */}
