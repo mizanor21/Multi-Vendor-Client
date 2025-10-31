@@ -1,155 +1,190 @@
 "use client";
 import React from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/free-mode";
-import "swiper/css/pagination";
-import { FreeMode, Pagination } from "swiper/modules";
-import Link from "next/link";
-import { useGetAllProductsQuery } from "@/app/api/productSlice";
-import TkIcon from "@/public/TkIcon";
-import { Spinner } from "@heroui/spinner";
+import { ShoppingCart, Heart, Eye } from "lucide-react";
+
+// Mock TkIcon component
+const TkIcon = ({ size, color, className }) => (
+  <span className={className} style={{ fontSize: size, color }}>৳</span>
+);
 
 export default function RecentProduct() {
-  const {
-    data: getAllProductData,
-    isLoading,
-    isError,
-  } = useGetAllProductsQuery();
+  // Mock data for demonstration
+  const approvedProducts = [
+    {
+      _id: "1",
+      productName: "Premium Wireless Headphones with Noise Cancellation",
+      images: ["https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&h=500&fit=crop"],
+      price: 5999,
+      discountPercent: 25,
+    },
+    {
+      _id: "2",
+      productName: "Smart Watch Series 8 Pro",
+      images: ["https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&h=500&fit=crop"],
+      price: 12999,
+      discountPercent: 15,
+    },
+    {
+      _id: "3",
+      productName: "Leather Messenger Bag",
+      images: ["https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500&h=500&fit=crop"],
+      price: 3499,
+      discountPercent: 0,
+    },
+    {
+      _id: "4",
+      productName: "Vintage Sunglasses Collection",
+      images: ["https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=500&h=500&fit=crop"],
+      price: 1299,
+      discountPercent: 30,
+    },
+    {
+      _id: "5",
+      productName: "Professional Camera Lens",
+      images: ["https://images.unsplash.com/photo-1606980642926-7b0233f27d54?w=500&h=500&fit=crop"],
+      price: 24999,
+      discountPercent: 10,
+    },
+  ];
 
-  const approvedProducts = getAllProductData?.products
-    ?.filter((item) => item?.approvalStatus === "approved")
-    ?.slice(-8)
-    .reverse();
+  const isLoading = false;
+  const isError = false;
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 className="text-3xl mt-10 mb-6 font-bold text-center md:text-left">
-        Recent Products
-      </h2>
+    <div className="bg-gradient-to-b from-white to-gray-50 py-16">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center mb-10">
+          {/* Header Section */}
+          <div className="">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3">
+              Recent <span className="text-green-600">Products</span>
+            </h2>
+            <div className="h-1 w-24 bg-gradient-to-r from-green-600 to-green-400 rounded-full"></div>
+          </div>
 
-      {isLoading ? (
-        <div className="flex justify-center items-center py-10">
-          <Spinner size="lg" />
-          <p className="ml-3 text-gray-500">Loading products...</p>
+          {/* View All Button */}
+          {approvedProducts?.length > 0 && (
+            <button className="bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white font-bold py-4 px-10 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+              View All Products →
+            </button>
+          )}
         </div>
-      ) : isError ? (
-        <div className="w-full text-center p-6 border border-red-300 bg-red-50 text-red-700 rounded-md shadow-sm mb-10">
-          <h2 className="text-xl font-semibold mb-2">
-            Failed to load products.
-          </h2>
-          <p>
-            Please try again later or contact support if the problem persists.
-          </p>
-        </div>
-      ) : approvedProducts?.length === 0 ? (
-        <div className="w-full text-center p-6 border border-yellow-300 bg-yellow-50 text-yellow-700 rounded-md shadow-sm mb-10">
-          <h2 className="text-xl font-semibold mb-2">
-            No approved products found.
-          </h2>
-          <p>
-            New products will appear here once they are available and approved.
-          </p>
-        </div>
-      ) : (
-        <Swiper
-          freeMode={true}
-          pagination={{ clickable: true }}
-          modules={[FreeMode, Pagination]}
-          className="mySwiper-recent-products pb-10"
-          breakpoints={{
-            0: {
-              slidesPerView: 2,
-              spaceBetween: 16,
-            },
-            480: {
-              slidesPerView: 2,
-              spaceBetween: 20,
-            },
-            640: {
-              slidesPerView: 3,
-              spaceBetween: 20,
-            },
-            768: {
-              slidesPerView: 3,
-              spaceBetween: 24,
-            },
-            1024: {
-              slidesPerView: 4,
-              spaceBetween: 24,
-            },
-            1280: {
-              slidesPerView: 5,
-              spaceBetween: 28,
-            },
-          }}
-        >
-          {approvedProducts?.map((item) => (
-            <SwiperSlide key={item._id} className="h-auto pb-2">
-              <Link href={`/client/product/${item._id}`}>
-                <div className="group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 h-full flex flex-col border border-gray-100">
+
+        {isLoading ? (
+          <div className="flex justify-center items-center py-20">
+            <div className="animate-spin rounded-full h-16 w-16 border-4 border-green-600 border-t-transparent"></div>
+            <p className="ml-4 text-gray-600 text-lg">Loading products...</p>
+          </div>
+        ) : isError ? (
+          <div className="max-w-2xl mx-auto text-center p-8 border-2 border-red-200 bg-red-50 text-red-700 rounded-2xl shadow-lg mb-10">
+            <div className="text-5xl mb-4">⚠️</div>
+            <h2 className="text-2xl font-bold mb-3">Failed to load products</h2>
+            <p className="text-lg">Please try again later or contact support if the problem persists.</p>
+          </div>
+        ) : approvedProducts?.length === 0 ? (
+          <div className="max-w-2xl mx-auto text-center p-8 border-2 border-yellow-200 bg-yellow-50 text-yellow-700 rounded-2xl shadow-lg mb-10">
+            <div className="text-5xl mb-4">📦</div>
+            <h2 className="text-2xl font-bold mb-3">No approved products found</h2>
+            <p className="text-lg">New products will appear here once they are available and approved.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+            {approvedProducts?.map((item) => {
+              const discountedPrice = (
+                item.price -
+                (item.discountPercent / 100) * item.price
+              ).toFixed(2);
+
+              return (
+                <div
+                  key={item._id}
+                  className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100"
+                >
                   {/* Discount Badge */}
                   {item?.discountPercent > 0 && (
-                    <div className="absolute top-3 right-3 z-10 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                      {item.discountPercent}% OFF
+                    <div className="absolute top-3 left-3 z-20 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg animate-pulse">
+                      -{item.discountPercent}%
                     </div>
                   )}
 
+                  {/* Quick Action Buttons */}
+                  <div className="absolute top-3 right-3 z-20 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <button className="bg-white p-2 rounded-full shadow-lg hover:bg-green-600 hover:text-white transition-all duration-300 transform hover:scale-110">
+                      <Heart className="w-4 h-4" />
+                    </button>
+                    <button className="bg-white p-2 rounded-full shadow-lg hover:bg-blue-600 hover:text-white transition-all duration-300 transform hover:scale-110">
+                      <Eye className="w-4 h-4" />
+                    </button>
+                  </div>
+
                   {/* Product Image */}
-                  <div className="relative pt-[100%] overflow-hidden">
-                    <img
-                      src={item.images[0]}
-                      alt={item.productName}
-                      className="absolute top-0 left-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
+                  <div className="relative overflow-hidden bg-gray-100">
+                    <div className="relative pt-[100%]">
+                      <img
+                        src={item.images[0]}
+                        alt={item.productName}
+                        className="absolute top-0 left-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+                      {/* Overlay on hover */}
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300"></div>
+                    </div>
                   </div>
 
                   {/* Product Info */}
-                  <div className="p-4 flex flex-col flex-grow">
-                    <h3 className="text-gray-800 font-medium mb-2 text-sm md:text-base line-clamp-2">
-                      {item.productName?.split(" ").slice(0, 3).join(" ") +
-                        (item.productName?.split(" ").length > 3
-                          ? "..."
-                          : "")}{" "}
+                  <div className="p-4">
+                    {/* Product Name */}
+                    <h3 className="text-gray-800 font-semibold mb-3 text-sm md:text-base line-clamp-2 min-h-[2.5rem] group-hover:text-green-600 transition-colors duration-300">
+                      {item.productName?.split(" ").slice(0, 4).join(" ") +
+                        (item.productName?.split(" ").length > 4 ? "..." : "")}
                     </h3>
 
                     {/* Price Section */}
-                    <div className="mt-auto">
-                      <div className="flex items-center">
-                        <span className="text-green-600 font-bold text-lg flex items-center">
+                    <div className="mb-3">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-green-600 font-bold text-lg md:text-xl flex items-center">
                           <TkIcon
-                            size="20px"
+                            size="18px"
                             color="#16a34a"
-                            className="w-4 h-4 mr-1"
+                            className="mr-1"
                           />
-                          {(
-                            item.price -
-                            (item.discountPercent / 100) * item.price
-                          ).toFixed(2)}
+                          {discountedPrice}
                         </span>
-                        {item.discountPercent > 0 && (
-                          <span className="text-gray-400 text-sm line-through ml-2 flex items-center">
+                      </div>
+                      {item.discountPercent > 0 && (
+                        <div className="flex items-center">
+                          <span className="text-gray-400 text-xs md:text-sm line-through flex items-center">
                             <TkIcon
-                              size="14px"
+                              size="12px"
                               color="#9ca3af"
-                              className="w-3 h-3 mr-0.5"
+                              className="mr-0.5"
                             />
                             {item.price}
                           </span>
-                        )}
-                      </div>
+                          <span className="ml-2 text-xs text-green-600 font-medium">
+                            Save ৳{(item.price - discountedPrice).toFixed(2)}
+                          </span>
+                        </div>
+                      )}
+                    </div>
 
-                      <button className="mt-3 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md text-sm font-medium transition-colors duration-200">
-                        View Details
+                    {/* Add to Cart Button */}
+                    <div className="flex flex-col self-end">
+                      <button className=" bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white py-2.5 px-4 rounded-xl text-sm font-semibold transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg flex items-center justify-center gap-2 group">
+                        <ShoppingCart className="w-4 h-4 group-hover:animate-bounce" />
+                        <span>Add to Cart</span>
                       </button>
                     </div>
+
                   </div>
+
+                  {/* Bottom accent line */}
+                  <div className="h-1 bg-gradient-to-r from-green-400 via-blue-400 to-purple-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
                 </div>
-              </Link>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      )}
+              );
+            })}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
