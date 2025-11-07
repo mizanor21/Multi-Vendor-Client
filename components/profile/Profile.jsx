@@ -100,7 +100,7 @@ export default function ProfilePage() {
   const handleRequestEmailChange = async () => {
     try {
       const res = await fetch(
-        "https://multi-vendor-e-com-backend.vercel.app/api/user/change-email/request",
+        "https://multi-vendor-backend-orpin.vercel.app/api/user/change-email/request",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -122,7 +122,7 @@ export default function ProfilePage() {
   const handleVerifyEmailChange = async () => {
     try {
       const res = await fetch(
-        "https://multi-vendor-e-com-backend.vercel.app/api/user/change-email/verify",
+        "https://multi-vendor-backend-orpin.vercel.app/api/user/change-email/verify",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

@@ -4,7 +4,7 @@ export const shippingSlice = createApi({
   reducerPath: "shipping",
   baseQuery: fetchBaseQuery({
     // baseUrl: "http://localhost:5500/api",
-    baseUrl: `https://multi-vendor-e-com-backend.vercel.app/api`,
+    baseUrl: `https://multi-vendor-backend-orpin.vercel.app/api`,
     credentials: "include",
   }),
   tagTypes: ["shipping"],
