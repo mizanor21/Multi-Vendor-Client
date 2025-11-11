@@ -41,7 +41,14 @@ export default function RecentProduct() {
     {
       _id: "5",
       productName: "Professional Camera Lens",
-      images: ["https://images.unsplash.com/photo-1606980642926-7b0233f27d54?w=500&h=500&fit=crop"],
+      images: ["https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=500&h=500&fit=crop"],
+      price: 24999,
+      discountPercent: 10,
+    },
+    {
+      _id: "6",
+      productName: "Professional Camera Lens",
+      images: ["https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=500&h=500&fit=crop"],
       price: 24999,
       discountPercent: 10,
     },
@@ -88,7 +95,7 @@ export default function RecentProduct() {
             <p className="text-lg">New products will appear here once they are available and approved.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3">
             {approvedProducts?.map((item) => {
               const discountedPrice = (
                 item.price -
