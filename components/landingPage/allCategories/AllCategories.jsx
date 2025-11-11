@@ -9,6 +9,7 @@ import "swiper/css";
 import "swiper/css/free-mode";
 import Link from "next/link";
 import TkIcon from "@/public/TkIcon";
+import Image from "next/image";
 
 export default function CategoryProducts() {
   const {
@@ -139,9 +140,11 @@ export default function CategoryProducts() {
                       {/* Product Image */}
                       <div className="relative overflow-hidden bg-gray-100">
                         <div className="relative pt-[100%]">
-                          <img
+                          <Image
                             src={item.images[0]}
                             alt={item.productName}
+                            width={250}
+                            height={300}
                             className="absolute top-0 left-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                           />
                           {/* Overlay on hover */}
@@ -186,12 +189,12 @@ export default function CategoryProducts() {
                           )}
                         </div>
 
-                        {/* Add to Cart Button */}
+                        {/* View Details Button */}
                         <div className="flex flex-col self-end">
                           <Link href={`/client/product/${item._id}`} className="w-full">
                             <button className="w-full bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white py-2.5 px-4 rounded-xl text-sm font-semibold transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg flex items-center justify-center gap-2 group">
-                              <ShoppingCart className="w-4 h-4 group-hover:animate-bounce" />
-                              <span>Add to Cart</span>
+                              <Eye className="w-4 h-4 group-hover:scale-110" />
+                              <span>View Details</span>
                             </button>
                           </Link>
                         </div>

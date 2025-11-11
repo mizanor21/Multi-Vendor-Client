@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { ShoppingCart, Heart, Eye } from "lucide-react";
+import Link from "next/link";
 
 // Mock TkIcon component
 const TkIcon = ({ size, color, className }) => (
@@ -174,12 +175,14 @@ export default function RecentProduct() {
                       )}
                     </div>
 
-                    {/* Add to Cart Button */}
+                    {/* View Details Button */}
                     <div className="flex flex-col self-end">
-                      <button className=" bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white py-2.5 px-4 rounded-xl text-sm font-semibold transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg flex items-center justify-center gap-2 group">
-                        <ShoppingCart className="w-4 h-4 group-hover:animate-bounce" />
-                        <span>Add to Cart</span>
-                      </button>
+                      <Link href={`/client/product/${item._id}`} className="w-full">
+                        <button className="w-full bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white py-2.5 px-4 rounded-xl text-sm font-semibold transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg flex items-center justify-center gap-2 group">
+                          <Eye className="w-4 h-4 group-hover:scale-110" />
+                          <span>View Details</span>
+                        </button>
+                      </Link>
                     </div>
 
                   </div>
