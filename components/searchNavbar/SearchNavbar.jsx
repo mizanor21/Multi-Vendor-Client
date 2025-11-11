@@ -166,13 +166,13 @@ export default function SearchNavbar() {
           <div className="md:hidden">
             <div className="flex items-center justify-between py-3">
               <Link href="/" className="flex-shrink-0">
-                <Image
+                {/* <Image
                   alt="Logo"
                   src="https://i.postimg.cc/pp2RnKSh/multi-vendor-e-com.jpg"
                   width={140}
                   height={40}
                   className="object-contain"
-                />
+                /> */}
               </Link>
 
               <div className="flex gap-2">

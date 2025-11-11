@@ -154,29 +154,6 @@ export default function BannerSlider() {
         </div>
       </div>
 
-      {/* Thumbnail Navigation (Optional) */}
-      {sliders.length > 1 && (
-        <div className="hidden lg:flex gap-3 mt-3 justify-center">
-          {sliders.map((slider, index) => (
-            <button
-              key={slider?._id || index}
-              onClick={() => swiperRef?.slideTo(index)}
-              className={`relative w-14 h-8 rounded-lg overflow-hidden border-2 transition-all duration-300 ${
-                activeIndex === index
-                  ? "border-blue-500 scale-105 shadow-lg"
-                  : "border-transparent opacity-60 hover:opacity-100 hover:scale-105"
-              }`}
-            >
-              <Image
-                src={slider?.image}
-                alt={`Thumbnail ${index + 1}`}
-                className="w-full h-full object-cover"
-              />
-            </button>
-          ))}
-        </div>
-      )}
-
       <style jsx global>{`
         @keyframes fade-in {
           from {
