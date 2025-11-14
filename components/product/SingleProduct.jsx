@@ -122,15 +122,15 @@ export default function SingleProduct() {
 
     const container = imageContainerRef.current;
     const rect = container.getBoundingClientRect();
-    
+
     // Calculate mouse position relative to the image
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    
+
     // Calculate percentage position
     const xPercent = (x / rect.width) * 100;
     const yPercent = (y / rect.height) * 100;
-    
+
     setZoomPosition({ x: xPercent, y: yPercent });
   };
 
@@ -296,11 +296,10 @@ export default function SingleProduct() {
                   <div
                     key={index}
                     onClick={() => handleImageSelect(img)}
-                    className={`min-w-[80px] w-20 h-20 rounded-lg border-2 cursor-pointer transition-all duration-200 overflow-hidden ${
-                      previewImage === img
+                    className={`min-w-[80px] w-20 h-20 rounded-lg border-2 cursor-pointer transition-all duration-200 overflow-hidden ${previewImage === img
                         ? "border-blue-500 shadow-lg"
                         : "border-gray-200 hover:border-blue-300"
-                    }`}
+                      }`}
                   >
                     <img
                       src={img}
@@ -316,24 +315,26 @@ export default function SingleProduct() {
             <div className="order-1 lg:order-2 flex-1 relative">
               <div
                 ref={imageContainerRef}
-                className="relative w-full aspect-square bg-white rounded-xl shadow-lg overflow-hidden cursor-crosshair"
+                className="relative flex justify-center items-center p-10 bg-white rounded-xl shadow-lg overflow-hidden cursor-crosshair"
                 onMouseMove={handleMouseMove}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
               >
                 {previewImage ? (
                   <>
-                    <img
+                    <Image
+                      width={400}
+                      height={300}
                       src={previewImage}
                       alt="Product preview"
-                      className="w-full h-full object-contain"
+                      className=" object-contain"
                     />
-                    
+
                     {/* Magnifying Lens Overlay */}
                     {isZooming && (
                       <div
                         ref={zoomLensRef}
-                        className="absolute w-32 h-32 border-2 border-blue-500 rounded-full pointer-events-none bg-white/20 backdrop-blur-sm"
+                        className="absolute w-32 h-32 z-[100] border-2 border-blue-500 rounded-full pointer-events-none bg-white/20 backdrop-blur-sm"
                         style={{
                           left: `${zoomPosition.x}%`,
                           top: `${zoomPosition.y}%`,
@@ -349,7 +350,7 @@ export default function SingleProduct() {
 
               {/* Zoomed Preview Panel - Right Side */}
               {isZooming && previewImage && (
-                <div className="hidden lg:block absolute left-full ml-4 top-0 w-[600] h-[600] bg-white rounded-xl shadow-2xl overflow-hidden border-2 border-gray-200 z-50">
+                <div className="hidden lg:block absolute left-full ml-4 top-0 w-[700] h-[500] bg-white rounded-xl shadow-2xl overflow-hidden border-2 border-gray-200 z-50">
                   <div
                     className="w-full h-full"
                     style={{
@@ -394,9 +395,9 @@ export default function SingleProduct() {
               <div className="flex flex-wrap items-center gap-2">
                 <span className="text-gray-600 font-medium">Tags:</span>
                 {getSingleProductData.product.tags[0].split(",").map((tag) => (
-                  <Chip 
-                    key={tag.trim()} 
-                    color="primary" 
+                  <Chip
+                    key={tag.trim()}
+                    color="primary"
                     variant="flat"
                     className="text-sm"
                   >
@@ -496,9 +497,8 @@ export default function SingleProduct() {
                 {getAllMatchedProducts?.products?.map((product, index) => (
                   <tr
                     key={product?._id}
-                    className={`border-b transition-colors ${
-                      index % 2 === 0 ? 'bg-white' : 'bg-gray-50'
-                    } hover:bg-blue-50`}
+                    className={`border-b transition-colors ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'
+                      } hover:bg-blue-50`}
                   >
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
