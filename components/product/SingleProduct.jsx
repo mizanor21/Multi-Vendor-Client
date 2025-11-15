@@ -288,31 +288,11 @@ export default function SingleProduct() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-5">
           {/* Image Gallery Section */}
-          <div className="flex flex-col lg:flex-row gap-4">
-            {/* Thumbnail Column */}
-            {isMounted && images?.length > 0 && (
-              <div className="order-2 lg:order-1 flex lg:flex-col gap-3 overflow-x-auto lg:overflow-y-auto lg:max-h-[600px] pb-2 lg:pb-0">
-                {images.map((img, index) => (
-                  <div
-                    key={index}
-                    onClick={() => handleImageSelect(img)}
-                    className={`min-w-[80px] w-20 h-20 rounded-lg border-2 cursor-pointer transition-all duration-200 overflow-hidden ${previewImage === img
-                        ? "border-blue-500 shadow-lg"
-                        : "border-gray-200 hover:border-blue-300"
-                      }`}
-                  >
-                    <img
-                      src={img}
-                      alt={`Thumbnail ${index + 1}`}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                ))}
-              </div>
-            )}
+          <div className="flex flex-col gap-4">
+            
 
             {/* Main Image with Zoom */}
-            <div className="order-1 lg:order-2 flex-1 relative">
+            <div className="order-1 flex-1 relative">
               <div
                 ref={imageContainerRef}
                 className="relative flex justify-center items-center p-10 bg-white rounded-xl shadow-lg overflow-hidden cursor-crosshair"
@@ -329,6 +309,8 @@ export default function SingleProduct() {
                       alt="Product preview"
                       className=" object-contain"
                     />
+
+
 
                     {/* Magnifying Lens Overlay */}
                     {isZooming && (
@@ -363,6 +345,28 @@ export default function SingleProduct() {
                 </div>
               )}
             </div>
+
+            {/* Thumbnail Column */}
+            {isMounted && images?.length > 0 && (
+              <div className="order-2 lg:order-1 flex flex-grow gap-3 overflow-x-auto lg:overflow-y-auto lg:max-h-[600px] pb-2 lg:pb-0">
+                {images.map((img, index) => (
+                  <div
+                    key={index}
+                    onClick={() => handleImageSelect(img)}
+                    className={`flex min-w-[80px] w-20 h-20 rounded-lg border-2 cursor-pointer transition-all duration-200 overflow-hidden ${previewImage === img
+                        ? "border-blue-500 shadow-lg"
+                        : "border-gray-200 hover:border-blue-300"
+                      }`}
+                  >
+                    <img
+                      src={img}
+                      alt={`Thumbnail ${index + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Product Info */}
