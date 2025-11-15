@@ -7,7 +7,7 @@ import FAQ from "./faq/FAQ";
 
 export default function LandingPage() {
   return (
-    <div className="nuni">
+    <div className="">
       <BannerSlider />
       <PopularCategories />
       <RecentProduct />

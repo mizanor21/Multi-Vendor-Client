@@ -1,5 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { sliderSlice } from "./api/sliderSlice.jsx";
 import { productSlice } from "./api/productSlice.jsx";
 import { categorySlice } from "./api/categorySlice.jsx";
 import { stallSlice } from "./api/stallSlice.jsx";
@@ -12,7 +11,6 @@ import { orderSlice } from "./api/orderSlice.jsx";
 
 export const store = configureStore({
   reducer: {
-    [sliderSlice.reducerPath]: sliderSlice.reducer,
     [productSlice.reducerPath]: productSlice.reducer,
     [categorySlice.reducerPath]: categorySlice.reducer,
     [stallSlice.reducerPath]: stallSlice.reducer,
@@ -25,7 +23,6 @@ export const store = configureStore({
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
-      sliderSlice.middleware,
       productSlice.middleware,
       categorySlice.middleware,
       stallSlice.middleware,
