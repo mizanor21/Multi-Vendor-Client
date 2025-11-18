@@ -55,33 +55,44 @@ function ProductCard({ product }) {
   const truncatedName = truncateProductName(product.productName);
 
   return (
-    <div className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100">
-      {/* Discount Badge */}
-      {product.discountPercent > 0 && (
-        <DiscountBadge discount={product.discountPercent} />
-      )}
+    <Link href={`/client/product/${product._id}`}>
+      <div className="group relative bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border-gray-100 cursor-pointer">
+        {/* Discount Badge */}
+        {product.discountPercent > 0 && (
+          <DiscountBadge discount={product.discountPercent} />
+        )}
 
-      {/* Quick Action Buttons */}
-      <QuickActionButtons />
+        {/* Quick Action Buttons */}
+        <div>
+          <QuickActionButtons />
+        </div>
 
-      {/* Product Image */}
-      <ProductImage image={product.images[0]} name={product.productName} />
+        {/* Product Image */}
+        <ProductImage image={product.images[0]} name={product.productName} />
 
-      {/* Product Info */}
-      <div className="p-4">
-        <ProductName name={truncatedName} />
-        <PriceSection 
-          price={product.price}
-          discountedPrice={discountedPrice}
-          discountPercent={product.discountPercent}
-          savings={savings}
-        />
-        <ViewDetailsButton productId={product._id} />
+        {/* Product Info */}
+        <div className="px-3 pt-3">
+          <ProductName name={truncatedName} />
+          <PriceSection
+            price={product.price}
+            discountedPrice={discountedPrice}
+            discountPercent={product.discountPercent}
+            savings={savings}
+          />
+        </div>
+
+        {/* View Details Button - Full Width at Bottom */}
+        {/* opacity-0 invisible group-hover:opacity-100 group-hover:visible transform translate-y-2 group-hover:translate-y-0 transition-all duration-300  */}
+        <div className="px-3 pb-3">
+          <div className="w-full text-center py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-md shadow-md">
+            View Details
+          </div>
+        </div>
+
+        {/* Bottom accent line */}
+        <div className="h-1 bg-gradient-to-r from-green-400 via-blue-400 to-purple-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
       </div>
-
-      {/* Bottom accent line */}
-      <div className="h-1 bg-gradient-to-r from-green-400 via-blue-400 to-purple-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
-    </div>
+    </Link>
   );
 }
 
@@ -98,13 +109,13 @@ function DiscountBadge({ discount }) {
 function QuickActionButtons() {
   return (
     <div className="absolute top-3 right-3 z-20 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-      <button 
+      <button
         className="bg-white p-2 rounded-full shadow-lg hover:bg-green-600 hover:text-white transition-all duration-300 transform hover:scale-110"
         aria-label="Add to wishlist"
       >
         <Heart className="w-4 h-4" />
       </button>
-      <button 
+      <button
         className="bg-white p-2 rounded-full shadow-lg hover:bg-blue-600 hover:text-white transition-all duration-300 transform hover:scale-110"
         aria-label="Quick view"
       >
@@ -135,18 +146,18 @@ function ProductImage({ image, name }) {
 // Product Name Component
 function ProductName({ name }) {
   return (
-    <h3 className="text-gray-800 font-semibold mb-3 text-sm md:text-base line-clamp-2 min-h-[2.5rem] group-hover:text-green-600 transition-colors duration-300">
+    <h3 className="text-gray-800 font-semibold text-sm md:text-base line-clamp-2 group-hover:text-green-600 transition-colors duration-300">
       {name}
     </h3>
   );
 }
 
 // Price Section Component
-function PriceSection({ 
-  price, 
-  discountedPrice, 
-  discountPercent, 
-  savings 
+function PriceSection({
+  price,
+  discountedPrice,
+  discountPercent,
+  savings
 }) {
   return (
     <div className="mb-3">
