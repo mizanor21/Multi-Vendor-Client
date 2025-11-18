@@ -17,6 +17,7 @@ import moment from "moment";
 import { useRouter } from "next/navigation";
 
 import { FaStar, FaRegStar, FaStarHalfAlt } from "react-icons/fa";
+import { MdZoomIn } from "react-icons/md";
 import Swal from "sweetalert2";
 import { jwtDecode } from "jwt-decode";
 
@@ -35,14 +36,6 @@ const BreadcrumbItem = dynamic(
 const Image = dynamic(() => import("@heroui/image").then((mod) => mod.Image), {
   ssr: false,
 });
-const SwiperComponent = dynamic(
-  () =>
-    import("swiper/react").then((mod) => ({
-      default: mod.Swiper,
-      SwiperSlide: mod.SwiperSlide,
-    })),
-  { ssr: false }
-);
 
 // Load other components dynamically
 const SimilarProducts = dynamic(() =>
@@ -82,7 +75,6 @@ export default function SingleProduct() {
 
   if (products.length > 0) {
     const prices = products.map((p) => p.price);
-
     minPrice = Math.min(...prices);
     maxPrice = Math.max(...prices);
   }
@@ -90,17 +82,30 @@ export default function SingleProduct() {
   const images = getSingleProductData?.product?.images || [];
   const [previewImage, setPreviewImage] = useState(images[0] || null);
 
-  // Image zoom states
+  // Enhanced zoom states
   const [isZooming, setIsZooming] = useState(false);
-  const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
+  const [zoomPosition, setZoomPosition] = useState({ x: 50, y: 50 });
+  const [showZoomPanel, setShowZoomPanel] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
   const imageContainerRef = useRef(null);
-  const zoomLensRef = useRef(null);
+  const zoomPanelRef = useRef(null);
 
   useEffect(() => {
     setIsMounted(true);
     if (getSingleProductData?.product?.images?.[0]) {
       setPreviewImage(getSingleProductData.product.images[0]);
     }
+
+    // Check if mobile device
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
+    return () => window.removeEventListener('resize', checkMobile);
   }, [getSingleProductData]);
 
   if (!isMounted) return <Loader />;
@@ -115,10 +120,14 @@ export default function SingleProduct() {
     );
   }
 
-  const handleImageSelect = (img) => setPreviewImage(img);
+  const handleImageSelect = (img) => {
+    setPreviewImage(img);
+    setIsZooming(false);
+    setShowZoomPanel(false);
+  };
 
   const handleMouseMove = (e) => {
-    if (!imageContainerRef.current) return;
+    if (!imageContainerRef.current || isMobile) return;
 
     const container = imageContainerRef.current;
     const rect = container.getBoundingClientRect();
@@ -127,19 +136,50 @@ export default function SingleProduct() {
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    // Calculate percentage position
-    const xPercent = (x / rect.width) * 100;
-    const yPercent = (y / rect.height) * 100;
+    // Calculate percentage position (clamped between 0 and 100)
+    const xPercent = Math.max(0, Math.min(100, (x / rect.width) * 100));
+    const yPercent = Math.max(0, Math.min(100, (y / rect.height) * 100));
 
     setZoomPosition({ x: xPercent, y: yPercent });
   };
 
   const handleMouseEnter = () => {
-    setIsZooming(true);
+    if (!isMobile && previewImage) {
+      setIsZooming(true);
+      setShowZoomPanel(true);
+    }
   };
 
   const handleMouseLeave = () => {
     setIsZooming(false);
+    setShowZoomPanel(false);
+  };
+
+  const handleTouchStart = (e) => {
+    if (!isMobile || !previewImage) return;
+    setShowZoomPanel(true);
+  };
+
+  const handleTouchMove = (e) => {
+    if (!imageContainerRef.current || !isMobile) return;
+
+    const touch = e.touches[0];
+    const container = imageContainerRef.current;
+    const rect = container.getBoundingClientRect();
+
+    const x = touch.clientX - rect.left;
+    const y = touch.clientY - rect.top;
+
+    const xPercent = Math.max(0, Math.min(100, (x / rect.width) * 100));
+    const yPercent = Math.max(0, Math.min(100, (y / rect.height) * 100));
+
+    setZoomPosition({ x: xPercent, y: yPercent });
+  };
+
+  const handleTouchEnd = () => {
+    if (isMobile) {
+      setShowZoomPanel(false);
+    }
   };
 
   const filterCategory = getAllCategories?.find(
@@ -191,8 +231,7 @@ export default function SingleProduct() {
     (rating) => rating?.rating
   );
 
-  // Check if ratings array exists and has numbers
-  let average = 0; // Initialize average to 0
+  let average = 0;
   if (ratings && ratings.length > 0) {
     const total = ratings.reduce((sum, current) => sum + current, 0);
     average = total / ratings.length;
@@ -200,7 +239,6 @@ export default function SingleProduct() {
 
   const renderStars = (averageRating) => {
     const stars = [];
-
     for (let i = 1; i <= 5; i++) {
       if (averageRating >= i) {
         stars.push(<FaStar key={i} className="text-yellow-500" />);
@@ -210,7 +248,6 @@ export default function SingleProduct() {
         stars.push(<FaRegStar key={i} className="text-yellow-500" />);
       }
     }
-
     return stars;
   };
 
@@ -288,41 +325,57 @@ export default function SingleProduct() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-5">
           {/* Image Gallery Section */}
-          <div className="flex flex-col gap-4">
-            
-
+          <div className="flex flex-col lg:flex-row gap-4">
             {/* Main Image with Zoom */}
-            <div className="order-1 flex-1 relative">
+            <div className="order-1 lg:order-2 flex-1 relative">
               <div
                 ref={imageContainerRef}
-                className="relative flex justify-center items-center p-10 bg-white rounded-xl shadow-lg overflow-hidden cursor-crosshair"
+                className={`relative flex justify-center items-center p-4 md:p-10 bg-white rounded-xl shadow-lg overflow-hidden ${!isMobile ? 'cursor-crosshair' : 'cursor-pointer'
+                  }`}
                 onMouseMove={handleMouseMove}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+                style={{ minHeight: '400px' }}
               >
                 {previewImage ? (
                   <>
-                    <Image
-                      width={400}
-                      height={300}
+                    <img
                       src={previewImage}
                       alt="Product preview"
-                      className=" object-contain"
+                      className="max-w-full max-h-[500px] object-contain select-none"
+                      draggable="false"
                     />
 
+                    {/* Hover indicator icon */}
+                    {!isMobile && !isZooming && (
+                      <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full p-3 shadow-lg">
+                        <MdZoomIn className="text-2xl text-blue-500" />
+                      </div>
+                    )}
 
-
-                    {/* Magnifying Lens Overlay */}
-                    {isZooming && (
+                    {/* Magnifying Lens Overlay - Desktop only */}
+                    {!isMobile && isZooming && (
                       <div
-                        ref={zoomLensRef}
-                        className="absolute w-32 h-32 z-[100] border-2 border-blue-500 rounded-full pointer-events-none bg-white/20 backdrop-blur-sm"
+                        className="absolute w-32 h-32 border-4 border-blue-500 rounded-full pointer-events-none bg-white/10 backdrop-blur-[1px] shadow-xl z-10"
                         style={{
                           left: `${zoomPosition.x}%`,
                           top: `${zoomPosition.y}%`,
                           transform: 'translate(-50%, -50%)',
+                          boxShadow: '0 0 0 9999px rgba(0, 0, 0, 0.3)',
                         }}
-                      />
+                      >
+                        <div className="absolute inset-0 border-2 border-white rounded-full" />
+                      </div>
+                    )}
+
+                    {/* Mobile tap instruction */}
+                    {isMobile && !showZoomPanel && (
+                      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/70 text-white px-4 py-2 rounded-full text-sm">
+                        Tap and hold to zoom
+                      </div>
                     )}
                   </>
                 ) : (
@@ -330,48 +383,81 @@ export default function SingleProduct() {
                 )}
               </div>
 
-              {/* Zoomed Preview Panel - Right Side */}
-              {isZooming && previewImage && (
-                <div className="hidden lg:block absolute left-full ml-4 top-0 w-[700] h-[500] bg-white rounded-xl shadow-2xl overflow-hidden border-2 border-gray-200 z-50">
-                  <div
-                    className="w-full h-full"
-                    style={{
-                      backgroundImage: `url(${previewImage})`,
-                      backgroundSize: '250%',
-                      backgroundPosition: `${zoomPosition.x}% ${zoomPosition.y}%`,
-                      backgroundRepeat: 'no-repeat',
-                    }}
-                  />
+              {/* Thumbnail Column - Vertical on desktop, Horizontal on mobile */}
+              {isMounted && images?.length > 0 && (
+                <div className="order-2 lg:order-1 flex gap-3 py-4 lg:pb-0 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+                  {images.map((img, index) => (
+                    <div
+                      key={index}
+                      onClick={() => handleImageSelect(img)}
+                      className={`flex-shrink-0 min-w-[80px] w-20 h-20 rounded-lg border-2 cursor-pointer transition-all duration-200 overflow-hidden ${previewImage === img
+                          ? "border-blue-500 shadow-lg scale-105"
+                          : "border-gray-200 hover:border-blue-300 hover:scale-105"
+                        }`}
+                    >
+                      <img
+                        src={img}
+                        alt={`Thumbnail ${index + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  ))}
                 </div>
+              )}
+
+              {/* Zoomed Preview Panel - Responsive positioning */}
+              {showZoomPanel && previewImage && (
+                <>
+                  {/* Desktop - Right side panel */}
+                  {!isMobile && (
+                    <div
+                      ref={zoomPanelRef}
+                      className="hidden lg:block absolute left-full ml-4 top-0 w-[750px] h-[600px] bg-white rounded-xl shadow-2xl overflow-hidden border-2 border-gray-200 z-50"
+                      style={{
+                        backgroundImage: `url(${previewImage})`,
+                        backgroundSize: '300%',
+                        backgroundPosition: `${zoomPosition.x}% ${zoomPosition.y}%`,
+                        backgroundRepeat: 'no-repeat',
+                      }}
+                    />
+                  )}
+
+                  {/* Mobile - Full screen overlay */}
+                  {isMobile && (
+                    <div className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4">
+                      <button
+                        onClick={() => setShowZoomPanel(false)}
+                        className="absolute top-4 right-4 bg-white rounded-full p-2 shadow-lg z-10"
+                      >
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </button>
+
+                      <div
+                        className="w-full h-full max-w-4xl max-h-4xl"
+                        style={{
+                          backgroundImage: `url(${previewImage})`,
+                          backgroundSize: '250%',
+                          backgroundPosition: `${zoomPosition.x}% ${zoomPosition.y}%`,
+                          backgroundRepeat: 'no-repeat',
+                        }}
+                      />
+
+                      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white/90 px-4 py-2 rounded-full text-sm">
+                        Move finger to explore
+                      </div>
+                    </div>
+                  )}
+                </>
               )}
             </div>
 
-            {/* Thumbnail Column */}
-            {isMounted && images?.length > 0 && (
-              <div className="order-2 lg:order-1 flex flex-grow gap-3 overflow-x-auto lg:overflow-y-auto lg:max-h-[600px] pb-2 lg:pb-0">
-                {images.map((img, index) => (
-                  <div
-                    key={index}
-                    onClick={() => handleImageSelect(img)}
-                    className={`flex min-w-[80px] w-20 h-20 rounded-lg border-2 cursor-pointer transition-all duration-200 overflow-hidden ${previewImage === img
-                        ? "border-blue-500 shadow-lg"
-                        : "border-gray-200 hover:border-blue-300"
-                      }`}
-                  >
-                    <img
-                      src={img}
-                      alt={`Thumbnail ${index + 1}`}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                ))}
-              </div>
-            )}
           </div>
 
           {/* Product Info */}
           <div className="space-y-4">
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 leading-tight">
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">
               {getSingleProductData?.product?.productName || "Product Name"}
             </h1>
 
@@ -384,7 +470,7 @@ export default function SingleProduct() {
                 <span className="text-lg font-semibold text-gray-700">
                   {average.toFixed(1)}
                 </span>
-                <span className="text-gray-500">
+                <span className="text-gray-500 text-sm md:text-base">
                   ({getSingleProductData?.product?.ratingsAndReviews?.length} reviews)
                 </span>
               </div>
@@ -397,13 +483,13 @@ export default function SingleProduct() {
             {/* Tags */}
             {getSingleProductData?.product?.tags && (
               <div className="flex flex-wrap items-center gap-2">
-                <span className="text-gray-600 font-medium">Tags:</span>
+                <span className="text-gray-600 font-medium text-sm md:text-base">Tags:</span>
                 {getSingleProductData.product.tags[0].split(",").map((tag) => (
                   <Chip
                     key={tag.trim()}
                     color="primary"
                     variant="flat"
-                    className="text-sm"
+                    className="text-xs md:text-sm"
                   >
                     {tag.trim()}
                   </Chip>
@@ -414,34 +500,34 @@ export default function SingleProduct() {
             {/* Product Info Grid */}
             <div className="grid grid-cols-2 gap-4 py-4">
               <div className="space-y-1">
-                <p className="text-gray-500 text-sm">Status</p>
-                <p className="font-bold text-lg">
+                <p className="text-gray-500 text-xs md:text-sm">Status</p>
+                <p className="font-bold text-base md:text-lg">
                   {getSingleProductData?.product?.stockStatus}
                 </p>
               </div>
               <div className="space-y-1">
-                <p className="text-gray-500 text-sm">Product ID</p>
-                <p className="font-bold text-lg">
+                <p className="text-gray-500 text-xs md:text-sm">Product ID</p>
+                <p className="font-bold text-base md:text-lg break-all">
                   {getSingleProductData?.product?.productId}
                 </p>
               </div>
             </div>
 
-            {/* Features or Additional Info */}
+            {/* Features */}
             <div className="bg-gray-50 rounded-lg p-4 space-y-2">
-              <h3 className="font-semibold text-lg mb-3">Key Features</h3>
-              <ul className="space-y-2 text-gray-700">
+              <h3 className="font-semibold text-base md:text-lg mb-3">Key Features</h3>
+              <ul className="space-y-2 text-sm md:text-base text-gray-700">
                 <li className="flex items-start">
-                  <span className="text-green-500 mr-2">✓</span>
-                  Authentic Product
+                  <span className="text-green-500 mr-2 flex-shrink-0">✓</span>
+                  <span>Authentic Product</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-green-500 mr-2">✓</span>
-                  Fast Delivery Available
+                  <span className="text-green-500 mr-2 flex-shrink-0">✓</span>
+                  <span>Fast Delivery Available</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-green-500 mr-2">✓</span>
-                  Multiple Payment Options
+                  <span className="text-green-500 mr-2 flex-shrink-0">✓</span>
+                  <span>Multiple Payment Options</span>
                 </li>
               </ul>
             </div>
@@ -450,11 +536,11 @@ export default function SingleProduct() {
 
         {/* Price Section */}
         <div className="mt-12 mb-8">
-          <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-2xl p-8">
-            <h2 className="text-center text-3xl md:text-4xl font-bold text-[#16a34a] mb-6">
+          <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-2xl p-6 md:p-8">
+            <h2 className="text-center text-2xl md:text-3xl lg:text-4xl font-bold text-[#16a34a] mb-6">
               Price in Bangladesh
             </h2>
-            <p className="text-lg text-gray-700 text-center max-w-4xl mx-auto leading-relaxed">
+            <p className="text-sm md:text-base lg:text-lg text-gray-700 text-center max-w-4xl mx-auto leading-relaxed">
               Buy{" "}
               <span className="text-primary-500 font-bold">
                 {getSingleProductData?.product?.productName}
@@ -469,30 +555,30 @@ export default function SingleProduct() {
             </p>
           </div>
 
-          {/* Sellers Table */}
+          {/* Sellers Table - Responsive */}
           <div className="mt-8 overflow-x-auto shadow-xl rounded-2xl">
-            <table className="w-full text-sm text-left">
+            <table className="w-full text-xs md:text-sm text-left min-w-[800px]">
               <thead className="text-xs uppercase bg-gradient-to-r from-gray-50 to-gray-100">
                 <tr>
-                  <th scope="col" className="px-6 py-4 font-semibold text-gray-700">
+                  <th scope="col" className="px-3 md:px-6 py-3 md:py-4 font-semibold text-gray-700">
                     Seller
                   </th>
-                  <th scope="col" className="px-6 py-4 font-semibold text-gray-700">
+                  <th scope="col" className="px-3 md:px-6 py-3 md:py-4 font-semibold text-gray-700">
                     Location
                   </th>
-                  <th scope="col" className="px-6 py-4 font-semibold text-gray-700">
+                  <th scope="col" className="px-3 md:px-6 py-3 md:py-4 font-semibold text-gray-700">
                     Condition
                   </th>
-                  <th scope="col" className="px-6 py-4 font-semibold text-gray-700">
+                  <th scope="col" className="px-3 md:px-6 py-3 md:py-4 font-semibold text-gray-700">
                     Discount
                   </th>
-                  <th scope="col" className="px-6 py-4 font-semibold text-gray-700">
+                  <th scope="col" className="px-3 md:px-6 py-3 md:py-4 font-semibold text-gray-700">
                     Price
                   </th>
-                  <th scope="col" className="px-6 py-4 font-semibold text-gray-700">
+                  <th scope="col" className="px-3 md:px-6 py-3 md:py-4 font-semibold text-gray-700">
                     Listed
                   </th>
-                  <th scope="col" className="px-6 py-4 font-semibold text-gray-700">
+                  <th scope="col" className="px-3 md:px-6 py-3 md:py-4 font-semibold text-gray-700">
                     Actions
                   </th>
                 </tr>
@@ -504,38 +590,38 @@ export default function SingleProduct() {
                     className={`border-b transition-colors ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'
                       } hover:bg-blue-50`}
                   >
-                    <td className="px-6 py-4">
-                      <div className="flex items-center gap-3">
+                    <td className="px-3 md:px-6 py-3 md:py-4">
+                      <div className="flex items-center gap-2 md:gap-3">
                         <img
                           src={product?.stall?.stallImage}
                           alt="seller"
-                          className="w-12 h-12 rounded-full object-cover border-2 border-gray-200"
+                          className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover border-2 border-gray-200 flex-shrink-0"
                         />
-                        <p className="font-medium text-gray-900">
+                        <p className="font-medium text-gray-900 text-xs md:text-sm truncate max-w-[100px] md:max-w-none">
                           {product?.stall?.stallOwnerName}
                         </p>
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-gray-700">
+                    <td className="px-3 md:px-6 py-3 md:py-4 text-gray-700 text-xs md:text-sm">
                       {product?.stall?.stallLocation}
                     </td>
-                    <td className="px-6 py-4">
-                      <Chip color="success" variant="flat" size="sm">
+                    <td className="px-3 md:px-6 py-3 md:py-4">
+                      <Chip color="success" variant="flat" size="sm" className="text-xs">
                         {product?.productCondition}
                       </Chip>
                     </td>
-                    <td className="px-6 py-4">
-                      <span className="font-bold text-green-600 text-lg">
+                    <td className="px-3 md:px-6 py-3 md:py-4">
+                      <span className="font-bold text-green-600 text-sm md:text-lg">
                         {product?.discountPercent > 0
                           ? `${product?.discountPercent}%`
                           : "0%"}
                       </span>
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-3 md:px-6 py-3 md:py-4">
                       <div className="space-y-1">
                         <div className="flex items-center gap-1">
-                          <TkIcon size="16" color="#000000" />
-                          <p className="font-bold text-lg">
+                          <TkIcon size="14" color="#000000" />
+                          <p className="font-bold text-sm md:text-lg">
                             {(
                               product?.price -
                               (product?.discountPercent / 100) * product?.price
@@ -544,19 +630,19 @@ export default function SingleProduct() {
                         </div>
                         {product?.discountPercent > 0 && (
                           <div className="flex items-center gap-1">
-                            <TkIcon size="14" color="gray" />
-                            <p className="line-through text-gray-400 text-sm">
+                            <TkIcon size="12" color="gray" />
+                            <p className="line-through text-gray-400 text-xs md:text-sm">
                               {product?.price}
                             </p>
                           </div>
                         )}
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-gray-600 text-sm">
+                    <td className="px-3 md:px-6 py-3 md:py-4 text-gray-600 text-xs md:text-sm">
                       {moment(product?.createdAt).format("MMM D, YYYY")}
                     </td>
-                    <td className="px-6 py-4">
-                      <div className="flex flex-wrap gap-2">
+                    <td className="px-3 md:px-6 py-3 md:py-4">
+                      <div className="flex flex-wrap gap-1 md:gap-2">
                         {product?.sellTags?.map((tag, tagIndex) => {
                           if (tag === "Buy Now") {
                             return (
@@ -567,7 +653,7 @@ export default function SingleProduct() {
                                 key={tagIndex}
                                 color="primary"
                                 size="sm"
-                                className="font-semibold"
+                                className="font-semibold text-xs"
                               >
                                 Buy Now
                               </Button>
@@ -580,6 +666,7 @@ export default function SingleProduct() {
                                 key={tagIndex}
                                 color="secondary"
                                 size="sm"
+                                className="text-xs"
                                 onClick={() => {
                                   const phoneNumber =
                                     product?.stall?.stallOwnerPhoneNumber || "";
@@ -597,6 +684,7 @@ export default function SingleProduct() {
                                 key={tagIndex}
                                 color="success"
                                 size="sm"
+                                className="text-xs"
                                 onClick={() => {
                                   const whatsappNumber =
                                     product?.stall?.stallOwnerPhoneNumber || "";
@@ -627,22 +715,22 @@ export default function SingleProduct() {
 
         {/* Specifications */}
         <div className="mt-12 mb-12">
-          <h2 className="text-center font-bold text-3xl md:text-4xl text-[#16a34a] mb-8">
+          <h2 className="text-center font-bold text-2xl md:text-3xl lg:text-4xl text-[#16a34a] mb-8">
             Full Specifications
           </h2>
           <div
-            className="bg-white rounded-2xl shadow-xl p-8"
+            className="bg-white rounded-2xl shadow-xl p-4 md:p-6 lg:p-8 prose max-w-none"
             dangerouslySetInnerHTML={{ __html: cleanHTML }}
           />
         </div>
 
         {/* Similar Products */}
         <div className="mt-12 mb-12">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#16a34a]">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#16a34a]">
               Similar Products
             </h2>
-            <button className="text-primary-500 hover:text-primary-600 font-semibold transition-colors">
+            <button className="text-primary-500 hover:text-primary-600 font-semibold transition-colors text-sm md:text-base">
               See all →
             </button>
           </div>
@@ -652,7 +740,7 @@ export default function SingleProduct() {
         {/* Brand Products */}
         <div className="mt-12 mb-12">
           <div className="mb-6">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#16a34a]">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#16a34a]">
               Popular Speaker List
             </h2>
           </div>
@@ -662,10 +750,12 @@ export default function SingleProduct() {
         {/* Comments Section */}
         <div className="mt-12 mb-12">
           <div className="text-center mb-8">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#16a34a]">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#16a34a]">
               Questions & Reviews
             </h2>
-            <p className="text-gray-600 mt-2">Share your experience with this product</p>
+            <p className="text-gray-600 mt-2 text-sm md:text-base">
+              Share your experience with this product
+            </p>
           </div>
           <CommentsSection
             productData="Demo product data"
@@ -674,6 +764,25 @@ export default function SingleProduct() {
           />
         </div>
       </div>
+
+      {/* Custom scrollbar styles */}
+      <style jsx global>{`
+        .scrollbar-thin::-webkit-scrollbar {
+          width: 6px;
+          height: 6px;
+        }
+        .scrollbar-thin::-webkit-scrollbar-track {
+          background: #f1f1f1;
+          border-radius: 10px;
+        }
+        .scrollbar-thin::-webkit-scrollbar-thumb {
+          background: #cbd5e0;
+          border-radius: 10px;
+        }
+        .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+          background: #a0aec0;
+        }
+      `}</style>
     </div>
   );
 }
