@@ -13,7 +13,7 @@ export default function SimilarProducts({ products }) {
 
   if (!list.length) {
     return (
-      <div className="w-full py-16 flex flex-col items-center justify-center bg-gray-50 rounded-lg shadow-sm mt-5 mb-10">
+      <div className="w-full py-16 flex flex-col items-center justify-center bg-gray-50 rounded-md shadow-sm mt-5 mb-10">
         <h2 className="text-2xl font-semibold text-gray-600">
           No Products Found
         </h2>
@@ -46,7 +46,7 @@ export default function SimilarProducts({ products }) {
                 pathname: `/client/product/${item?._id}`,
               }}
             >
-              <Card className="relative overflow-hidden rounded-2xl hover:shadow-xl transition-all duration-300 border border-gray-200 bg-white">
+              <Card className="relative overflow-hidden rounded-md hover:shadow-xl transition-all duration-300 border border-gray-200 bg-white">
                 {/* Discount Ribbon */}
                 {item?.discountPercent > 0 && (
                   <div className="absolute right-0 top-0 z-20">
@@ -95,7 +95,7 @@ export default function SimilarProducts({ products }) {
                 <div className="px-4 pb-4 pt-1">
                   <Button
                     color="primary"
-                    className="w-full text-white font-semibold text-sm rounded-lg"
+                    className="w-full text-white font-semibold text-sm rounded-md"
                   >
                     View Details
                   </Button>

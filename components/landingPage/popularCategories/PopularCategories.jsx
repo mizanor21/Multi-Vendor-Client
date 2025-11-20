@@ -103,7 +103,7 @@ export default function PopularCategories() {
         <div className="flex items-center gap-3">
           <div className="relative">
             <Sparkles className="w-8 h-8 text-yellow-500 animate-pulse" />
-            <div className="absolute inset-0 bg-yellow-500/20 blur-xl rounded-full"></div>
+            <div className="absolute inset-0 bg-yellow-500/20 blur-xl rounded-md"></div>
           </div>
           <div>
             <h2 className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
@@ -181,9 +181,9 @@ export default function PopularCategories() {
                     {/* Icon Container with Gradient */}
                     <div className="relative z-10 mb-3 transform group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300">
                       <div
-                        className={`absolute inset-0 bg-gradient-to-br ${category.gradient} opacity-0 group-hover:opacity-20 blur-xl rounded-full transition-opacity duration-300`}
+                        className={`absolute inset-0 bg-gradient-to-br ${category.gradient} opacity-0 group-hover:opacity-20 blur-xl rounded-md transition-opacity duration-300`}
                       ></div>
-                      <div className="relative bg-white rounded-2xl p-3 shadow-md group-hover:shadow-xl transition-shadow">
+                      <div className="relative bg-white rounded-md p-3 shadow-md group-hover:shadow-xl transition-shadow">
                         <IconComponent size="48px" color={category.color} />
                       </div>
                     </div>
@@ -200,9 +200,9 @@ export default function PopularCategories() {
 
                     {/* Decorative dots */}
                     <div className="absolute top-2 left-2 flex gap-1 opacity-0 group-hover:opacity-50 transition-opacity duration-300">
-                      <div className="w-1 h-1 rounded-full bg-gray-400"></div>
-                      <div className="w-1 h-1 rounded-full bg-gray-400"></div>
-                      <div className="w-1 h-1 rounded-full bg-gray-400"></div>
+                      <div className="w-1 h-1 rounded-md bg-gray-400"></div>
+                      <div className="w-1 h-1 rounded-md bg-gray-400"></div>
+                      <div className="w-1 h-1 rounded-md bg-gray-400"></div>
                     </div>
                   </CardBody>
                 </Card>
@@ -216,7 +216,7 @@ export default function PopularCategories() {
       <div className="md:hidden mt-6 flex justify-center">
         <Link
           href="/categories"
-          className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full font-semibold hover:shadow-lg transition-all hover:scale-105"
+          className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-md font-semibold hover:shadow-lg transition-all hover:scale-105"
         >
           View All Categories
           <ChevronRight className="w-4 h-4" />

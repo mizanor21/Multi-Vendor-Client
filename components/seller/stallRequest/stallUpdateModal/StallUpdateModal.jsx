@@ -175,7 +175,7 @@ export default function StallUpdateModal({ isOpen2, onOpenChange2, stallId }) {
                   <img
                     src={stallData.stallImage}
                     alt="Current Stall"
-                    className="w-full h-auto mb-2 rounded"
+                    className="w-full h-auto mb-2 rounded-md"
                   />
                 )}
                 <Select

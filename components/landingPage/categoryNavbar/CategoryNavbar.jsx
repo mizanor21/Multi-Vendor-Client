@@ -110,7 +110,7 @@ export default function CategoryNavbar() {
           <div className="lg:hidden flex justify-between items-center py-3">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`p-2.5 rounded-xl transition-all duration-300 `}
+              className={`p-2.5 rounded-md transition-all duration-300 `}
               aria-label="Toggle navigation"
             >
               {isMobileMenuOpen ? (
@@ -132,7 +132,7 @@ export default function CategoryNavbar() {
                   onMouseLeave={handleCategoryMouseLeave}
                 >
                   <button
-                    className={`flex items-center gap-2 px-5 py-3 rounded-xl font-semibold transition-all duration-300 ${
+                    className={`flex items-center gap-2 px-5 py-3 rounded-md font-semibold transition-all duration-300 ${
                       scrolled
                         ? "text-gray-700 hover:bg-blue-50 hover:text-blue-600 active:bg-blue-100"
                         : "text-white hover:bg-white/20 active:bg-white/30"
@@ -162,7 +162,7 @@ export default function CategoryNavbar() {
                         onMouseEnter={handleDropdownMouseEnter}
                         onMouseLeave={handleCategoryMouseLeave}
                       >
-                        <div className="w-80 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden animate-slideDown">
+                        <div className="w-80 bg-white rounded-md shadow-2xl border border-gray-100 overflow-hidden animate-slideDown">
                           {/* Header */}
                           <div className="px-5 py-3 bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-blue-100">
                             <h3 className="font-bold text-gray-800 flex items-center gap-2">
@@ -183,7 +183,7 @@ export default function CategoryNavbar() {
                               >
                                 <Link
                                   href={`/category/${category._id}/${subcategory._id}`}
-                                  className={`flex items-center justify-between px-4 py-3.5 rounded-xl text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 hover:text-blue-600 transition-all duration-200 group/item ${
+                                  className={`flex items-center justify-between px-4 py-3.5 rounded-md text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 hover:text-blue-600 transition-all duration-200 group/item ${
                                     index === 0 ? "mt-0" : "mt-1"
                                   }`}
                                   onClick={handleNavigationClick}
@@ -209,7 +209,7 @@ export default function CategoryNavbar() {
                                       onMouseEnter={handleDropdownMouseEnter}
                                       onMouseLeave={handleSubcategoryMouseLeave}
                                     >
-                                      <div className="w-72 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden animate-slideRight">
+                                      <div className="w-72 bg-white rounded-md shadow-2xl border border-gray-100 overflow-hidden animate-slideRight">
                                         {/* Header */}
                                         <div className="px-5 py-3 bg-gradient-to-r from-purple-50 to-pink-50 border-b border-purple-100">
                                           <h4 className="font-bold text-gray-800 text-sm flex items-center gap-2">
@@ -223,7 +223,7 @@ export default function CategoryNavbar() {
                                             <Link
                                               key={microcategory._id}
                                               href={`/category/${category._id}/${subcategory._id}/${microcategory._id}`}
-                                              className={`block px-4 py-3 rounded-xl text-gray-600 hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 hover:text-purple-600 transition-all duration-200 font-medium text-sm ${
+                                              className={`block px-4 py-3 rounded-md text-gray-600 hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 hover:text-purple-600 transition-all duration-200 font-medium text-sm ${
                                                 idx === 0 ? "mt-0" : "mt-1"
                                               }`}
                                               onClick={handleNavigationClick}
@@ -276,14 +276,14 @@ export default function CategoryNavbar() {
         {/* Mobile Menu Header */}
         <div className="flex items-center justify-between p-5 border-b border-gray-200 bg-gradient-to-r from-blue-600 to-indigo-600 sticky top-0 z-10">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-white/20 rounded-lg">
+            <div className="p-2 bg-white/20 rounded-md">
               <Grid3x3 className="w-6 h-6 text-white" />
             </div>
             <h2 className="text-xl font-bold text-white">All Categories</h2>
           </div>
           <button
             onClick={() => setIsMobileMenuOpen(false)}
-            className="p-2 rounded-lg text-white hover:bg-white/20 transition-colors active:bg-white/30"
+            className="p-2 rounded-md text-white hover:bg-white/20 transition-colors active:bg-white/30"
             aria-label="Close menu"
           >
             <RxCross1 size={24} strokeWidth={0.5} />
@@ -296,7 +296,7 @@ export default function CategoryNavbar() {
             {categories?.map((category) => (
               <div
                 key={category._id}
-                className="border-2 border-gray-200 rounded-2xl overflow-hidden hover:border-blue-300 transition-all shadow-sm hover:shadow-md"
+                className="border-2 border-gray-200 rounded-md overflow-hidden hover:border-blue-300 transition-all shadow-sm hover:shadow-md"
               >
                 <button
                   onClick={() => handleCategoryClick(category._id)}
@@ -307,7 +307,7 @@ export default function CategoryNavbar() {
                   </span>
                   {category.subcategories?.length > 0 && (
                     <div className="flex items-center gap-2">
-                      <span className="text-xs font-semibold text-gray-500 bg-gray-200 px-2 py-1 rounded-full">
+                      <span className="text-xs font-semibold text-gray-500 bg-gray-200 px-2 py-1 rounded-md">
                         {category.subcategories.length}
                       </span>
                       <ChevronDown
@@ -394,21 +394,21 @@ export default function CategoryNavbar() {
             <div className="space-y-2">
               <Link
                 href="/deals"
-                className="block p-3 bg-white rounded-xl border-2 border-gray-200 hover:border-green-300 hover:bg-green-50 transition-all font-semibold text-gray-700 hover:text-green-600 text-sm"
+                className="block p-3 bg-white rounded-md border-2 border-gray-200 hover:border-green-300 hover:bg-green-50 transition-all font-semibold text-gray-700 hover:text-green-600 text-sm"
                 onClick={handleNavigationClick}
               >
                 🔥 Today's Deals
               </Link>
               <Link
                 href="/new-arrivals"
-                className="block p-3 bg-white rounded-xl border-2 border-gray-200 hover:border-purple-300 hover:bg-purple-50 transition-all font-semibold text-gray-700 hover:text-purple-600 text-sm"
+                className="block p-3 bg-white rounded-md border-2 border-gray-200 hover:border-purple-300 hover:bg-purple-50 transition-all font-semibold text-gray-700 hover:text-purple-600 text-sm"
                 onClick={handleNavigationClick}
               >
                 ✨ New Arrivals
               </Link>
               <Link
                 href="/bestsellers"
-                className="block p-3 bg-white rounded-xl border-2 border-gray-200 hover:border-orange-300 hover:bg-orange-50 transition-all font-semibold text-gray-700 hover:text-orange-600 text-sm"
+                className="block p-3 bg-white rounded-md border-2 border-gray-200 hover:border-orange-300 hover:bg-orange-50 transition-all font-semibold text-gray-700 hover:text-orange-600 text-sm"
                 onClick={handleNavigationClick}
               >
                 ⭐ Best Sellers

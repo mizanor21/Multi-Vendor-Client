@@ -138,8 +138,8 @@ export default function SellerOrders() {
 
   return (
     <div className="max-w-full mx-auto p-4">
-      <div className="relative flex flex-col w-full h-full text-slate-700 bg-white shadow-md rounded-xl bg-clip-border">
-        <div className="relative mx-4 mt-4 overflow-hidden text-slate-700 bg-white rounded-none bg-clip-border">
+      <div className="relative flex flex-col w-full h-full text-slate-700 bg-white shadow-md rounded-md bg-clip-border">
+        <div className="relative mx-4 mt-4 overflow-hidden text-slate-700 bg-white rounded-md bg-clip-border">
           <div className="flex items-center justify-between">
             <h3 className="text-3xl font-semibold text-slate-800">My Orders</h3>
             <p className="text-sm text-slate-500">
@@ -362,10 +362,10 @@ export default function SellerOrders() {
         <div className="flex items-center justify-between p-3">
           <p className="block text-sm text-slate-500">Page 1 of 10</p>
           <div className="flex gap-1">
-            <button className="rounded border border-slate-300 py-2.5 px-3 text-center text-xs font-semibold text-slate-600 transition-all hover:opacity-75">
+            <button className="rounded-md border border-slate-300 py-2.5 px-3 text-center text-xs font-semibold text-slate-600 transition-all hover:opacity-75">
               Previous
             </button>
-            <button className="rounded border border-slate-300 py-2.5 px-3 text-center text-xs font-semibold text-slate-600 transition-all hover:opacity-75">
+            <button className="rounded-md border border-slate-300 py-2.5 px-3 text-center text-xs font-semibold text-slate-600 transition-all hover:opacity-75">
               Next
             </button>
           </div>

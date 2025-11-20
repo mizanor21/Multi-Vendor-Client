@@ -109,7 +109,7 @@ export default function Cart() {
         </div>
       ) : (
         <>
-          <div className="overflow-auto rounded-lg bg-white">
+          <div className="overflow-auto rounded-md bg-white">
             <Table
               isStriped
               aria-label="Shopping Cart Table"

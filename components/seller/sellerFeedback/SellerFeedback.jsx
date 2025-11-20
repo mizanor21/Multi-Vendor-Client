@@ -166,12 +166,12 @@ export default function SellerFeedback() {
           </div>
         ) : (
           filteredReviews.map((review) => (
-            <div key={review._id} className="bg-white rounded-lg shadow-sm p-6">
+            <div key={review._id} className="bg-white rounded-md shadow-sm p-6">
               <div className="flex gap-4 mb-4">
                 <Image
                   src={review.product.images[0]}
                   alt={review.product.productName}
-                  className="w-20 h-20 object-cover rounded-lg"
+                  className="w-20 h-20 object-cover rounded-md"
                   width={80}
                   height={80}
                 />
@@ -227,7 +227,7 @@ export default function SellerFeedback() {
                 <p className="text-gray-700 mb-4">{review.message}</p>
 
                 {review.reply && (
-                  <div className="bg-blue-50 p-4 rounded-lg mb-4">
+                  <div className="bg-blue-50 p-4 rounded-md mb-4">
                     <div className="flex items-center gap-2 mb-2">
                       <span className="font-semibold">Your Reply:</span>
                       <span className="text-sm text-gray-500">

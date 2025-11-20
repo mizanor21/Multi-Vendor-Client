@@ -12,7 +12,7 @@ export default function SellerDashboard() {
 
       <div className="">
         <div className="grid grid-cols-1 gap-4 px-4 mt-8 sm:grid-cols-4 sm:px-8">
-          <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
+          <div className="flex items-center bg-white border rounded-md overflow-hidden shadow">
             <div className="p-4 bg-green-400">
               <ProductIcon size="48px" color="#ffffff" />
             </div>
@@ -21,7 +21,7 @@ export default function SellerDashboard() {
               <p className="text-3xl">12,768</p>
             </div>
           </div>
-          <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
+          <div className="flex items-center bg-white border rounded-md overflow-hidden shadow">
             <div className="p-4 bg-blue-400">
               <OrderIcon size="48px" color="#ffffff" />
             </div>
@@ -30,7 +30,7 @@ export default function SellerDashboard() {
               <p className="text-3xl">39,265</p>
             </div>
           </div>
-          <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
+          <div className="flex items-center bg-white border rounded-md overflow-hidden shadow">
             <div className="p-4 bg-indigo-400">
               <CartIcon size="48px" color="#ffffff" />
             </div>
@@ -39,7 +39,7 @@ export default function SellerDashboard() {
               <p className="text-3xl">142,334</p>
             </div>
           </div>
-          <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
+          <div className="flex items-center bg-white border rounded-md overflow-hidden shadow">
             <div className="p-4 bg-red-400">
               <FeedBackIcon size="48px" color="#ffffff" />
             </div>

@@ -245,7 +245,7 @@ export default function SellerProductUpdate() {
 
   return (
     <div className="min-h-screen bg-gray-100 p-8">
-      <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
+      <div className="max-w-4xl mx-auto bg-white rounded-md shadow-lg overflow-hidden">
         <div className="p-6 md:p-8">
           <p className="text-center font-bold text-3xl text-gray-800 mb-6">
             Update Your Product
@@ -256,7 +256,7 @@ export default function SellerProductUpdate() {
           </p>
           <form className="space-y-6" onSubmit={handleSubmit}>
             {/* Product Details Section */}
-            <div className="border border-gray-200 rounded-lg p-5">
+            <div className="border border-gray-200 rounded-md p-5">
               <h2 className="text-xl font-semibold text-gray-700 mb-4">
                 Product Details
               </h2>
@@ -317,7 +317,7 @@ export default function SellerProductUpdate() {
             </div>
 
             {/* Pricing & Stock Section */}
-            <div className="border border-gray-200 rounded-lg p-5">
+            <div className="border border-gray-200 rounded-md p-5">
               <h2 className="text-xl font-semibold text-gray-700 mb-4">
                 Pricing & Stock
               </h2>
@@ -389,7 +389,7 @@ export default function SellerProductUpdate() {
             </div>
 
             {/* Categorization & Tags Section */}
-            <div className="border border-gray-200 rounded-lg p-5">
+            <div className="border border-gray-200 rounded-md p-5">
               <h2 className="text-xl font-semibold text-gray-700 mb-4">
                 Categorization & Tags
               </h2>
@@ -479,7 +479,7 @@ export default function SellerProductUpdate() {
             </div>
 
             {/* Shipping & Condition Section */}
-            <div className="border border-gray-200 rounded-lg p-5">
+            <div className="border border-gray-200 rounded-md p-5">
               <h2 className="text-xl font-semibold text-gray-700 mb-4">
                 Shipping & Product Condition
               </h2>
@@ -539,7 +539,7 @@ export default function SellerProductUpdate() {
             </div>
 
             {/* Images Section */}
-            <div className="border border-gray-200 rounded-lg p-5">
+            <div className="border border-gray-200 rounded-md p-5">
               <h2 className="text-xl font-semibold text-gray-700 mb-4">
                 Product Images
               </h2>
@@ -550,13 +550,13 @@ export default function SellerProductUpdate() {
                     <img
                       src={image}
                       alt={`Product Image ${index + 1}`}
-                      className="w-full h-32 object-cover rounded-lg"
+                      className="w-full h-32 object-cover rounded-md"
                     />
-                    <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity rounded-lg">
+                    <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity rounded-md">
                       <button
                         type="button"
                         onClick={() => handleImageRemove(index)}
-                        className="text-white bg-red-500 p-2 rounded-full hover:bg-red-600 transition"
+                        className="text-white bg-red-500 p-2 rounded-md hover:bg-red-600 transition"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -575,7 +575,7 @@ export default function SellerProductUpdate() {
                   </div>
                 ))}
                 {/* Image upload button */}
-                <div className="relative flex flex-col items-center justify-center p-4 border-2 border-dashed border-gray-300 rounded-lg text-gray-500 cursor-pointer hover:border-blue-500 hover:text-blue-500 transition">
+                <div className="relative flex flex-col items-center justify-center p-4 border-2 border-dashed border-gray-300 rounded-md text-gray-500 cursor-pointer hover:border-blue-500 hover:text-blue-500 transition">
                   <input
                     type="file"
                     id="imageUpload"
@@ -593,7 +593,7 @@ export default function SellerProductUpdate() {
                     <img
                       src={URL.createObjectURL(file)}
                       alt={`New Image Preview ${index + 1}`}
-                      className="w-full h-32 object-cover rounded-lg"
+                      className="w-full h-32 object-cover rounded-md"
                     />
                   </div>
                 ))}
@@ -605,7 +605,7 @@ export default function SellerProductUpdate() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full bg-blue-600 text-white font-semibold py-3 px-4 rounded-lg shadow-md hover:bg-blue-700 transition-colors focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 disabled:bg-blue-400 disabled:cursor-not-allowed"
+                className="w-full bg-blue-600 text-white font-semibold py-3 px-4 rounded-md shadow-md hover:bg-blue-700 transition-colors focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 disabled:bg-blue-400 disabled:cursor-not-allowed"
               >
                 {isLoading ? "Updating..." : "Save Changes"}
               </button>

@@ -345,12 +345,12 @@ export default function CreateProductModal({ isOpen, onOpenChange }) {
                           <img
                             src={url}
                             alt={`Product ${index + 1}`}
-                            className="w-20 h-20 object-cover rounded border"
+                            className="w-20 h-20 object-cover rounded-md border"
                           />
                           <button
                             type="button"
                             onClick={() => removeImage(index)}
-                            className="absolute -top-2 -right-2 bg-white rounded-full p-0.5 shadow-md"
+                            className="absolute -top-2 -right-2 bg-white rounded-md p-0.5 shadow-md"
                             aria-label="Remove image"
                           >
                             <XIcon className="w-5 h-5 text-red-500" />

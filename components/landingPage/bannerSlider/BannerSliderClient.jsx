@@ -144,7 +144,7 @@ export default function BannerSliderClient({ sliders }) {
           }}
           loop={sliders.length > 1}
           modules={[Autoplay, EffectCreative, Pagination, Keyboard, Mousewheel]}
-          className="overflow-hidden rounded-lg"
+          className="overflow-hidden rounded-md"
         >
           {sliders.map((slider, index) => (
             <SwiperSlide key={slider._id || index}>
@@ -169,7 +169,7 @@ export default function BannerSliderClient({ sliders }) {
                     <div className="max-w-2xl lg:max-w-3xl">
                       {/* Category badge */}
                       {slider?.category && (
-                        <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 rounded-full bg-white/10 backdrop-blur-md border border-white/20 animate-fade-slide-up">
+                        <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 rounded-md bg-white/10 backdrop-blur-md border border-white/20 animate-fade-slide-up">
                           <ShoppingBag className="w-4 h-4 text-white" />
                           <span className="text-white text-sm font-medium uppercase tracking-wider">
                             {slider.category}
@@ -197,13 +197,13 @@ export default function BannerSliderClient({ sliders }) {
                           {slider?.link ? (
                             <Link
                               href={slider.link}
-                              className="group/btn inline-flex items-center gap-2 bg-white text-gray-900 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-all duration-300 hover:scale-105 hover:shadow-2xl shadow-xl"
+                              className="group/btn inline-flex items-center gap-2 bg-white text-gray-900 px-8 py-4 rounded-md font-semibold hover:bg-gray-100 transition-all duration-300 hover:scale-105 hover:shadow-2xl shadow-xl"
                             >
                               <span>{slider.buttonText || "Shop Now"}</span>
                               <ChevronRight className="w-5 h-5 transition-transform group-hover/btn:translate-x-1" />
                             </Link>
                           ) : (
-                            <button className="group/btn inline-flex items-center gap-2 bg-white text-gray-900 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-all duration-300 hover:scale-105 hover:shadow-2xl shadow-xl">
+                            <button className="group/btn inline-flex items-center gap-2 bg-white text-gray-900 px-8 py-4 rounded-md font-semibold hover:bg-gray-100 transition-all duration-300 hover:scale-105 hover:shadow-2xl shadow-xl">
                               <span>{slider.buttonText}</span>
                               <ChevronRight className="w-5 h-5 transition-transform group-hover/btn:translate-x-1" />
                             </button>
@@ -211,7 +211,7 @@ export default function BannerSliderClient({ sliders }) {
 
                           {/* Secondary CTA if available */}
                           {slider?.secondaryButtonText && (
-                            <button className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md text-white px-8 py-4 rounded-full font-semibold hover:bg-white/20 transition-all duration-300 border border-white/30 hover:border-white/50">
+                            <button className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md text-white px-8 py-4 rounded-md font-semibold hover:bg-white/20 transition-all duration-300 border border-white/30 hover:border-white/50">
                               {slider.secondaryButtonText}
                             </button>
                           )}
@@ -222,8 +222,8 @@ export default function BannerSliderClient({ sliders }) {
                 </div>
 
                 {/* Decorative elements for premium feel */}
-                <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-white/5 to-transparent rounded-full blur-3xl z-10" />
-                <div className="absolute bottom-0 right-0 w-40 h-40 bg-gradient-to-tl from-white/5 to-transparent rounded-full blur-3xl z-10" />
+                <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-white/5 to-transparent rounded-md blur-3xl z-10" />
+                <div className="absolute bottom-0 right-0 w-40 h-40 bg-gradient-to-tl from-white/5 to-transparent rounded-md blur-3xl z-10" />
               </div>
             </SwiperSlide>
           ))}
@@ -232,7 +232,7 @@ export default function BannerSliderClient({ sliders }) {
         {/* Enhanced Navigation Buttons */}
         <button
           onClick={goPrev}
-          className="hidden lg:flex absolute left-4 xl:left-6 top-1/2 -translate-y-1/2 z-30 items-center justify-center w-14 h-14 rounded-full bg-white/90 backdrop-blur-md border border-white/50 text-gray-900 hover:bg-white transition-all duration-300 opacity-0 group-hover:opacity-100 hover:scale-110 shadow-xl hover:shadow-2xl"
+          className="hidden lg:flex absolute left-4 xl:left-6 top-1/2 -translate-y-1/2 z-30 items-center justify-center w-14 h-14 rounded-md bg-white/90 backdrop-blur-md border border-white/50 text-gray-900 hover:bg-white transition-all duration-300 opacity-0 group-hover:opacity-100 hover:scale-110 shadow-xl hover:shadow-2xl"
           aria-label="Previous slide"
         >
           <ChevronLeft className="w-6 h-6" strokeWidth={2.5} />
@@ -240,7 +240,7 @@ export default function BannerSliderClient({ sliders }) {
 
         <button
           onClick={goNext}
-          className="hidden lg:flex absolute right-4 xl:right-6 top-1/2 -translate-y-1/2 z-30 items-center justify-center w-14 h-14 rounded-full bg-white/90 backdrop-blur-md border border-white/50 text-gray-900 hover:bg-white transition-all duration-300 opacity-0 group-hover:opacity-100 hover:scale-110 shadow-xl hover:shadow-2xl"
+          className="hidden lg:flex absolute right-4 xl:right-6 top-1/2 -translate-y-1/2 z-30 items-center justify-center w-14 h-14 rounded-md bg-white/90 backdrop-blur-md border border-white/50 text-gray-900 hover:bg-white transition-all duration-300 opacity-0 group-hover:opacity-100 hover:scale-110 shadow-xl hover:shadow-2xl"
           aria-label="Next slide"
         >
           <ChevronRight className="w-6 h-6" strokeWidth={2.5} />
@@ -248,7 +248,7 @@ export default function BannerSliderClient({ sliders }) {
 
         {/* Thumbnail navigation for desktop */}
         {sliders.length > 1 && (
-          <div className="hidden lg:flex absolute bottom-6 left-1/2 -translate-x-1/2 z-30 items-center gap-3 px-6 py-3 rounded-full bg-black/40 backdrop-blur-xl border border-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <div className="hidden lg:flex absolute bottom-6 left-1/2 -translate-x-1/2 z-30 items-center gap-3 px-6 py-3 rounded-md bg-black/40 backdrop-blur-xl border border-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             {sliders.map((slider, index) => (
               <button
                 key={slider._id || index}
@@ -277,7 +277,7 @@ export default function BannerSliderClient({ sliders }) {
             <button
               key={index}
               onClick={() => goToSlide(index)}
-              className={`h-2 rounded-full transition-all duration-300 ${
+              className={`h-2 rounded-md transition-all duration-300 ${
                 activeIndex === index
                   ? "bg-white w-8"
                   : "bg-white/50 w-2 hover:bg-white/70"

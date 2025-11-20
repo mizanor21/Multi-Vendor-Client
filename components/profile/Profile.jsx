@@ -149,7 +149,7 @@ export default function ProfilePage() {
   if (userDataLoader) return <Loader />;
 
   return (
-    <div className="mt-8 px-4 max-w-xl mx-auto bg-white p-6 rounded-lg shadow-md">
+    <div className="mt-8 px-4 max-w-xl mx-auto bg-white p-6 rounded-md shadow-md">
       <h2 className="text-2xl font-bold mb-4 mt-4 text-center">
         Update Profile
       </h2>
@@ -162,7 +162,7 @@ export default function ProfilePage() {
           value={formData.userName}
           onChange={handleChange}
           placeholder="User Name"
-          className="w-full border px-4 py-2 rounded"
+          className="w-full border px-4 py-2 rounded-md"
         />
 
         {/* Email change section */}
@@ -172,7 +172,7 @@ export default function ProfilePage() {
               type="email"
               value={formData.email}
               readOnly
-              className="w-full border px-4 py-2 rounded bg-gray-100"
+              className="w-full border px-4 py-2 rounded-md bg-gray-100"
             />
             <Button
               onClick={() => setEmailStep("request")}
@@ -190,7 +190,7 @@ export default function ProfilePage() {
               placeholder="New Email"
               value={newEmail}
               onChange={(e) => setNewEmail(e.target.value)}
-              className="w-full border px-4 py-2 rounded"
+              className="w-full border px-4 py-2 rounded-md"
             />
             <Button
               onClick={handleRequestEmailChange}
@@ -208,7 +208,7 @@ export default function ProfilePage() {
               placeholder="Verification Code"
               value={verificationCode}
               onChange={(e) => setVerificationCode(e.target.value)}
-              className="w-full border px-4 py-2 rounded"
+              className="w-full border px-4 py-2 rounded-md"
             />
             <Button
               onClick={handleVerifyEmailChange}
@@ -225,14 +225,14 @@ export default function ProfilePage() {
           value={formData.phoneNumber}
           onChange={handleChange}
           placeholder="Phone Number"
-          className="w-full border px-4 py-2 rounded"
+          className="w-full border px-4 py-2 rounded-md"
         />
 
         <select
           name="gender"
           value={formData.gender}
           onChange={handleChange}
-          className="w-full border px-4 py-2 rounded"
+          className="w-full border px-4 py-2 rounded-md"
         >
           <option value="">Select Gender</option>
           <option value="Male">Male</option>
@@ -247,13 +247,13 @@ export default function ProfilePage() {
             value={formData.address}
             onChange={handleChange}
             placeholder="Address"
-            className="w-full border px-4 py-2 rounded"
+            className="w-full border px-4 py-2 rounded-md"
           />
           <Tooltip content="Get your location">
             <Button
               isIconOnly
               onClick={fetchAddressFromLocation}
-              className="bg-blue-600 text-white px-3 py-2 rounded hover:bg-blue-700"
+              className="bg-blue-600 text-white px-3 py-2 rounded-md hover:bg-blue-700"
             >
               <LocationIcon size="20px" color="#ffffff" />
             </Button>
@@ -263,7 +263,7 @@ export default function ProfilePage() {
         <Button
           isLoading={isLoading}
           type="submit"
-          className="bg-green-600 text-white w-full py-2 rounded hover:bg-green-700"
+          className="bg-green-600 text-white w-full py-2 rounded-md hover:bg-green-700"
         >
           Update Profile
         </Button>

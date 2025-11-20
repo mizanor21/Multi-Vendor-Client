@@ -67,12 +67,12 @@ export default function RecentProduct() {
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3">
               Recent <span className="text-green-600">Products</span>
             </h2>
-            <div className="h-1 w-24 bg-gradient-to-r from-green-600 to-green-400 rounded-full"></div>
+            <div className="h-1 w-24 bg-gradient-to-r from-green-600 to-green-400 rounded-md"></div>
           </div>
 
           {/* View All Button */}
           {approvedProducts?.length > 0 && (
-            <button className="bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white font-bold py-4 px-10 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+            <button className="bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white font-bold py-4 px-10 rounded-md transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
               View All Products →
             </button>
           )}
@@ -80,17 +80,17 @@ export default function RecentProduct() {
 
         {isLoading ? (
           <div className="flex justify-center items-center py-20">
-            <div className="animate-spin rounded-full h-16 w-16 border-4 border-green-600 border-t-transparent"></div>
+            <div className="animate-spin rounded-md h-16 w-16 border-4 border-green-600 border-t-transparent"></div>
             <p className="ml-4 text-gray-600 text-lg">Loading products...</p>
           </div>
         ) : isError ? (
-          <div className="max-w-2xl mx-auto text-center p-8 border-2 border-red-200 bg-red-50 text-red-700 rounded-2xl shadow-lg mb-10">
+          <div className="max-w-2xl mx-auto text-center p-8 border-2 border-red-200 bg-red-50 text-red-700 rounded-md shadow-lg mb-10">
             <div className="text-5xl mb-4">⚠️</div>
             <h2 className="text-2xl font-bold mb-3">Failed to load products</h2>
             <p className="text-lg">Please try again later or contact support if the problem persists.</p>
           </div>
         ) : approvedProducts?.length === 0 ? (
-          <div className="max-w-2xl mx-auto text-center p-8 border-2 border-yellow-200 bg-yellow-50 text-yellow-700 rounded-2xl shadow-lg mb-10">
+          <div className="max-w-2xl mx-auto text-center p-8 border-2 border-yellow-200 bg-yellow-50 text-yellow-700 rounded-md shadow-lg mb-10">
             <div className="text-5xl mb-4">📦</div>
             <h2 className="text-2xl font-bold mb-3">No approved products found</h2>
             <p className="text-lg">New products will appear here once they are available and approved.</p>
@@ -106,21 +106,21 @@ export default function RecentProduct() {
               return (
                 <div
                   key={item._id}
-                  className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100"
+                  className="group relative bg-white rounded-md overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100"
                 >
                   {/* Discount Badge */}
                   {item?.discountPercent > 0 && (
-                    <div className="absolute top-3 left-3 z-20 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg animate-pulse">
+                    <div className="absolute top-3 left-3 z-20 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs font-bold px-3 py-1.5 rounded-md shadow-lg animate-pulse">
                       -{item.discountPercent}%
                     </div>
                   )}
 
                   {/* Quick Action Buttons */}
                   <div className="absolute top-3 right-3 z-20 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <button className="bg-white p-2 rounded-full shadow-lg hover:bg-green-600 hover:text-white transition-all duration-300 transform hover:scale-110">
+                    <button className="bg-white p-2 rounded-md shadow-lg hover:bg-green-600 hover:text-white transition-all duration-300 transform hover:scale-110">
                       <Heart className="w-4 h-4" />
                     </button>
-                    <button className="bg-white p-2 rounded-full shadow-lg hover:bg-blue-600 hover:text-white transition-all duration-300 transform hover:scale-110">
+                    <button className="bg-white p-2 rounded-md shadow-lg hover:bg-blue-600 hover:text-white transition-all duration-300 transform hover:scale-110">
                       <Eye className="w-4 h-4" />
                     </button>
                   </div>
@@ -178,7 +178,7 @@ export default function RecentProduct() {
                     {/* View Details Button */}
                     <div className="flex flex-col self-end">
                       <Link href={`/client/product/${item._id}`} className="w-full">
-                        <button className="w-full bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white py-2.5 px-4 rounded-xl text-sm font-semibold transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg flex items-center justify-center gap-2 group">
+                        <button className="w-full bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white py-2.5 px-4 rounded-md text-sm font-semibold transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg flex items-center justify-center gap-2 group">
                           <Eye className="w-4 h-4 group-hover:scale-110" />
                           <span>View Details</span>
                         </button>

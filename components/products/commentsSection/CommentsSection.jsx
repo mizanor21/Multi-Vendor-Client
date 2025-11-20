@@ -177,7 +177,7 @@ export default function CommentsSection({
         </Select>
       </div>
 
-      <section className="mt-6 p-6 bg-white rounded-lg shadow-md border">
+      <section className="mt-6 p-6 bg-white rounded-md shadow-md border">
         <h2 className="text-lg font-semibold text-gray-800 mb-4">
           Rate This Product
         </h2>
@@ -242,14 +242,14 @@ export default function CommentsSection({
               rows="4"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              className="w-full p-3 text-sm text-gray-900 border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
+              className="w-full p-3 text-sm text-gray-900 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
               placeholder="Share your thoughts about this product..."
             ></textarea>
           </div>
           <Button
             isLoading={makeReviewLoader}
             type="submit"
-            className="bg-blue-600 hover:bg-blue-700 text-white text-sm px-4 py-2 rounded-lg"
+            className="bg-blue-600 hover:bg-blue-700 text-white text-sm px-4 py-2 rounded-md"
           >
             Submit
           </Button>
@@ -271,7 +271,7 @@ export default function CommentsSection({
             {sortedReviews.map((review) => (
               <div
                 key={review._id}
-                className="bg-white p-4 rounded-lg shadow-sm border"
+                className="bg-white p-4 rounded-md shadow-sm border"
               >
                 <div className="flex items-start justify-between">
                   <div>

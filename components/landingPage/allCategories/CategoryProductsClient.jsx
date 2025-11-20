@@ -36,11 +36,11 @@ function CategoryHeader({ categoryId, categoryName }) {
         <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3">
           {categoryName} <span className="text-green-600">Products</span>
         </h2>
-        <div className="h-1 w-24 bg-gradient-to-r from-green-600 to-green-400 rounded-full"></div>
+        <div className="h-1 w-24 bg-gradient-to-r from-green-600 to-green-400 rounded-md"></div>
       </div>
 
       <Link href={`/category/${categoryId}`}>
-        <button className="bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white font-bold py-4 px-10 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+        <button className="bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white font-bold py-4 px-10 rounded-md transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
           View All Products →
         </button>
       </Link>
@@ -56,7 +56,7 @@ function ProductCard({ product }) {
 
   return (
     <Link href={`/client/product/${product._id}`}>
-      <div className="group relative bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border-gray-100 cursor-pointer">
+      <div className="group relative bg-white rounded-md overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border-gray-100 cursor-pointer">
         {/* Discount Badge */}
         {product.discountPercent > 0 && (
           <DiscountBadge discount={product.discountPercent} />
@@ -99,7 +99,7 @@ function ProductCard({ product }) {
 // Discount Badge Component
 function DiscountBadge({ discount }) {
   return (
-    <div className="absolute top-3 left-3 z-20 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg animate-pulse">
+    <div className="absolute top-3 left-3 z-20 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs font-bold px-3 py-1.5 rounded-md shadow-lg animate-pulse">
       -{discount}%
     </div>
   );
@@ -110,13 +110,13 @@ function QuickActionButtons() {
   return (
     <div className="absolute top-3 right-3 z-20 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
       <button
-        className="bg-white p-2 rounded-full shadow-lg hover:bg-green-600 hover:text-white transition-all duration-300 transform hover:scale-110"
+        className="bg-white p-2 rounded-md shadow-lg hover:bg-green-600 hover:text-white transition-all duration-300 transform hover:scale-110"
         aria-label="Add to wishlist"
       >
         <Heart className="w-4 h-4" />
       </button>
       <button
-        className="bg-white p-2 rounded-full shadow-lg hover:bg-blue-600 hover:text-white transition-all duration-300 transform hover:scale-110"
+        className="bg-white p-2 rounded-md shadow-lg hover:bg-blue-600 hover:text-white transition-all duration-300 transform hover:scale-110"
         aria-label="Quick view"
       >
         <Eye className="w-4 h-4" />
@@ -186,7 +186,7 @@ function PriceSection({
 function ViewDetailsButton({ productId }) {
   return (
     <Link href={`/client/product/${productId}`} className="w-full">
-      <button className="w-full bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white py-2.5 px-4 rounded-xl text-sm font-semibold transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg flex items-center justify-center gap-2 group">
+      <button className="w-full bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white py-2.5 px-4 rounded-md text-sm font-semibold transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg flex items-center justify-center gap-2 group">
         <Eye className="w-4 h-4 group-hover:scale-110" />
         <span>View Details</span>
       </button>

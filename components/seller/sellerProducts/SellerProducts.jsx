@@ -190,8 +190,8 @@ export default function SellerProducts() {
   return (
     <div>
       <div className="max-w-full mx-auto">
-        <div className="relative flex flex-col w-full h-full text-slate-700 bg-white shadow-md rounded-xl bg-clip-border">
-          <div className="relative mx-4 mt-4 overflow-hidden text-slate-700 bg-white rounded-none bg-clip-border">
+        <div className="relative flex flex-col w-full h-full text-slate-700 bg-white shadow-md rounded-md bg-clip-border">
+          <div className="relative mx-4 mt-4 overflow-hidden text-slate-700 bg-white rounded-md bg-clip-border">
             <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 mb-4">
               <div className="flex-1">
                 <h3 className="text-3xl font-semibold text-slate-800">
@@ -693,7 +693,7 @@ export default function SellerProducts() {
                 <button
                   onClick={handlePreviousPage}
                   disabled={currentPage === 1}
-                  className="rounded border border-slate-300 py-2.5 px-3 text-center text-xs font-semibold text-slate-600 transition-all hover:opacity-75 focus:ring focus:ring-slate-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                  className="rounded-md border border-slate-300 py-2.5 px-3 text-center text-xs font-semibold text-slate-600 transition-all hover:opacity-75 focus:ring focus:ring-slate-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                   type="button"
                 >
                   Previous
@@ -708,7 +708,7 @@ export default function SellerProducts() {
                         ? handlePageClick(pageNumber)
                         : null
                     }
-                    className={`rounded border py-2.5 px-3 text-center text-xs font-semibold transition-all ${
+                    className={`rounded-md border py-2.5 px-3 text-center text-xs font-semibold transition-all ${
                       pageNumber === currentPage
                         ? "bg-blue-500 text-white border-blue-500"
                         : "border-slate-300 text-slate-600 hover:opacity-75"
@@ -727,7 +727,7 @@ export default function SellerProducts() {
                 <button
                   onClick={handleNextPage}
                   disabled={currentPage === totalPages}
-                  className="rounded border border-slate-300 py-2.5 px-3 text-center text-xs font-semibold text-slate-600 transition-all hover:opacity-75 focus:ring focus:ring-slate-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                  className="rounded-md border border-slate-300 py-2.5 px-3 text-center text-xs font-semibold text-slate-600 transition-all hover:opacity-75 focus:ring focus:ring-slate-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                   type="button"
                 >
                   Next

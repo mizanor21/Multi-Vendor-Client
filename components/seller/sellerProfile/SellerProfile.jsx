@@ -11,13 +11,13 @@ export default function SellerProfile() {
     <div className="">
       <p className="text-center text-5xl font-bold mb-8">Your Profile</p>
       <div className="flex justify-center items-center min-h-screen bg-gray-900 p-4">
-        <div className="max-w-2xl w-full bg-gray-800 text-white rounded-xl shadow-lg p-6 sm:p-10">
+        <div className="max-w-2xl w-full bg-gray-800 text-white rounded-md shadow-lg p-6 sm:p-10">
           <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
             {/* Profile Image */}
             <Image
               src="https://heroui.com/images/hero-card-complete.jpeg"
               alt="Profile"
-              className="w-32 h-32 sm:w-32 sm:h-32 rounded-full border-4 border-gray-600"
+              className="w-32 h-32 sm:w-32 sm:h-32 rounded-md border-4 border-gray-600"
             />
 
             <div className="flex-1 text-center sm:text-left">
@@ -28,7 +28,7 @@ export default function SellerProfile() {
               {/* Edit Profile Button */}
               <Button
                 onPress={onOpen}
-                className="mt-3 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg"
+                className="mt-3 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md"
               >
                 Edit Profile
               </Button>

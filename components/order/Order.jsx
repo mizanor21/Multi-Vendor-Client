@@ -100,7 +100,7 @@ export default function Order() {
           return (
             <div
               key={order._id}
-              className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-shadow duration-300"
+              className="bg-white rounded-md shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-shadow duration-300"
             >
               {/* Order Header */}
               <div className="bg-gray-50 px-6 py-4 border-b border-gray-200">
@@ -111,7 +111,7 @@ export default function Order() {
                         Order # {order?._id?.slice(-8).toUpperCase()}
                       </h3>
                       <span
-                        className={`px-3 py-1 rounded-full text-xs font-medium capitalize ${
+                        className={`px-3 py-1 rounded-md text-xs font-medium capitalize ${
                           order?.status === "completed"
                             ? "bg-green-100 text-green-800 border border-green-200"
                             : order?.status === "cancelled"
@@ -147,7 +147,7 @@ export default function Order() {
                       <img
                         src={product?.images?.[0] || "/no-image.png"}
                         alt={product?.productName || "Product image"}
-                        className="w-24 h-24 sm:w-32 sm:h-32 object-cover rounded-lg border border-gray-200"
+                        className="w-24 h-24 sm:w-32 sm:h-32 object-cover rounded-md border border-gray-200"
                         onError={(e) => {
                           e.target.src = "/no-image.png";
                         }}
@@ -182,7 +182,7 @@ export default function Order() {
                       </div>
 
                       {/* Price Breakdown */}
-                      <div className="mt-4 p-3 bg-gray-50 rounded-lg">
+                      <div className="mt-4 p-3 bg-gray-50 rounded-md">
                         <div className="flex justify-between text-sm mb-1">
                           <span>Unit Price:</span>
                           <span>৳{product?.price?.toFixed(2)}</span>

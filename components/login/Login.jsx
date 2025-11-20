@@ -65,7 +65,7 @@ export default function Login() {
             radius="none"
             className="mb-3"
           />
-          <div className="bg-white shadow w-full rounded-lg divide-y divide-gray-200">
+          <div className="bg-white shadow w-full rounded-md divide-y divide-gray-200">
             <div className="px-5 py-7">
               <Form onSubmit={handleLoginFormSubmit} className="w-full">
                 <div className="mb-6 w-full" data-twe-input-wrapper-init>
@@ -89,7 +89,7 @@ export default function Login() {
                 <Button
                   type="submit"
                   isLoading={isLoading}
-                  className="transition duration-200 bg-blue-500 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-lg text-sm shadow-sm hover:shadow-md font-semibold text-center inline-block"
+                  className="transition duration-200 bg-blue-500 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-md text-sm shadow-sm hover:shadow-md font-semibold text-center inline-block"
                 >
                   <span className="inline-block mr-2">Login</span>
                   <svg
@@ -113,7 +113,7 @@ export default function Login() {
               <div className="grid grid-cols-2 gap-1">
                 <div className="text-center sm:text-left whitespace-nowrap">
                   <Link href="/auth/forgot-password">
-                    <button className="transition duration-200 mx-5 px-5 py-4 cursor-pointer font-normal text-sm rounded-lg text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-200 focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 ring-inset">
+                    <button className="transition duration-200 mx-5 px-5 py-4 cursor-pointer font-normal text-sm rounded-md text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-200 focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 ring-inset">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -134,7 +134,7 @@ export default function Login() {
                 </div>
                 <div className="text-center sm:text-right whitespace-nowrap">
                   <Link href="/">
-                    <button className="transition duration-200 mx-5 px-5 py-4 cursor-pointer font-normal text-sm rounded-lg text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-200 focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 ring-inset">
+                    <button className="transition duration-200 mx-5 px-5 py-4 cursor-pointer font-normal text-sm rounded-md text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-200 focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 ring-inset">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"

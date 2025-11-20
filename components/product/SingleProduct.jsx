@@ -330,7 +330,7 @@ export default function SingleProduct() {
             <div className="order-1 lg:order-2 flex-1 relative">
               <div
                 ref={imageContainerRef}
-                className={`relative flex justify-center items-center p-4 md:p-10 bg-white rounded-xl shadow-lg overflow-hidden ${!isMobile ? 'cursor-crosshair' : 'cursor-pointer'
+                className={`relative flex justify-center items-center p-4 md:p-10 bg-white rounded-md shadow-lg overflow-hidden ${!isMobile ? 'cursor-crosshair' : 'cursor-pointer'
                   }`}
                 onMouseMove={handleMouseMove}
                 onMouseEnter={handleMouseEnter}
@@ -351,7 +351,7 @@ export default function SingleProduct() {
 
                     {/* Hover indicator icon */}
                     {!isMobile && !isZooming && (
-                      <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full p-3 shadow-lg">
+                      <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-md p-3 shadow-lg">
                         <MdZoomIn className="text-2xl text-blue-500" />
                       </div>
                     )}
@@ -359,7 +359,7 @@ export default function SingleProduct() {
                     {/* Magnifying Lens Overlay - Desktop only */}
                     {!isMobile && isZooming && (
                       <div
-                        className="absolute w-32 h-32 border-4 border-blue-500 rounded-full pointer-events-none bg-white/10 backdrop-blur-[1px] shadow-xl z-10"
+                        className="absolute w-32 h-32 border-4 border-blue-500 rounded-md pointer-events-none bg-white/10 backdrop-blur-[1px] shadow-xl z-10"
                         style={{
                           left: `${zoomPosition.x}%`,
                           top: `${zoomPosition.y}%`,
@@ -367,19 +367,19 @@ export default function SingleProduct() {
                           boxShadow: '0 0 0 9999px rgba(0, 0, 0, 0.3)',
                         }}
                       >
-                        <div className="absolute inset-0 border-2 border-white rounded-full" />
+                        <div className="absolute inset-0 border-2 border-white rounded-md" />
                       </div>
                     )}
 
                     {/* Mobile tap instruction */}
                     {isMobile && !showZoomPanel && (
-                      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/70 text-white px-4 py-2 rounded-full text-sm">
+                      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/70 text-white px-4 py-2 rounded-md text-sm">
                         Tap and hold to zoom
                       </div>
                     )}
                   </>
                 ) : (
-                  <div className="w-full h-full bg-gray-100 rounded-xl animate-pulse" />
+                  <div className="w-full h-full bg-gray-100 rounded-md animate-pulse" />
                 )}
               </div>
 
@@ -390,7 +390,7 @@ export default function SingleProduct() {
                     <div
                       key={index}
                       onClick={() => handleImageSelect(img)}
-                      className={`flex-shrink-0 min-w-[80px] w-20 h-20 rounded-lg border-2 cursor-pointer transition-all duration-200 overflow-hidden ${previewImage === img
+                      className={`flex-shrink-0 min-w-[80px] w-20 h-20 rounded-md border-2 cursor-pointer transition-all duration-200 overflow-hidden ${previewImage === img
                           ? "border-blue-500 shadow-lg scale-105"
                           : "border-gray-200 hover:border-blue-300 hover:scale-105"
                         }`}
@@ -412,7 +412,7 @@ export default function SingleProduct() {
                   {!isMobile && (
                     <div
                       ref={zoomPanelRef}
-                      className="hidden lg:block absolute left-full ml-4 top-0 w-[750px] h-[600px] bg-white rounded-xl shadow-2xl overflow-hidden border-2 border-gray-200 z-50"
+                      className="hidden lg:block absolute left-full ml-4 top-0 w-[750px] h-[600px] bg-white rounded-md shadow-2xl overflow-hidden border-2 border-gray-200 z-50"
                       style={{
                         backgroundImage: `url(${previewImage})`,
                         backgroundSize: '300%',
@@ -427,7 +427,7 @@ export default function SingleProduct() {
                     <div className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4">
                       <button
                         onClick={() => setShowZoomPanel(false)}
-                        className="absolute top-4 right-4 bg-white rounded-full p-2 shadow-lg z-10"
+                        className="absolute top-4 right-4 bg-white rounded-md p-2 shadow-lg z-10"
                       >
                         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -444,7 +444,7 @@ export default function SingleProduct() {
                         }}
                       />
 
-                      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white/90 px-4 py-2 rounded-full text-sm">
+                      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white/90 px-4 py-2 rounded-md text-sm">
                         Move finger to explore
                       </div>
                     </div>
@@ -514,7 +514,7 @@ export default function SingleProduct() {
             </div>
 
             {/* Features */}
-            <div className="bg-gray-50 rounded-lg p-4 space-y-2">
+            <div className="bg-gray-50 rounded-md p-4 space-y-2">
               <h3 className="font-semibold text-base md:text-lg mb-3">Key Features</h3>
               <ul className="space-y-2 text-sm md:text-base text-gray-700">
                 <li className="flex items-start">
@@ -536,7 +536,7 @@ export default function SingleProduct() {
 
         {/* Price Section */}
         <div className="mt-12 mb-8">
-          <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-2xl p-6 md:p-8">
+          <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-md p-6 md:p-8">
             <h2 className="text-center text-2xl md:text-3xl lg:text-4xl font-bold text-[#16a34a] mb-6">
               Price in Bangladesh
             </h2>
@@ -556,7 +556,7 @@ export default function SingleProduct() {
           </div>
 
           {/* Sellers Table - Responsive */}
-          <div className="mt-8 overflow-x-auto shadow-xl rounded-2xl">
+          <div className="mt-8 overflow-x-auto shadow-xl rounded-md">
             <table className="w-full text-xs md:text-sm text-left min-w-[800px]">
               <thead className="text-xs uppercase bg-gradient-to-r from-gray-50 to-gray-100">
                 <tr>
@@ -595,7 +595,7 @@ export default function SingleProduct() {
                         <img
                           src={product?.stall?.stallImage}
                           alt="seller"
-                          className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover border-2 border-gray-200 flex-shrink-0"
+                          className="w-10 h-10 md:w-12 md:h-12 rounded-md object-cover border-2 border-gray-200 flex-shrink-0"
                         />
                         <p className="font-medium text-gray-900 text-xs md:text-sm truncate max-w-[100px] md:max-w-none">
                           {product?.stall?.stallOwnerName}
@@ -719,7 +719,7 @@ export default function SingleProduct() {
             Full Specifications
           </h2>
           <div
-            className="bg-white rounded-2xl shadow-xl p-4 md:p-6 lg:p-8 prose max-w-none"
+            className="bg-white rounded-md shadow-xl p-4 md:p-6 lg:p-8 prose max-w-none"
             dangerouslySetInnerHTML={{ __html: cleanHTML }}
           />
         </div>

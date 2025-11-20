@@ -50,7 +50,7 @@ export default function ForgotPassword() {
   return (
     <main className="nuni container mx-auto h-screen w-full">
       <div className="w-full h-screen mx-auto p-6 flex justify-center items-center">
-        <div className="mt-7 bg-white rounded-xl shadow-lg dark:bg-gray-800 dark:border-gray-700 border-2 border-indigo-300">
+        <div className="mt-7 bg-white rounded-md shadow-lg dark:bg-gray-800 dark:border-gray-700 border-2 border-indigo-300">
           <div className="p-4 sm:p-7 w-96">
             <div className="text-center">
               <h1 className="block text-2xl font-bold text-gray-800 dark:text-white">

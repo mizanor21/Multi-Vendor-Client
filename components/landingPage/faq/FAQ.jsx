@@ -48,7 +48,7 @@ export default function FAQ() {
           {faqItems.map((item) => (
             <div
               key={item.key}
-              className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100"
+              className="bg-white rounded-md shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100"
             >
               <button
                 onClick={() => toggleItem(item.key)}
@@ -89,7 +89,7 @@ export default function FAQ() {
         {/* Call to Action */}
         <div className="mt-16 text-center">
           <p className="text-gray-600 mb-6">Still have questions?</p>
-          <button className="bg-green-600 hover:bg-green-700 text-white font-semibold px-8 py-3 rounded-full transition-all duration-300 hover:shadow-lg hover:scale-105">
+          <button className="bg-green-600 hover:bg-green-700 text-white font-semibold px-8 py-3 rounded-md transition-all duration-300 hover:shadow-lg hover:scale-105">
             Contact Support
           </button>
         </div>

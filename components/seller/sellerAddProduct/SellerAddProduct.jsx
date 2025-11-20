@@ -261,7 +261,7 @@ export default function SellerAddProduct() {
   if (!mounted) return null;
 
   return (
-    <section className="max-w-5xl mx-auto p-6 bg-white rounded shadow">
+    <section className="max-w-5xl mx-auto p-6 bg-white rounded-md shadow">
       <h2 className="text-xl font-semibold mb-4">Create a Product</h2>
       <Form
         onSubmit={handleFormSubmit}
@@ -293,12 +293,12 @@ export default function SellerAddProduct() {
                   <img
                     src={url}
                     alt={`Product ${index + 1}`}
-                    className="w-20 h-20 object-cover rounded border"
+                    className="w-20 h-20 object-cover rounded-md border"
                   />
                   <button
                     type="button"
                     onClick={() => removeImage(index)}
-                    className="absolute -top-2 -right-2 bg-white rounded-full p-0.5 shadow-md"
+                    className="absolute -top-2 -right-2 bg-white rounded-md p-0.5 shadow-md"
                   >
                     ❌
                   </button>

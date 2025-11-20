@@ -295,7 +295,7 @@ export default function SearchNavbar() {
                       <button
                         type="button"
                         onClick={clearSearch}
-                        className="text-gray-400 hover:text-gray-600 transition-colors p-1 hover:bg-gray-100 rounded-full"
+                        className="text-gray-400 hover:text-gray-600 transition-colors p-1 hover:bg-gray-100 rounded-md"
                       >
                         <X className="w-4 h-4" />
                       </button>
@@ -326,7 +326,7 @@ export default function SearchNavbar() {
 
               {/* Search Results Dropdown - Mobile */}
               {showResults && (
-                <div className="absolute z-[1000] mt-2 w-full bg-white rounded-2xl shadow-2xl border border-gray-200 max-h-[70vh] overflow-hidden animate-slideDown">
+                <div className="absolute z-[1000] mt-2 w-full bg-white rounded-md shadow-2xl border border-gray-200 max-h-[70vh] overflow-hidden animate-slideDown">
                   <div className="overflow-y-auto max-h-[70vh] custom-scrollbar">
                     {isFetching ? (
                       <div className="flex flex-col justify-center items-center p-12">
@@ -355,7 +355,7 @@ export default function SearchNavbar() {
                                 <button
                                   key={index}
                                   onClick={() => handleRecentSearchClick(term)}
-                                  className="w-full flex items-center gap-3 text-left px-3 py-2.5 hover:bg-blue-50 rounded-lg transition-colors group"
+                                  className="w-full flex items-center gap-3 text-left px-3 py-2.5 hover:bg-blue-50 rounded-md transition-colors group"
                                 >
                                   <Search className="w-4 h-4 text-gray-400 group-hover:text-blue-600 transition-colors" />
                                   <span className="text-gray-700 group-hover:text-blue-600 font-medium">
@@ -375,7 +375,7 @@ export default function SearchNavbar() {
                           </div>
                           <Link
                             href="/deals"
-                            className="flex items-center gap-3 px-3 py-2.5 hover:bg-green-50 rounded-lg transition-colors group"
+                            className="flex items-center gap-3 px-3 py-2.5 hover:bg-green-50 rounded-md transition-colors group"
                             onClick={() => setShowResults(false)}
                           >
                             <Tag className="w-4 h-4 text-gray-400 group-hover:text-green-600" />
@@ -385,7 +385,7 @@ export default function SearchNavbar() {
                           </Link>
                           <Link
                             href="/new-arrivals"
-                            className="flex items-center gap-3 px-3 py-2.5 hover:bg-purple-50 rounded-lg transition-colors group"
+                            className="flex items-center gap-3 px-3 py-2.5 hover:bg-purple-50 rounded-md transition-colors group"
                             onClick={() => setShowResults(false)}
                           >
                             <Package className="w-4 h-4 text-gray-400 group-hover:text-purple-600" />
@@ -397,7 +397,7 @@ export default function SearchNavbar() {
                       </div>
                     ) : isError ? (
                       <div className="flex flex-col items-center justify-center p-12">
-                        <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
+                        <div className="w-16 h-16 bg-red-100 rounded-md flex items-center justify-center mb-4">
                           <X className="w-8 h-8 text-red-600" />
                         </div>
                         <p className="text-red-600 font-semibold text-lg mb-2">No products found</p>
@@ -430,10 +430,10 @@ export default function SearchNavbar() {
                               <Image
                                 src={product.images[0] || "/placeholder-product.jpg"}
                                 alt={product.productName}
-                                className="rounded-lg object-cover w-full h-full shadow-sm group-hover:shadow-md transition-shadow"
+                                className="rounded-md object-cover w-full h-full shadow-sm group-hover:shadow-md transition-shadow"
                               />
                               {product.discountPercent > 0 && (
-                                <div className="absolute -top-1 -right-1 bg-gradient-to-br from-red-500 to-pink-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full shadow-md">
+                                <div className="absolute -top-1 -right-1 bg-gradient-to-br from-red-500 to-pink-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-md shadow-md">
                                   {product.discountPercent}%
                                 </div>
                               )}
@@ -466,7 +466,7 @@ export default function SearchNavbar() {
                       </div>
                     ) : (
                       <div className="p-12 text-center">
-                        <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <div className="w-16 h-16 bg-gray-100 rounded-md flex items-center justify-center mx-auto mb-4">
                           <Search className="w-8 h-8 text-gray-400" />
                         </div>
                         <p className="text-gray-500 text-base font-medium mb-1">
@@ -511,7 +511,7 @@ export default function SearchNavbar() {
                       <button
                         type="button"
                         onClick={clearSearch}
-                        className="text-gray-400 hover:text-gray-600 transition-colors p-1.5 hover:bg-gray-100 rounded-full"
+                        className="text-gray-400 hover:text-gray-600 transition-colors p-1.5 hover:bg-gray-100 rounded-md"
                       >
                         <X className="w-5 h-5" />
                       </button>
@@ -542,7 +542,7 @@ export default function SearchNavbar() {
 
               {/* Search Results Dropdown - Desktop */}
               {showResults && (
-                <div className="absolute z-[1000] mt-3 w-full bg-white rounded-2xl shadow-2xl border border-gray-200 max-h-[600px] overflow-hidden animate-slideDown">
+                <div className="absolute z-[1000] mt-3 w-full bg-white rounded-md shadow-2xl border border-gray-200 max-h-[600px] overflow-hidden animate-slideDown">
                   <div className="overflow-y-auto max-h-[600px] custom-scrollbar">
                     {isFetching ? (
                       <div className="flex flex-col justify-center items-center p-16">
@@ -573,7 +573,7 @@ export default function SearchNavbar() {
                                     <button
                                       key={index}
                                       onClick={() => handleRecentSearchClick(term)}
-                                      className="w-full flex items-center gap-3 text-left px-4 py-3 hover:bg-blue-50 rounded-xl transition-colors group"
+                                      className="w-full flex items-center gap-3 text-left px-4 py-3 hover:bg-blue-50 rounded-md transition-colors group"
                                     >
                                       <Search className="w-5 h-5 text-gray-400 group-hover:text-blue-600 transition-colors" />
                                       <span className="text-gray-700 group-hover:text-blue-600 font-medium">
@@ -595,7 +595,7 @@ export default function SearchNavbar() {
                             <div className="space-y-1">
                               <Link
                                 href="/deals"
-                                className="flex items-center gap-3 px-4 py-3 hover:bg-green-50 rounded-xl transition-colors group"
+                                className="flex items-center gap-3 px-4 py-3 hover:bg-green-50 rounded-md transition-colors group"
                                 onClick={() => setShowResults(false)}
                               >
                                 <Tag className="w-5 h-5 text-gray-400 group-hover:text-green-600" />
@@ -605,7 +605,7 @@ export default function SearchNavbar() {
                               </Link>
                               <Link
                                 href="/new-arrivals"
-                                className="flex items-center gap-3 px-4 py-3 hover:bg-purple-50 rounded-xl transition-colors group"
+                                className="flex items-center gap-3 px-4 py-3 hover:bg-purple-50 rounded-md transition-colors group"
                                 onClick={() => setShowResults(false)}
                               >
                                 <Package className="w-5 h-5 text-gray-400 group-hover:text-purple-600" />
@@ -615,7 +615,7 @@ export default function SearchNavbar() {
                               </Link>
                               <Link
                                 href="/bestsellers"
-                                className="flex items-center gap-3 px-4 py-3 hover:bg-orange-50 rounded-xl transition-colors group"
+                                className="flex items-center gap-3 px-4 py-3 hover:bg-orange-50 rounded-md transition-colors group"
                                 onClick={() => setShowResults(false)}
                               >
                                 <Star className="w-5 h-5 text-gray-400 group-hover:text-orange-600" />
@@ -629,7 +629,7 @@ export default function SearchNavbar() {
                       </div>
                     ) : isError ? (
                       <div className="flex flex-col items-center justify-center p-16">
-                        <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mb-4">
+                        <div className="w-20 h-20 bg-red-100 rounded-md flex items-center justify-center mb-4">
                           <X className="w-10 h-10 text-red-600" />
                         </div>
                         <p className="text-red-600 font-semibold text-xl mb-2">No products found</p>
@@ -665,10 +665,10 @@ export default function SearchNavbar() {
                               <Image
                                 src={product.images[0] || "/placeholder-product.jpg"}
                                 alt={product.productName}
-                                className="rounded-xl object-cover w-full h-full shadow-md group-hover:shadow-xl group-hover:scale-105 transition-all duration-300"
+                                className="rounded-md object-cover w-full h-full shadow-md group-hover:shadow-xl group-hover:scale-105 transition-all duration-300"
                               />
                               {product.discountPercent > 0 && (
-                                <div className="absolute -top-2 -right-2 bg-gradient-to-br from-red-500 to-pink-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg">
+                                <div className="absolute -top-2 -right-2 bg-gradient-to-br from-red-500 to-pink-600 text-white text-xs font-bold px-2 py-1 rounded-md shadow-lg">
                                   {product.discountPercent}% OFF
                                 </div>
                               )}
@@ -706,7 +706,7 @@ export default function SearchNavbar() {
                       </div>
                     ) : (
                       <div className="p-16 text-center">
-                        <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <div className="w-20 h-20 bg-gray-100 rounded-md flex items-center justify-center mx-auto mb-4">
                           <Search className="w-10 h-10 text-gray-400" />
                         </div>
                         <p className="text-gray-500 text-lg font-medium mb-2">

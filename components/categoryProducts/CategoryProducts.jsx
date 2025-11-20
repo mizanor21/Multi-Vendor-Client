@@ -336,11 +336,11 @@ export default function CategoryProducts({
             value={value}
             checked={checked}
             onChange={() => onChange(name, value)}
-            className="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out border-gray-300 rounded focus:ring-indigo-500 focus:ring-2 focus:ring-offset-1"
+            className="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out border-gray-300 rounded-md focus:ring-indigo-500 focus:ring-2 focus:ring-offset-1"
           />
           <span className="ml-3 text-base">{label}</span>
         </div>
-        <span className="text-sm text-gray-500 bg-gray-100 px-2 py-0.5 rounded">
+        <span className="text-sm text-gray-500 bg-gray-100 px-2 py-0.5 rounded-md">
           {count}
         </span>
       </label>
@@ -349,7 +349,7 @@ export default function CategoryProducts({
 
   const FilterSidebar = ({ filters, onFilterChange, onReset }) => {
     return (
-      <div className="w-full bg-white shadow-lg rounded-lg p-4 font-sans flex flex-col h-fit">
+      <div className="w-full bg-white shadow-lg rounded-md p-4 font-sans flex flex-col h-fit">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-bold text-gray-800">Filters</h2>
           <button
@@ -414,11 +414,11 @@ export default function CategoryProducts({
                 name="inStock"
                 checked={filters.inStock}
                 onChange={() => onFilterChange("inStock")}
-                className="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out border-gray-300 rounded focus:ring-indigo-500 focus:ring-2 focus:ring-offset-1"
+                className="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out border-gray-300 rounded-md focus:ring-indigo-500 focus:ring-2 focus:ring-offset-1"
               />
               <span className="ml-3 text-base">In Stock Only</span>
             </div>
-            <span className="text-sm text-gray-500 bg-gray-100 px-2 py-0.5 rounded">
+            <span className="text-sm text-gray-500 bg-gray-100 px-2 py-0.5 rounded-md">
               {getAllCategoriesProducts?.filter(
                 (p) => p.stockStatus === "in-stock"
               ).length || 0}
@@ -431,13 +431,13 @@ export default function CategoryProducts({
           filters.brand.length > 0 ||
           filters.priceRange.length > 0 ||
           filters.inStock) && (
-          <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+          <div className="mt-6 p-4 bg-gray-50 rounded-md">
             <h3 className="font-semibold text-gray-700 mb-2">Active Filters</h3>
             <div className="flex flex-wrap gap-2">
               {filters.condition.map((cond) => (
                 <span
                   key={cond}
-                  className="bg-indigo-100 text-indigo-800 text-xs px-2 py-1 rounded flex items-center"
+                  className="bg-indigo-100 text-indigo-800 text-xs px-2 py-1 rounded-md flex items-center"
                 >
                   {cond}
                   <button
@@ -452,7 +452,7 @@ export default function CategoryProducts({
               {filters.brand.map((brand) => (
                 <span
                   key={brand}
-                  className="bg-indigo-100 text-indigo-800 text-xs px-2 py-1 rounded flex items-center"
+                  className="bg-indigo-100 text-indigo-800 text-xs px-2 py-1 rounded-md flex items-center"
                 >
                   {brand}
                   <button
@@ -469,7 +469,7 @@ export default function CategoryProducts({
                 return (
                   <span
                     key={range}
-                    className="bg-indigo-100 text-indigo-800 text-xs px-2 py-1 rounded flex items-center"
+                    className="bg-indigo-100 text-indigo-800 text-xs px-2 py-1 rounded-md flex items-center"
                   >
                     ৳{min} - {max === "Infinity" ? "∞" : max}
                     <button
@@ -483,7 +483,7 @@ export default function CategoryProducts({
                 );
               })}
               {filters.inStock && (
-                <span className="bg-indigo-100 text-indigo-800 text-xs px-2 py-1 rounded flex items-center">
+                <span className="bg-indigo-100 text-indigo-800 text-xs px-2 py-1 rounded-md flex items-center">
                   In Stock
                   <button
                     onClick={() => handleFilterChange("inStock")}
@@ -615,7 +615,7 @@ export default function CategoryProducts({
 
         {/* Main content area */}
         <main className="flex-1 p-4 md:p-6">
-          <div className="bg-white p-4 sm:p-6 rounded-lg shadow-md">
+          <div className="bg-white p-4 sm:p-6 rounded-md shadow-md">
             {/* Mobile filter button */}
             <div className="lg:hidden mb-4">
               <button
@@ -690,7 +690,7 @@ export default function CategoryProducts({
                           setCurrentPage(Math.max(1, currentPage - 1))
                         }
                         disabled={currentPage === 1}
-                        className="px-3 py-1 sm:px-3 sm:py-1 rounded border border-gray-300 text-gray-500 hover:bg-gray-50 disabled:opacity-50 text-sm sm:text-base"
+                        className="px-3 py-1 sm:px-3 sm:py-1 rounded-md border border-gray-300 text-gray-500 hover:bg-gray-50 disabled:opacity-50 text-sm sm:text-base"
                       >
                         Previous
                       </button>
@@ -704,7 +704,7 @@ export default function CategoryProducts({
                               ? setCurrentPage(page)
                               : null
                           }
-                          className={`px-2 py-1 sm:px-3 sm:py-1 rounded border text-sm sm:text-base ${
+                          className={`px-2 py-1 sm:px-3 sm:py-1 rounded-md border text-sm sm:text-base ${
                             page === currentPage
                               ? "bg-indigo-600 text-white border-indigo-600"
                               : "border-gray-300 text-gray-700 hover:bg-gray-50"
@@ -723,7 +723,7 @@ export default function CategoryProducts({
                           setCurrentPage(Math.min(totalPages, currentPage + 1))
                         }
                         disabled={currentPage === totalPages}
-                        className="px-3 py-1 sm:px-3 sm:py-1 rounded border border-gray-300 text-gray-700 hover:bg-gray-50 disabled:opacity-50 text-sm sm:text-base"
+                        className="px-3 py-1 sm:px-3 sm:py-1 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-50 disabled:opacity-50 text-sm sm:text-base"
                       >
                         Next
                       </button>
@@ -733,7 +733,7 @@ export default function CategoryProducts({
               </>
             ) : (
               <div className="col-span-full text-center py-12">
-                <div className="bg-gray-200 border-2 border-dashed rounded-xl w-16 h-16 mx-auto flex items-center justify-center text-gray-400 mb-4">
+                <div className="bg-gray-200 border-2 border-dashed rounded-md w-16 h-16 mx-auto flex items-center justify-center text-gray-400 mb-4">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-8 w-8"

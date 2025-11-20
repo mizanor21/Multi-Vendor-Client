@@ -59,7 +59,7 @@ export default function SellerLogin() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
-      <div className="bg-white rounded-2xl shadow-md p-8 w-full max-w-sm">
+      <div className="bg-white rounded-md shadow-md p-8 w-full max-w-sm">
         <h2 className="text-2xl font-semibold text-center mb-6 text-gray-700">
           Seller Login
         </h2>
@@ -75,7 +75,7 @@ export default function SellerLogin() {
               type="email"
               id="email"
               required
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="you@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -92,7 +92,7 @@ export default function SellerLogin() {
               type="password"
               id="password"
               required
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -101,7 +101,7 @@ export default function SellerLogin() {
           <Button
             type="submit"
             isLoading={isLoading}
-            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-200"
+            className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-200"
           >
             Login
           </Button>

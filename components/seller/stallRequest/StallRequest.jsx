@@ -195,7 +195,7 @@ export default function StallRequest() {
   return (
     <div className="p-4 bg-gray-50">
       <div className="max-w-full mx-auto">
-        <Card className="shadow-lg rounded-xl">
+        <Card className="shadow-lg rounded-md">
           <CardHeader className="p-6 border-b border-gray-200">
             <div className="flex flex-row items-center justify-between w-full">
               <div>

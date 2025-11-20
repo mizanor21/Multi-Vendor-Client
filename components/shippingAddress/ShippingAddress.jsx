@@ -170,7 +170,7 @@ export default function ShippingAddress() {
 
       <div className="flex flex-col md:flex-row gap-8">
         {/* Shipping Information */}
-        <div className="md:w-2/3 bg-white rounded-lg shadow-md p-6">
+        <div className="md:w-2/3 bg-white rounded-md shadow-md p-6">
           <h2 className="text-xl font-semibold text-gray-800 mb-6">
             Shipping Information
           </h2>
@@ -282,7 +282,7 @@ export default function ShippingAddress() {
         </div>
 
         {/* Order Summary */}
-        <div className="md:w-1/3 bg-white rounded-lg shadow-md p-6 h-fit">
+        <div className="md:w-1/3 bg-white rounded-md shadow-md p-6 h-fit">
           <h2 className="text-xl font-semibold text-gray-800 mb-6">
             Order Summary
           </h2>

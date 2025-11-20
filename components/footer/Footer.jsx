@@ -45,8 +45,8 @@ export default function Footer() {
     <footer className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white relative overflow-hidden">
       {/* Decorative Background Elements */}
       <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-500 rounded-full blur-3xl"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500 rounded-md blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-500 rounded-md blur-3xl"></div>
       </div>
 
       {/* Features Section */}
@@ -58,9 +58,9 @@ export default function Footer() {
               return (
                 <div
                   key={index}
-                  className="flex items-center gap-4 p-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300 group cursor-pointer"
+                  className="flex items-center gap-4 p-4 rounded-md bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300 group cursor-pointer"
                 >
-                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-md bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center group-hover:scale-110 transition-transform">
                     <IconComponent className="w-6 h-6 text-white" />
                   </div>
                   <div className="hidden sm:block">
@@ -95,10 +95,10 @@ export default function Footer() {
                   <input
                     type="email"
                     placeholder="Enter your email"
-                    className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:border-blue-500 transition-colors text-sm"
+                    className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-md focus:outline-none focus:border-blue-500 transition-colors text-sm"
                   />
                 </div>
-                <button className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg hover:shadow-lg hover:scale-105 transition-all font-semibold flex items-center gap-2">
+                <button className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-md hover:shadow-lg hover:scale-105 transition-all font-semibold flex items-center gap-2">
                   <Send className="w-4 h-4" />
                 </button>
               </div>
@@ -125,7 +125,7 @@ export default function Footer() {
           <div>
             <h3 className="text-xl font-bold mb-6 relative inline-block">
               Shopping
-              <div className="absolute bottom-0 left-0 w-12 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></div>
+              <div className="absolute bottom-0 left-0 w-12 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-md"></div>
             </h3>
             <ul className="space-y-3">
               {footerLinks.shopping.map((link, index) => (
@@ -148,7 +148,7 @@ export default function Footer() {
           <div>
             <h3 className="text-xl font-bold mb-6 relative inline-block">
               Knowledge Base
-              <div className="absolute bottom-0 left-0 w-12 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></div>
+              <div className="absolute bottom-0 left-0 w-12 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-md"></div>
             </h3>
             <ul className="space-y-3">
               {footerLinks.knowledge.map((link, index) => (
@@ -171,7 +171,7 @@ export default function Footer() {
           <div>
             <h3 className="text-xl font-bold mb-6 relative inline-block">
               Information
-              <div className="absolute bottom-0 left-0 w-12 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></div>
+              <div className="absolute bottom-0 left-0 w-12 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-md"></div>
             </h3>
             <ul className="space-y-3">
               {footerLinks.information.map((link, index) => (
@@ -209,7 +209,7 @@ export default function Footer() {
                   href="https://facebook.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-white/30  flex items-center justify-center hover:bg-blue-600 hover:border-blue-600 transition-all duration-300 hover:scale-110 group"
+                  className="w-10 h-10 rounded-md bg-white/30  flex items-center justify-center hover:bg-blue-600 hover:border-blue-600 transition-all duration-300 hover:scale-110 group"
                 >
                   <FaFacebook className="w-5 h-5" />
                 </a>
@@ -217,7 +217,7 @@ export default function Footer() {
                   href="https://instagram.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-white/30  flex items-center justify-center hover:bg-gradient-to-br hover:from-purple-600 hover:to-pink-600 hover:border-transparent transition-all duration-300 hover:scale-110"
+                  className="w-10 h-10 rounded-md bg-white/30  flex items-center justify-center hover:bg-gradient-to-br hover:from-purple-600 hover:to-pink-600 hover:border-transparent transition-all duration-300 hover:scale-110"
                 >
                   <FaInstagram className="w-5 h-5" />
                 </a>
@@ -225,7 +225,7 @@ export default function Footer() {
                   href="https://youtube.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-white/30  flex items-center justify-center hover:bg-red-600 hover:border-red-600 transition-all duration-300 hover:scale-110"
+                  className="w-10 h-10 rounded-md bg-white/30  flex items-center justify-center hover:bg-red-600 hover:border-red-600 transition-all duration-300 hover:scale-110"
                 >
                   <FaYoutube className="w-5 h-5" />
                 </a>
@@ -233,7 +233,7 @@ export default function Footer() {
                   href="https://pinterest.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-white/30  flex items-center justify-center hover:bg-red-700 hover:border-red-700 transition-all duration-300 hover:scale-110"
+                  className="w-10 h-10 rounded-md bg-white/30  flex items-center justify-center hover:bg-red-700 hover:border-red-700 transition-all duration-300 hover:scale-110"
                 >
                   <FaPinterest className="w-5 h-5" />
                 </a>
@@ -244,13 +244,13 @@ export default function Footer() {
             <div className="flex items-center gap-2 flex-wrap justify-center">
               <span className="text-xs text-gray-400">We Accept:</span>
               <div className="flex gap-2">
-                <div className="px-3 py-1 bg-white/10 rounded text-xs font-semibold border border-white/20">
+                <div className="px-3 py-1 bg-white/10 rounded-md text-xs font-semibold border border-white/20">
                   Visa
                 </div>
-                <div className="px-3 py-1 bg-white/10 rounded text-xs font-semibold border border-white/20">
+                <div className="px-3 py-1 bg-white/10 rounded-md text-xs font-semibold border border-white/20">
                   Mastercard
                 </div>
-                <div className="px-3 py-1 bg-white/10 rounded text-xs font-semibold border border-white/20">
+                <div className="px-3 py-1 bg-white/10 rounded-md text-xs font-semibold border border-white/20">
                   bKash
                 </div>
               </div>
