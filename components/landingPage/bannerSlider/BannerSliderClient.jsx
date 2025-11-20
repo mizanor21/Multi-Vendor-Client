@@ -96,7 +96,7 @@ export default function BannerSliderClient({ sliders }) {
 
   return (
     <div 
-      className="container mx-auto overflow-hidden p-4 lg:px-0" 
+      className="container mx-auto overflow-hidden px-4 lg:px-0" 
       style={{ marginTop: getMarginTop() }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}

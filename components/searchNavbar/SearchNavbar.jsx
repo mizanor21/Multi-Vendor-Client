@@ -31,7 +31,6 @@ import {
   Star,
   Tag,
   Package,
-  Menu,
   ChevronRight,
   Sparkles
 } from "lucide-react";
@@ -45,7 +44,6 @@ export default function SearchNavbar() {
   const [scrolled, setScrolled] = useState(false);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [recentSearches, setRecentSearches] = useState([]);
-  const [trendingProducts, setTrendingProducts] = useState([]);
   const searchRef = useRef(null);
   const debounceTimeout = useRef(null);
 
@@ -189,15 +187,16 @@ export default function SearchNavbar() {
           {/* Mobile Layout */}
           <div className="lg:hidden">
             {/* Top Bar - Mobile */}
-            <div className="flex items-center justify-between py-3 gap-3">
+            <div className="flex justify-between items-center py-3 gap-3">
+              <CategoryNavbar />
               {/* Logo */}
-              <Link href="/" className="flex-shrink-0 ml-10">
+              <Link href="/" className="">
                 <Image
                   alt="Logo"
                   src="https://i.postimg.cc/pp2RnKSh/multi-vendor-e-com.jpg"
                   width={120}
                   height={35}
-                  className="object-contain"
+                  className=""
                 />
               </Link>
 
@@ -234,7 +233,6 @@ export default function SearchNavbar() {
                   </Button>
                 </Badge>
 
-                <CategoryNavbar />
                 {/* User Menu / Login */}
                 {loginInfo ? (
                   <Dropdown placement="bottom-end">
@@ -818,7 +816,7 @@ export default function SearchNavbar() {
       </div>
       <div className="hidden xl:block">
 
-      <CategoryNavbar />
+        <CategoryNavbar />
       </div>
 
 

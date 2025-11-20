@@ -1,7 +1,6 @@
 import "./globals.css";
 import ClientProviders from "@/app/client-providers";
 import SearchNavbar from "@/components/searchNavbar/SearchNavbar";
-import CategoryNavbar from "@/components/landingPage/categoryNavbar/CategoryNavbar";
 import Footer from "@/components/footer/Footer";
 
 export const metadata = {
