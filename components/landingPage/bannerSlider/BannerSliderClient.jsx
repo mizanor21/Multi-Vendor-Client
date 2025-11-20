@@ -53,18 +53,6 @@ export default function BannerSliderClient({ sliders }) {
     };
   }, [isAutoplayRunning, isHovered, activeIndex]);
 
-  // Toggle autoplay
-  const toggleAutoplay = useCallback(() => {
-    if (swiperRef) {
-      if (isAutoplayRunning) {
-        swiperRef.autoplay.stop();
-      } else {
-        swiperRef.autoplay.start();
-      }
-      setIsAutoplayRunning(!isAutoplayRunning);
-    }
-  }, [swiperRef, isAutoplayRunning]);
-
   // Navigation handlers
   const goNext = useCallback(() => {
     if (swiperRef) {

@@ -3,7 +3,7 @@ import { useGetAllCategoriesQuery } from "@/app/api/categorySlice";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { RxHamburgerMenu, RxCross1 } from "react-icons/rx";
-import { ChevronDown, ChevronRight, Grid3x3 } from "lucide-react";
+import { ChevronDown, ChevronRight, Grid3x3, Tag, TrendingUp, Sparkles } from "lucide-react";
 
 export default function CategoryNavbar() {
   const [openCategoryId, setOpenCategoryId] = useState(null);
@@ -15,6 +15,7 @@ export default function CategoryNavbar() {
   const categoryTimeoutRef = useRef(null);
   const subcategoryTimeoutRef = useRef(null);
 
+  // Scroll detection
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
@@ -23,6 +24,7 @@ export default function CategoryNavbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Prevent body scroll when mobile menu is open
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = "hidden";
@@ -34,6 +36,7 @@ export default function CategoryNavbar() {
     };
   }, [isMobileMenuOpen]);
 
+  // Desktop hover handlers with delay
   const handleCategoryMouseEnter = (categoryId) => {
     if (categoryTimeoutRef.current) {
       clearTimeout(categoryTimeoutRef.current);
@@ -71,6 +74,7 @@ export default function CategoryNavbar() {
     }
   };
 
+  // Mobile click handlers
   const handleCategoryClick = (categoryId) => {
     if (window.innerWidth < 1024) {
       setOpenCategoryId(openCategoryId === categoryId ? null : categoryId);
@@ -97,39 +101,41 @@ export default function CategoryNavbar() {
       <nav
         className={`w-full fixed left-0 z-50 transition-all duration-300 ${
           scrolled
-            ? "bg-white/90 backdrop-blur-lg shadow-lg"
-            : "bg-[linear-gradient(120deg,rgba(14,165,233,0.9)_0%,rgba(99,102,241,0.9)_100%)]"
+            ? "top-[110px] lg:top-[80px] bg-white/98 backdrop-blur-xl shadow-md"
+            : "top-[110px] lg:top-[80px] bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 shadow-lg"
         }`}
       >
         <div className="container mx-auto px-4">
           {/* Mobile Header */}
-          <div className="lg:hidden flex justify-between items-center py-4">
+          <div className="lg:hidden flex justify-between items-center py-3">
             <div className="flex items-center gap-3">
-              <Grid3x3 className={`w-6 h-6 ${scrolled ? "text-blue-600" : "text-white"}`} />
+              <div className={`p-2 rounded-lg ${scrolled ? "bg-blue-100" : "bg-white/20"}`}>
+                <Grid3x3 className={`w-5 h-5 ${scrolled ? "text-blue-600" : "text-white"}`} />
+              </div>
               <span className={`font-bold text-lg ${scrolled ? "text-gray-900" : "text-white"}`}>
-                Categories
+                All Categories
               </span>
             </div>
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`p-2 rounded-lg transition-all duration-300 ${
+              className={`p-2.5 rounded-xl transition-all duration-300 ${
                 scrolled
-                  ? "text-gray-700 hover:bg-gray-100"
-                  : "text-white hover:bg-white/20"
+                  ? "text-gray-700 hover:bg-gray-100 active:bg-gray-200"
+                  : "text-white hover:bg-white/20 active:bg-white/30"
               }`}
               aria-label="Toggle navigation"
             >
               {isMobileMenuOpen ? (
-                <RxCross1 size={24} />
+                <RxCross1 size={24} strokeWidth={0.5} />
               ) : (
-                <RxHamburgerMenu size={24} />
+                <RxHamburgerMenu size={24} strokeWidth={0.5} />
               )}
             </button>
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:block">
-            <div className="flex items-center justify-center gap-1 py-1">
+            <div className="flex items-center justify-center gap-1 py-1.5">
               {categories?.map((category) => (
                 <div
                   key={category._id}
@@ -138,19 +144,19 @@ export default function CategoryNavbar() {
                   onMouseLeave={handleCategoryMouseLeave}
                 >
                   <button
-                    className={`flex items-center gap-2 px-5 py-3.5 rounded-lg font-medium transition-all duration-300 ${
+                    className={`flex items-center gap-2 px-5 py-3 rounded-xl font-semibold transition-all duration-300 ${
                       scrolled
-                        ? "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
-                        : "text-white hover:bg-white/20"
+                        ? "text-gray-700 hover:bg-blue-50 hover:text-blue-600 active:bg-blue-100"
+                        : "text-white hover:bg-white/20 active:bg-white/30"
                     } ${
                       openCategoryId === category._id
                         ? scrolled
-                          ? "bg-blue-50 text-blue-600"
-                          : "bg-white/20"
+                          ? "bg-blue-50 text-blue-600 shadow-sm"
+                          : "bg-white/20 shadow-lg"
                         : ""
                     }`}
                   >
-                    {category.name}
+                    <span className="text-sm">{category.name}</span>
                     {category.subcategories?.length > 0 && (
                       <ChevronDown
                         className={`w-4 h-4 transition-transform duration-300 ${
@@ -168,9 +174,17 @@ export default function CategoryNavbar() {
                         onMouseEnter={handleDropdownMouseEnter}
                         onMouseLeave={handleCategoryMouseLeave}
                       >
-                        <div className="w-72 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden animate-slideDown">
+                        <div className="w-80 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden animate-slideDown">
+                          {/* Header */}
+                          <div className="px-5 py-3 bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-blue-100">
+                            <h3 className="font-bold text-gray-800 flex items-center gap-2">
+                              <Tag className="w-4 h-4 text-blue-600" />
+                              {category.name}
+                            </h3>
+                          </div>
+                          
                           <div className="p-2 max-h-[70vh] overflow-y-auto custom-scrollbar">
-                            {category.subcategories?.map((subcategory) => (
+                            {category.subcategories?.map((subcategory, index) => (
                               <div
                                 key={subcategory._id}
                                 className="relative"
@@ -181,14 +195,21 @@ export default function CategoryNavbar() {
                               >
                                 <Link
                                   href={`/category/${category._id}/${subcategory._id}`}
-                                  className="flex items-center justify-between px-4 py-3 rounded-xl text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 hover:text-blue-600 transition-all duration-200 group/item"
+                                  className={`flex items-center justify-between px-4 py-3.5 rounded-xl text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 hover:text-blue-600 transition-all duration-200 group/item ${
+                                    index === 0 ? "mt-0" : "mt-1"
+                                  }`}
                                   onClick={handleNavigationClick}
                                 >
-                                  <span className="font-medium">
+                                  <span className="font-medium text-sm">
                                     {subcategory.name}
                                   </span>
                                   {subcategory.microcategories?.length > 0 && (
-                                    <ChevronRight className="w-4 h-4 text-gray-400 group-hover/item:text-blue-600 transition-colors" />
+                                    <div className="flex items-center gap-2">
+                                      <span className="text-xs text-gray-400 font-medium">
+                                        {subcategory.microcategories.length}
+                                      </span>
+                                      <ChevronRight className="w-4 h-4 text-gray-400 group-hover/item:text-blue-600 transition-colors" />
+                                    </div>
                                   )}
                                 </Link>
 
@@ -200,20 +221,28 @@ export default function CategoryNavbar() {
                                       onMouseEnter={handleDropdownMouseEnter}
                                       onMouseLeave={handleSubcategoryMouseLeave}
                                     >
-                                      <div className="w-64 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden animate-slideRight">
+                                      <div className="w-72 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden animate-slideRight">
+                                        {/* Header */}
+                                        <div className="px-5 py-3 bg-gradient-to-r from-purple-50 to-pink-50 border-b border-purple-100">
+                                          <h4 className="font-bold text-gray-800 text-sm flex items-center gap-2">
+                                            <Sparkles className="w-4 h-4 text-purple-600" />
+                                            {subcategory.name}
+                                          </h4>
+                                        </div>
+                                        
                                         <div className="p-2 max-h-[60vh] overflow-y-auto custom-scrollbar">
-                                          {subcategory.microcategories.map(
-                                            (microcategory) => (
-                                              <Link
-                                                key={microcategory._id}
-                                                href={`/category/${category._id}/${subcategory._id}/${microcategory._id}`}
-                                                className="block px-4 py-3 rounded-xl text-gray-600 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 hover:text-blue-600 transition-all duration-200 font-medium"
-                                                onClick={handleNavigationClick}
-                                              >
-                                                {microcategory.name}
-                                              </Link>
-                                            )
-                                          )}
+                                          {subcategory.microcategories.map((microcategory, idx) => (
+                                            <Link
+                                              key={microcategory._id}
+                                              href={`/category/${category._id}/${subcategory._id}/${microcategory._id}`}
+                                              className={`block px-4 py-3 rounded-xl text-gray-600 hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 hover:text-purple-600 transition-all duration-200 font-medium text-sm ${
+                                                idx === 0 ? "mt-0" : "mt-1"
+                                              }`}
+                                              onClick={handleNavigationClick}
+                                            >
+                                              {microcategory.name}
+                                            </Link>
+                                          ))}
                                         </div>
                                       </div>
                                     </div>
@@ -221,6 +250,15 @@ export default function CategoryNavbar() {
                               </div>
                             ))}
                           </div>
+
+                          {/* Footer - View All */}
+                          <Link
+                            href={`/category/${category._id}`}
+                            className="block px-5 py-3 bg-gradient-to-r from-blue-50 to-indigo-50 border-t border-blue-100 text-center text-blue-600 hover:text-blue-700 font-semibold text-sm transition-colors"
+                            onClick={handleNavigationClick}
+                          >
+                            View All in {category.name}
+                          </Link>
                         </div>
                       </div>
                     )}
@@ -234,29 +272,33 @@ export default function CategoryNavbar() {
       {/* Mobile Overlay */}
       {isMobileMenuOpen && (
         <div
-          className="lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-40 animate-fadeIn"
+          className="lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-[998] animate-fadeIn"
+          style={{ top: scrolled ? "178px" : "178px" }}
           onClick={() => setIsMobileMenuOpen(false)}
         />
       )}
 
       {/* Mobile Slide-in Menu */}
       <div
-        className={`lg:hidden fixed top-0 right-0 h-full w-[85%] max-w-sm bg-white z-50 shadow-2xl transform transition-transform duration-300 ease-out ${
+        className={`lg:hidden fixed right-0 h-full w-[90%] max-w-md bg-white z-[999] shadow-2xl transform transition-transform duration-300 ease-out ${
           isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
+        style={{ top: scrolled ? "178px" : "178px" }}
       >
         {/* Mobile Menu Header */}
-        <div className="flex items-center justify-between p-5 border-b border-gray-200 bg-gradient-to-r from-blue-600 to-indigo-600">
+        <div className="flex items-center justify-between p-5 border-b border-gray-200 bg-gradient-to-r from-blue-600 to-indigo-600 sticky top-0 z-10">
           <div className="flex items-center gap-3">
-            <Grid3x3 className="w-6 h-6 text-white" />
-            <h2 className="text-xl font-bold text-white">Categories</h2>
+            <div className="p-2 bg-white/20 rounded-lg">
+              <Grid3x3 className="w-6 h-6 text-white" />
+            </div>
+            <h2 className="text-xl font-bold text-white">All Categories</h2>
           </div>
           <button
             onClick={() => setIsMobileMenuOpen(false)}
-            className="p-2 rounded-lg text-white hover:bg-white/20 transition-colors"
+            className="p-2 rounded-lg text-white hover:bg-white/20 transition-colors active:bg-white/30"
             aria-label="Close menu"
           >
-            <RxCross1 size={24} />
+            <RxCross1 size={24} strokeWidth={0.5} />
           </button>
         </div>
 
@@ -266,21 +308,26 @@ export default function CategoryNavbar() {
             {categories?.map((category) => (
               <div
                 key={category._id}
-                className="border border-gray-200 rounded-xl overflow-hidden hover:border-blue-300 transition-colors"
+                className="border-2 border-gray-200 rounded-2xl overflow-hidden hover:border-blue-300 transition-all shadow-sm hover:shadow-md"
               >
                 <button
                   onClick={() => handleCategoryClick(category._id)}
-                  className="w-full flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-white hover:from-blue-50 hover:to-indigo-50 transition-all duration-200"
+                  className="w-full flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-white hover:from-blue-50 hover:to-indigo-50 transition-all duration-200 active:scale-[0.98]"
                 >
-                  <span className="font-semibold text-gray-800">
+                  <span className="font-bold text-gray-800 text-base">
                     {category.name}
                   </span>
                   {category.subcategories?.length > 0 && (
-                    <ChevronDown
-                      className={`w-5 h-5 text-gray-600 transition-transform duration-300 ${
-                        openCategoryId === category._id ? "rotate-180" : ""
-                      }`}
-                    />
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-semibold text-gray-500 bg-gray-200 px-2 py-1 rounded-full">
+                        {category.subcategories.length}
+                      </span>
+                      <ChevronDown
+                        className={`w-5 h-5 text-gray-600 transition-transform duration-300 ${
+                          openCategoryId === category._id ? "rotate-180" : ""
+                        }`}
+                      />
+                    </div>
                   )}
                 </button>
 
@@ -288,25 +335,30 @@ export default function CategoryNavbar() {
                 {openCategoryId === category._id &&
                   category.subcategories?.length > 0 && (
                     <div className="bg-gray-50 animate-slideDown">
-                      {category.subcategories.map((subcategory) => (
-                        <div key={subcategory._id} className="border-t border-gray-200">
+                      {category.subcategories.map((subcategory, index) => (
+                        <div key={subcategory._id} className={index === 0 ? "" : "border-t border-gray-200"}>
                           <button
                             onClick={() =>
                               handleSubcategoryClick(subcategory._id)
                             }
-                            className="w-full flex items-center justify-between p-4 pl-8 hover:bg-white transition-colors"
+                            className="w-full flex items-center justify-between p-4 pl-8 hover:bg-white transition-colors active:bg-blue-50"
                           >
-                            <span className="font-medium text-gray-700">
+                            <span className="font-semibold text-gray-700 text-sm">
                               {subcategory.name}
                             </span>
                             {subcategory.microcategories?.length > 0 && (
-                              <ChevronRight
-                                className={`w-4 h-4 text-gray-500 transition-transform duration-300 ${
-                                  openSubcategoryId === subcategory._id
-                                    ? "rotate-90"
-                                    : ""
-                                }`}
-                              />
+                              <div className="flex items-center gap-2">
+                                <span className="text-xs font-semibold text-gray-400">
+                                  {subcategory.microcategories.length}
+                                </span>
+                                <ChevronRight
+                                  className={`w-4 h-4 text-gray-500 transition-transform duration-300 ${
+                                    openSubcategoryId === subcategory._id
+                                      ? "rotate-90"
+                                      : ""
+                                  }`}
+                                />
+                              </div>
                             )}
                           </button>
 
@@ -314,35 +366,78 @@ export default function CategoryNavbar() {
                           {openSubcategoryId === subcategory._id &&
                             subcategory.microcategories?.length > 0 && (
                               <div className="bg-white animate-slideDown">
-                                {subcategory.microcategories.map(
-                                  (microcategory) => (
-                                    <Link
-                                      key={microcategory._id}
-                                      href={`/category/${category._id}/${subcategory._id}/${microcategory._id}`}
-                                      className="block p-3 pl-12 text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-colors border-t border-gray-100"
-                                      onClick={handleNavigationClick}
-                                    >
-                                      {microcategory.name}
-                                    </Link>
-                                  )
-                                )}
+                                {subcategory.microcategories.map((microcategory, idx) => (
+                                  <Link
+                                    key={microcategory._id}
+                                    href={`/category/${category._id}/${subcategory._id}/${microcategory._id}`}
+                                    className={`block p-3 pl-14 text-gray-600 hover:bg-purple-50 hover:text-purple-600 transition-colors font-medium text-sm active:bg-purple-100 ${
+                                      idx === 0 ? "" : "border-t border-gray-100"
+                                    }`}
+                                    onClick={handleNavigationClick}
+                                  >
+                                    {microcategory.name}
+                                  </Link>
+                                ))}
                               </div>
                             )}
                         </div>
                       ))}
+                      
+                      {/* View All Subcategories */}
+                      <Link
+                        href={`/category/${category._id}`}
+                        className="block p-4 text-center bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-600 hover:text-blue-700 font-bold text-sm border-t-2 border-blue-100 transition-colors"
+                        onClick={handleNavigationClick}
+                      >
+                        View All in {category.name}
+                      </Link>
                     </div>
                   )}
               </div>
             ))}
           </div>
+
+          {/* Quick Links Section */}
+          <div className="p-4 border-t-2 border-gray-200 bg-gray-50">
+            <h3 className="font-bold text-gray-800 mb-3 flex items-center gap-2">
+              <TrendingUp className="w-5 h-5 text-blue-600" />
+              Quick Links
+            </h3>
+            <div className="space-y-2">
+              <Link
+                href="/deals"
+                className="block p-3 bg-white rounded-xl border-2 border-gray-200 hover:border-green-300 hover:bg-green-50 transition-all font-semibold text-gray-700 hover:text-green-600 text-sm"
+                onClick={handleNavigationClick}
+              >
+                🔥 Today's Deals
+              </Link>
+              <Link
+                href="/new-arrivals"
+                className="block p-3 bg-white rounded-xl border-2 border-gray-200 hover:border-purple-300 hover:bg-purple-50 transition-all font-semibold text-gray-700 hover:text-purple-600 text-sm"
+                onClick={handleNavigationClick}
+              >
+                ✨ New Arrivals
+              </Link>
+              <Link
+                href="/bestsellers"
+                className="block p-3 bg-white rounded-xl border-2 border-gray-200 hover:border-orange-300 hover:bg-orange-50 transition-all font-semibold text-gray-700 hover:text-orange-600 text-sm"
+                onClick={handleNavigationClick}
+              >
+                ⭐ Best Sellers
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
+
+      {/* Spacer for fixed category navbar */}
+      <div className="h-[52px] lg:h-[48px]"></div>
 
       <style jsx global>{`
         @keyframes slideDown {
           from {
             opacity: 0;
-            transform: translateY(-10px);
+            transform: translateY(-15px);
           }
           to {
             opacity: 1;
@@ -353,7 +448,7 @@ export default function CategoryNavbar() {
         @keyframes slideRight {
           from {
             opacity: 0;
-            transform: translateX(-10px);
+            transform: translateX(-15px);
           }
           to {
             opacity: 1;
@@ -371,11 +466,11 @@ export default function CategoryNavbar() {
         }
 
         .animate-slideDown {
-          animation: slideDown 0.3s ease-out;
+          animation: slideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .animate-slideRight {
-          animation: slideRight 0.3s ease-out;
+          animation: slideRight 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .animate-fadeIn {
@@ -392,12 +487,12 @@ export default function CategoryNavbar() {
         }
 
         .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: #cbd5e1;
+          background: linear-gradient(180deg, #3b82f6, #6366f1);
           border-radius: 10px;
         }
 
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: #94a3b8;
+          background: linear-gradient(180deg, #2563eb, #4f46e5);
         }
       `}</style>
     </>

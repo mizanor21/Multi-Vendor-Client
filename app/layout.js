@@ -12,25 +12,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="font-[inter]">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200..1000&display=swap"
-          rel="stylesheet"
-        />
-      </head>
       <body>
         <ClientProviders>
-          <div className="fixed top-0 left-0 w-full z-20 bg-white shadow-md">
-            <SearchNavbar />
-            <CategoryNavbar />
-          </div>
-          <main className="pt-[104px]">{children}</main>
+          <SearchNavbar />
+          <main>{children}</main>
           <Footer />
         </ClientProviders>
       </body>
