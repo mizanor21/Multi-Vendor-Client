@@ -258,54 +258,6 @@ export default function BannerSliderClient({ sliders }) {
           <ChevronRight className="w-6 h-6" strokeWidth={2.5} />
         </button>
 
-        {/* Enhanced Control Panel */}
-        <div className="absolute top-4 sm:top-6 right-4 sm:right-6 z-30 flex items-center gap-2 sm:gap-3">
-          {/* Autoplay Toggle with progress */}
-          <div className="relative">
-            <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 40 40">
-              <circle
-                cx="20"
-                cy="20"
-                r="18"
-                fill="none"
-                stroke="white"
-                strokeWidth="2"
-                opacity="0.2"
-              />
-              <circle
-                cx="20"
-                cy="20"
-                r="18"
-                fill="none"
-                stroke="white"
-                strokeWidth="2"
-                strokeDasharray={`${2 * Math.PI * 18}`}
-                strokeDashoffset={`${2 * Math.PI * 18 * (1 - progress / 100)}`}
-                opacity="0.8"
-                className="transition-all duration-100 ease-linear"
-              />
-            </svg>
-            <button
-              onClick={toggleAutoplay}
-              className="relative flex items-center justify-center w-10 h-10 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white hover:bg-white/30 transition-all duration-300 hover:scale-110"
-              aria-label={isAutoplayRunning ? "Pause autoplay" : "Start autoplay"}
-            >
-              {isAutoplayRunning ? (
-                <Pause className="w-4 h-4" fill="white" />
-              ) : (
-                <Play className="w-4 h-4 ml-0.5" fill="white" />
-              )}
-            </button>
-          </div>
-
-          {/* Slide Counter with better design */}
-          <div className="hidden sm:flex px-4 py-2 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-sm font-semibold tracking-wide">
-            <span className="text-white">{activeIndex + 1}</span>
-            <span className="text-white/60 mx-1">/</span>
-            <span className="text-white/80">{sliders.length}</span>
-          </div>
-        </div>
-
         {/* Thumbnail navigation for desktop */}
         {sliders.length > 1 && (
           <div className="hidden lg:flex absolute bottom-6 left-1/2 -translate-x-1/2 z-30 items-center gap-3 px-6 py-3 rounded-full bg-black/40 backdrop-blur-xl border border-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
