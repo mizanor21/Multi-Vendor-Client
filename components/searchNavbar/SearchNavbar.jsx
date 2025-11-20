@@ -728,7 +728,7 @@ export default function SearchNavbar() {
               <Link href="/seller/dashboard">
                 <Button
                   startContent={<SellIcon />}
-                  className="bg-gradient-to-br from-blue-600 to-indigo-600 text-white font-semibold hover:shadow-lg transition-all hover:scale-105 px-6"
+                  className="bg-gradient-to-br from-blue-600 to-indigo-600 text-white font-semibold hover:shadow-lg transition-all hover:scale-105 px-6 rounded-md"
                   size="lg"
                 >
                   Sell
@@ -744,7 +744,7 @@ export default function SearchNavbar() {
               >
                 <Button
                   startContent={<CartIcon size="20px" color="#ffffff" />}
-                  className="bg-gradient-to-br from-blue-600 to-indigo-600 text-white font-semibold hover:shadow-lg transition-all hover:scale-105 px-6"
+                  className="bg-gradient-to-br from-blue-600 to-indigo-600 text-white font-semibold hover:shadow-lg transition-all hover:scale-105 px-6 rounded-md"
                   size="lg"
                   onPress={() => router.push("/client/cart")}
                 >
@@ -756,7 +756,7 @@ export default function SearchNavbar() {
               <Badge color="warning" content="0" shape="circle" className="font-bold">
                 <Button
                   startContent={<PointsIcon />}
-                  className="bg-gradient-to-br from-amber-500 to-orange-500 text-white font-semibold hover:shadow-lg transition-all hover:scale-105 px-6"
+                  className="bg-gradient-to-br from-amber-500 to-orange-500 text-white font-semibold hover:shadow-lg transition-all hover:scale-105 px-6 rounded-md"
                   size="lg"
                 >
                   Points
@@ -803,7 +803,7 @@ export default function SearchNavbar() {
                 <Link href="/auth/login">
                   <Button
                     startContent={<LoginIcon />}
-                    className="bg-gradient-to-br from-blue-600 to-indigo-600 text-white font-semibold hover:shadow-lg transition-all hover:scale-105 px-6"
+                    className="bg-gradient-to-br from-blue-600 to-indigo-600 text-white font-semibold hover:shadow-lg transition-all hover:scale-105 px-6 rounded-md"
                     size="lg"
                   >
                     Sign In
