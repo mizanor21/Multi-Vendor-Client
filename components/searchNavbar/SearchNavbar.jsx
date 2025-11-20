@@ -191,7 +191,7 @@ export default function SearchNavbar() {
             {/* Top Bar - Mobile */}
             <div className="flex items-center justify-between py-3 gap-3">
               {/* Logo */}
-              <Link href="/" className="flex-shrink-0">
+              <Link href="/" className="flex-shrink-0 ml-10">
                 <Image
                   alt="Logo"
                   src="https://i.postimg.cc/pp2RnKSh/multi-vendor-e-com.jpg"
@@ -234,6 +234,7 @@ export default function SearchNavbar() {
                   </Button>
                 </Badge>
 
+                <CategoryNavbar />
                 {/* User Menu / Login */}
                 {loginInfo ? (
                   <Dropdown placement="bottom-end">
@@ -815,7 +816,10 @@ export default function SearchNavbar() {
           </div>
         </div>
       </div>
+      <div className="hidden xl:block">
+
       <CategoryNavbar />
+      </div>
 
 
       {/* Spacer to prevent content from going under fixed navbar */}

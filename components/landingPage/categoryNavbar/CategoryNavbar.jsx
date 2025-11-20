@@ -101,28 +101,16 @@ export default function CategoryNavbar() {
       <nav
         className={`w-full fixed left-0 z-50 transition-all duration-300 ${
           scrolled
-            ? "top-[110px] lg:top-[80px] bg-white/98 backdrop-blur-xl shadow-md"
-            : "top-[110px] lg:top-[80px] bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 shadow-lg"
+            ? "lg:top-[80px] lg:bg-white/98 lg:backdrop-blur-xl lg:shadow-md"
+            : "lg:top-[80px] lg:bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 lg:shadow-lg"
         }`}
       >
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-2">
           {/* Mobile Header */}
           <div className="lg:hidden flex justify-between items-center py-3">
-            <div className="flex items-center gap-3">
-              <div className={`p-2 rounded-lg ${scrolled ? "bg-blue-100" : "bg-white/20"}`}>
-                <Grid3x3 className={`w-5 h-5 ${scrolled ? "text-blue-600" : "text-white"}`} />
-              </div>
-              <span className={`font-bold text-lg ${scrolled ? "text-gray-900" : "text-white"}`}>
-                All Categories
-              </span>
-            </div>
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`p-2.5 rounded-xl transition-all duration-300 ${
-                scrolled
-                  ? "text-gray-700 hover:bg-gray-100 active:bg-gray-200"
-                  : "text-white hover:bg-white/20 active:bg-white/30"
-              }`}
+              className={`p-2.5 rounded-xl transition-all duration-300 `}
               aria-label="Toggle navigation"
             >
               {isMobileMenuOpen ? (
@@ -273,7 +261,7 @@ export default function CategoryNavbar() {
       {isMobileMenuOpen && (
         <div
           className="lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-[998] animate-fadeIn"
-          style={{ top: scrolled ? "178px" : "178px" }}
+          style={{ top: scrolled ? "75px" : "75px" }}
           onClick={() => setIsMobileMenuOpen(false)}
         />
       )}
@@ -283,7 +271,7 @@ export default function CategoryNavbar() {
         className={`lg:hidden fixed right-0 h-full w-[90%] max-w-md bg-white z-[999] shadow-2xl transform transition-transform duration-300 ease-out ${
           isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
-        style={{ top: scrolled ? "178px" : "178px" }}
+        style={{ top: scrolled ? "75px" : "75px" }}
       >
         {/* Mobile Menu Header */}
         <div className="flex items-center justify-between p-5 border-b border-gray-200 bg-gradient-to-r from-blue-600 to-indigo-600 sticky top-0 z-10">
