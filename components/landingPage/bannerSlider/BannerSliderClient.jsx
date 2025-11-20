@@ -108,7 +108,7 @@ export default function BannerSliderClient({ sliders }) {
 
   return (
     <div 
-      className="container mx-auto lg:rounded-lg overflow-hidden" 
+      className="container mx-auto overflow-hidden p-4 lg:px-0" 
       style={{ marginTop: getMarginTop() }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -156,11 +156,11 @@ export default function BannerSliderClient({ sliders }) {
           }}
           loop={sliders.length > 1}
           modules={[Autoplay, EffectCreative, Pagination, Keyboard, Mousewheel]}
-          className="overflow-hidden lg:rounded-lg shadow-2xl"
+          className="overflow-hidden rounded-lg"
         >
           {sliders.map((slider, index) => (
             <SwiperSlide key={slider._id || index}>
-              <div className="relative w-full aspect-[21/9] sm:aspect-[18/7] lg:aspect-[21/7] overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
+              <div className="relative w-full aspect-[21/12] sm:aspect-[18/7] lg:aspect-[21/7] overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
                 {/* Multi-layer gradient overlay for depth */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent z-10" />
                 <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-transparent z-10" />
