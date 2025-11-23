@@ -725,7 +725,7 @@ export default function SearchNavbar() {
             {/* Action Buttons - Desktop */}
             <div className="flex items-center gap-3 flex-shrink-0">
               {/* Sell Button */}
-              <Link href="/seller/dashboard">
+              <Link href="/seller/login">
                 <Button
                   startContent={<SellIcon />}
                   className="bg-gradient-to-br from-blue-600 to-indigo-600 text-white font-semibold hover:shadow-lg transition-all hover:scale-105 px-6 rounded-md"
