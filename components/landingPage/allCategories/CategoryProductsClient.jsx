@@ -33,14 +33,14 @@ function CategoryHeader({ categoryId, categoryName }) {
   return (
     <div className="flex justify-between items-center mb-10">
       <div>
-        <h2 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 mb-3">
+        <h2 className="text-lg md:text-xl lg:text-3xl xl:text-3xl font-bold text-gray-900 mb-3">
           {categoryName} <span className="text-green-600">Products</span>
         </h2>
         <div className="h-1 w-24 bg-gradient-to-r from-green-600 to-green-400 rounded-md"></div>
       </div>
 
       <Link href={`/category/${categoryId}`}>
-        <button className="bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white py-2 px-5 rounded-md transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+        <button className="bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white px-3 py-1 lg:py-2 lg:px-5 rounded-md transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-sm lg:text-base whitespace-nowrap">
           All Products→
         </button>
       </Link>
