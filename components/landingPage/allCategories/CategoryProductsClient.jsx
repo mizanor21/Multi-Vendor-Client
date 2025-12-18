@@ -33,15 +33,15 @@ function CategoryHeader({ categoryId, categoryName }) {
   return (
     <div className="flex justify-between items-center mb-10">
       <div>
-        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3">
+        <h2 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 mb-3">
           {categoryName} <span className="text-green-600">Products</span>
         </h2>
         <div className="h-1 w-24 bg-gradient-to-r from-green-600 to-green-400 rounded-md"></div>
       </div>
 
       <Link href={`/category/${categoryId}`}>
-        <button className="bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white font-bold py-4 px-10 rounded-md transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-          View All Products →
+        <button className="bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white py-2 px-5 rounded-md transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+          All Products→
         </button>
       </Link>
     </div>
@@ -56,7 +56,8 @@ function ProductCard({ product }) {
 
   return (
     <Link href={`/client/product/${product._id}`}>
-      <div className="group relative bg-white rounded-md overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border-gray-100 cursor-pointer">
+      <div className="group relative h-full flex flex-col bg-white overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100/80 cursor-pointer">
+
         {/* Discount Badge */}
         {product.discountPercent > 0 && (
           <DiscountBadge discount={product.discountPercent} />
@@ -71,7 +72,7 @@ function ProductCard({ product }) {
         <ProductImage image={product.images[0]} name={product.productName} />
 
         {/* Product Info */}
-        <div className="px-3 pt-3">
+        <div className="px-4 pt-4 flex-1">
           <ProductName name={truncatedName} />
           <PriceSection
             price={product.price}
@@ -81,16 +82,15 @@ function ProductCard({ product }) {
           />
         </div>
 
-        {/* View Details Button - Full Width at Bottom */}
-        {/* opacity-0 invisible group-hover:opacity-100 group-hover:visible transform translate-y-2 group-hover:translate-y-0 transition-all duration-300  */}
-        <div className="px-3 pb-3">
-          <div className="w-full text-center py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-md shadow-md">
+        {/* View Details Button - Fixed at Bottom */}
+        <div className="px-4 py-4 mt-auto">
+          <div className="w-full flex items-center justify-center py-2 bg-gradient-to-r from-emerald-400 to-indigo-500 text-sm text-white rounded shadow-md shadow-blue-500/25 hover:shadow-blue-500/40 transition-all duration-300">
             View Details
           </div>
         </div>
 
-        {/* Bottom accent line */}
-        <div className="h-1 bg-gradient-to-r from-green-400 via-blue-400 to-purple-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+        {/* Bottom accent line
+        <div className="h-1 bg-gradient-to-r from-emerald-400 via-indigo-500 to-purple-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div> */}
       </div>
     </Link>
   );
@@ -179,18 +179,6 @@ function PriceSection({
         </div>
       )}
     </div>
-  );
-}
-
-// View Details Button Component
-function ViewDetailsButton({ productId }) {
-  return (
-    <Link href={`/client/product/${productId}`} className="w-full">
-      <button className="w-full bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white py-2.5 px-4 rounded-md text-sm font-semibold transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg flex items-center justify-center gap-2 group">
-        <Eye className="w-4 h-4 group-hover:scale-110" />
-        <span>View Details</span>
-      </button>
-    </Link>
   );
 }
 
