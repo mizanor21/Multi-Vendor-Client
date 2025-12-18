@@ -1,7 +1,6 @@
 "use client";
 import { useGetAllCategoriesQuery } from "@/app/api/categorySlice";
 import { useGetAllCategoriesProductQuery } from "@/app/api/productSlice";
-import Loader from "@/utils/loader/Loader";
 import React, { useState, useMemo, useEffect } from "react";
 import { Breadcrumbs, BreadcrumbItem } from "@heroui/breadcrumbs";
 import ProductCard from "../products/productCard/ProductCard";

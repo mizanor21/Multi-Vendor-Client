@@ -11,7 +11,6 @@ import {
 } from "@/app/api/productSlice";
 import Loader from "@/utils/loader/Loader";
 import { Button, Chip } from "@heroui/react";
-import { SwiperSlide } from "swiper/react";
 import TkIcon from "@/public/TkIcon";
 import moment from "moment";
 import { useRouter } from "next/navigation";
@@ -19,7 +18,6 @@ import { useRouter } from "next/navigation";
 import { FaStar, FaRegStar, FaStarHalfAlt } from "react-icons/fa";
 import { MdZoomIn } from "react-icons/md";
 import Swal from "sweetalert2";
-import { jwtDecode } from "jwt-decode";
 
 import Cookies from "js-cookie";
 import { useAddToCartMutation } from "@/app/api/cartApiSlice";
@@ -33,9 +31,6 @@ const BreadcrumbItem = dynamic(
   () => import("@heroui/breadcrumbs").then((mod) => mod.BreadcrumbItem),
   { ssr: false }
 );
-const Image = dynamic(() => import("@heroui/image").then((mod) => mod.Image), {
-  ssr: false,
-});
 
 // Load other components dynamically
 const SimilarProducts = dynamic(() =>
@@ -65,7 +60,7 @@ export default function SingleProduct() {
     getSingleProductData?.product?.productName
   );
 
-  const [addToCart, { isLoading: addToCartLoader }] = useAddToCartMutation();
+  const [addToCart] = useAddToCartMutation();
 
   //get all match products array...
   const products = getAllMatchedProducts?.products || [];
