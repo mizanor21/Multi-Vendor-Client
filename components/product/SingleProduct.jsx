@@ -16,13 +16,13 @@ import moment from "moment";
 import { useRouter } from "next/navigation";
 
 import { FaStar, FaRegStar, FaStarHalfAlt } from "react-icons/fa";
-import { MdZoomIn } from "react-icons/md";
+import { MdZoomIn, MdZoomOut, MdClose } from "react-icons/md";
 import Swal from "sweetalert2";
 
 import Cookies from "js-cookie";
 import { useAddToCartMutation } from "@/app/api/cartApiSlice";
 
-// Dynamic imports for client-side only components
+// Dynamic imports
 const Breadcrumbs = dynamic(
   () => import("@heroui/breadcrumbs").then((mod) => mod.Breadcrumbs),
   { ssr: false }
@@ -32,7 +32,6 @@ const BreadcrumbItem = dynamic(
   { ssr: false }
 );
 
-// Load other components dynamically
 const SimilarProducts = dynamic(() =>
   import("@/components/products/similarProducts/SimilarProducts")
 );
@@ -62,7 +61,6 @@ export default function SingleProduct() {
 
   const [addToCart] = useAddToCartMutation();
 
-  //get all match products array...
   const products = getAllMatchedProducts?.products || [];
 
   let minPrice = 0;
@@ -77,14 +75,25 @@ export default function SingleProduct() {
   const images = getSingleProductData?.product?.images || [];
   const [previewImage, setPreviewImage] = useState(images[0] || null);
 
-  // Enhanced zoom states
-  const [isZooming, setIsZooming] = useState(false);
-  const [zoomPosition, setZoomPosition] = useState({ x: 50, y: 50 });
-  const [showZoomPanel, setShowZoomPanel] = useState(false);
+  // Hybrid Zoom States
   const [isMobile, setIsMobile] = useState(false);
+  
+  // External Zoom (Desktop)
+  const [isExternalZooming, setIsExternalZooming] = useState(false);
+  const [externalZoomPosition, setExternalZoomPosition] = useState({ x: 50, y: 50 });
+  const [showExternalPanel, setShowExternalPanel] = useState(false);
+  const [externalZoomLevel, setExternalZoomLevel] = useState(2);
+  
+  // Internal Zoom (Mobile)
+  const [isInternalZooming, setIsInternalZooming] = useState(false);
+  const [internalZoomLevel, setInternalZoomLevel] = useState(1);
+  const [internalPosition, setInternalPosition] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
 
   const imageContainerRef = useRef(null);
-  const zoomPanelRef = useRef(null);
+  const externalPanelRef = useRef(null);
+  const hoverTimeoutRef = useRef(null);
 
   useEffect(() => {
     setIsMounted(true);
@@ -92,7 +101,6 @@ export default function SingleProduct() {
       setPreviewImage(getSingleProductData.product.images[0]);
     }
 
-    // Check if mobile device
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 1024);
     };
@@ -100,7 +108,12 @@ export default function SingleProduct() {
     checkMobile();
     window.addEventListener('resize', checkMobile);
 
-    return () => window.removeEventListener('resize', checkMobile);
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current);
+      }
+    };
   }, [getSingleProductData]);
 
   if (!isMounted) return <Loader />;
@@ -115,68 +128,120 @@ export default function SingleProduct() {
     );
   }
 
-  const handleImageSelect = (img) => {
-    setPreviewImage(img);
-    setIsZooming(false);
-    setShowZoomPanel(false);
-  };
-
-  const handleMouseMove = (e) => {
+  // ==================== EXTERNAL ZOOM HANDLERS (DESKTOP) ====================
+  const handleExternalMouseMove = (e) => {
     if (!imageContainerRef.current || isMobile) return;
 
     const container = imageContainerRef.current;
     const rect = container.getBoundingClientRect();
-
-    // Calculate mouse position relative to the image
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    // Calculate percentage position (clamped between 0 and 100)
     const xPercent = Math.max(0, Math.min(100, (x / rect.width) * 100));
     const yPercent = Math.max(0, Math.min(100, (y / rect.height) * 100));
 
-    setZoomPosition({ x: xPercent, y: yPercent });
+    setExternalZoomPosition({ x: xPercent, y: yPercent });
   };
 
-  const handleMouseEnter = () => {
+  const handleExternalMouseEnter = () => {
     if (!isMobile && previewImage) {
-      setIsZooming(true);
-      setShowZoomPanel(true);
+      hoverTimeoutRef.current = setTimeout(() => {
+        setIsExternalZooming(true);
+        setShowExternalPanel(true);
+      }, 200);
     }
   };
 
-  const handleMouseLeave = () => {
-    setIsZooming(false);
-    setShowZoomPanel(false);
+  const handleExternalMouseLeave = () => {
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+    }
+    setIsExternalZooming(false);
+    setShowExternalPanel(false);
+  };
+
+  const handleExternalZoomIn = () => {
+    setExternalZoomLevel(prev => Math.min(prev + 0.5, 4));
+  };
+
+  const handleExternalZoomOut = () => {
+    setExternalZoomLevel(prev => Math.max(prev - 0.5, 1.5));
+  };
+
+  // ==================== INTERNAL ZOOM HANDLERS (MOBILE) ====================
+  const handleInternalImageClick = () => {
+    if (isMobile && previewImage) {
+      setIsInternalZooming(true);
+      setInternalZoomLevel(2);
+      setInternalPosition({ x: 0, y: 0 });
+    }
+  };
+
+  const handleInternalZoomIn = () => {
+    setInternalZoomLevel(prev => Math.min(prev + 0.5, 4));
+  };
+
+  const handleInternalZoomOut = () => {
+    setInternalZoomLevel(prev => {
+      const newZoom = Math.max(prev - 0.5, 1);
+      if (newZoom === 1) {
+        setIsInternalZooming(false);
+        setInternalPosition({ x: 0, y: 0 });
+      }
+      return newZoom;
+    });
+  };
+
+  const handleInternalClose = () => {
+    setIsInternalZooming(false);
+    setInternalZoomLevel(1);
+    setInternalPosition({ x: 0, y: 0 });
   };
 
   const handleTouchStart = (e) => {
-    if (!isMobile || !previewImage) return;
-    setShowZoomPanel(true);
+    if (!isInternalZooming) return;
+    
+    const touch = e.touches[0];
+    setIsDragging(true);
+    setDragStart({
+      x: touch.clientX - internalPosition.x,
+      y: touch.clientY - internalPosition.y
+    });
   };
 
   const handleTouchMove = (e) => {
-    if (!imageContainerRef.current || !isMobile) return;
-
+    if (!isInternalZooming || !isDragging) return;
+    
+    e.preventDefault();
     const touch = e.touches[0];
-    const container = imageContainerRef.current;
-    const rect = container.getBoundingClientRect();
-
-    const x = touch.clientX - rect.left;
-    const y = touch.clientY - rect.top;
-
-    const xPercent = Math.max(0, Math.min(100, (x / rect.width) * 100));
-    const yPercent = Math.max(0, Math.min(100, (y / rect.height) * 100));
-
-    setZoomPosition({ x: xPercent, y: yPercent });
+    
+    const newX = touch.clientX - dragStart.x;
+    const newY = touch.clientY - dragStart.y;
+    
+    // Constrain movement
+    const maxX = (internalZoomLevel - 1) * 150;
+    const maxY = (internalZoomLevel - 1) * 150;
+    
+    setInternalPosition({
+      x: Math.max(-maxX, Math.min(maxX, newX)),
+      y: Math.max(-maxY, Math.min(maxY, newY))
+    });
   };
 
   const handleTouchEnd = () => {
-    if (isMobile) {
-      setShowZoomPanel(false);
-    }
+    setIsDragging(false);
   };
 
+  const handleImageSelect = (img) => {
+    setPreviewImage(img);
+    setIsExternalZooming(false);
+    setShowExternalPanel(false);
+    setIsInternalZooming(false);
+    setInternalZoomLevel(1);
+    setInternalPosition({ x: 0, y: 0 });
+  };
+
+  // ==================== OTHER HANDLERS ====================
   const filterCategory = getAllCategories?.find(
     (category) => category?._id === getSingleProductData?.product?.category
   );
@@ -190,24 +255,8 @@ export default function SingleProduct() {
 
   const cleanHTML = sanitizeHtml(getSingleProductData?.product?.description, {
     allowedTags: [
-      "h1",
-      "h2",
-      "h3",
-      "h4",
-      "h5",
-      "h6",
-      "p",
-      "b",
-      "strong",
-      "i",
-      "em",
-      "u",
-      "ul",
-      "ol",
-      "li",
-      "a",
-      "br",
-      "img",
+      "h1", "h2", "h3", "h4", "h5", "h6", "p", "b", "strong", "i", "em", "u",
+      "ul", "ol", "li", "a", "br", "img",
     ],
     allowedAttributes: {
       a: ["href", "name", "target"],
@@ -302,9 +351,7 @@ export default function SingleProduct() {
 
             {filterSubCategory && (
               <BreadcrumbItem
-                className={
-                  !filterMicroCategory ? "text-[#006fee] font-bold" : ""
-                }
+                className={!filterMicroCategory ? "text-[#006fee] font-bold" : ""}
               >
                 <p className="text-[#006fee]">{filterSubCategory.name}</p>
               </BreadcrumbItem>
@@ -321,133 +368,189 @@ export default function SingleProduct() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-5">
           {/* Image Gallery Section */}
           <div className="flex flex-col lg:flex-row gap-4">
-            {/* Main Image with Zoom */}
-            <div className="order-1 lg:order-2 flex-1 relative">
-              <div
-                ref={imageContainerRef}
-                className={`relative flex justify-center items-center p-4 md:p-10 bg-white rounded-md shadow-lg overflow-hidden ${!isMobile ? 'cursor-crosshair' : 'cursor-pointer'
-                  }`}
-                onMouseMove={handleMouseMove}
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-                onTouchStart={handleTouchStart}
-                onTouchMove={handleTouchMove}
-                onTouchEnd={handleTouchEnd}
-                style={{ minHeight: '400px' }}
-              >
-                {previewImage ? (
-                  <>
+            {/* Thumbnail Column */}
+            {isMounted && images?.length > 0 && (
+              <div className="order-2 lg:order-1 flex lg:flex-col gap-3 overflow-x-auto lg:overflow-y-auto py-4 lg:py-0 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 lg:max-h-[500px]">
+                {images.map((img, index) => (
+                  <div
+                    key={index}
+                    onClick={() => handleImageSelect(img)}
+                    className={`flex-shrink-0 min-w-[70px] w-[70px] h-[70px] rounded-lg border-2 cursor-pointer transition-all duration-200 overflow-hidden ${
+                      previewImage === img
+                        ? "border-blue-500 shadow-lg scale-105 ring-2 ring-blue-200"
+                        : "border-gray-200 hover:border-blue-300 hover:scale-105"
+                    }`}
+                  >
                     <img
-                      src={previewImage}
-                      alt="Product preview"
-                      className="max-w-full max-h-[500px] object-contain select-none"
-                      draggable="false"
+                      src={img}
+                      alt={`Thumbnail ${index + 1}`}
+                      className="w-full h-full object-cover"
                     />
-
-                    {/* Hover indicator icon */}
-                    {!isMobile && !isZooming && (
-                      <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-md p-3 shadow-lg">
-                        <MdZoomIn className="text-2xl text-blue-500" />
-                      </div>
-                    )}
-
-                    {/* Magnifying Lens Overlay - Desktop only */}
-                    {!isMobile && isZooming && (
-                      <div
-                        className="absolute w-32 h-32 border-4 border-blue-500 rounded-md pointer-events-none bg-white/10 backdrop-blur-[1px] shadow-xl z-10"
-                        style={{
-                          left: `${zoomPosition.x}%`,
-                          top: `${zoomPosition.y}%`,
-                          transform: 'translate(-50%, -50%)',
-                          boxShadow: '0 0 0 9999px rgba(0, 0, 0, 0.3)',
-                        }}
-                      >
-                        <div className="absolute inset-0 border-2 border-white rounded-md" />
-                      </div>
-                    )}
-
-                    {/* Mobile tap instruction */}
-                    {isMobile && !showZoomPanel && (
-                      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/70 text-white px-4 py-2 rounded-md text-sm">
-                        Tap and hold to zoom
-                      </div>
-                    )}
-                  </>
-                ) : (
-                  <div className="w-full h-full bg-gray-100 rounded-md animate-pulse" />
-                )}
+                  </div>
+                ))}
               </div>
+            )}
 
-              {/* Thumbnail Column - Vertical on desktop, Horizontal on mobile */}
-              {isMounted && images?.length > 0 && (
-                <div className="order-2 lg:order-1 flex gap-3 py-4 lg:pb-0 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
-                  {images.map((img, index) => (
-                    <div
-                      key={index}
-                      onClick={() => handleImageSelect(img)}
-                      className={`flex-shrink-0 min-w-[80px] w-20 h-20 rounded-md border-2 cursor-pointer transition-all duration-200 overflow-hidden ${previewImage === img
-                          ? "border-blue-500 shadow-lg scale-105"
-                          : "border-gray-200 hover:border-blue-300 hover:scale-105"
-                        }`}
-                    >
+            {/* Main Image Container */}
+            <div className="order-1 lg:order-2 flex-1 relative">
+              {/* DESKTOP: External Zoom */}
+              {!isMobile && (
+                <div
+                  ref={imageContainerRef}
+                  className="relative flex justify-center items-center p-4 md:p-10 bg-white rounded-lg shadow-lg overflow-hidden cursor-crosshair"
+                  onMouseMove={handleExternalMouseMove}
+                  onMouseEnter={handleExternalMouseEnter}
+                  onMouseLeave={handleExternalMouseLeave}
+                  style={{ minHeight: '400px' }}
+                >
+                  {previewImage ? (
+                    <>
                       <img
-                        src={img}
-                        alt={`Thumbnail ${index + 1}`}
-                        className="w-full h-full object-cover"
+                        src={previewImage}
+                        alt="Product preview"
+                        className="max-w-full max-h-[500px] object-contain select-none"
+                        draggable="false"
                       />
-                    </div>
-                  ))}
+
+                      {/* Zoom Controls - Desktop */}
+                      <div className="absolute top-4 right-4 flex flex-col gap-2">
+                        {!isExternalZooming && (
+                          <div className="bg-white/95 backdrop-blur-sm rounded-lg p-2 shadow-lg transition-all hover:scale-105">
+                            <MdZoomIn className="text-xl text-blue-500" />
+                          </div>
+                        )}
+                        
+                        {isExternalZooming && (
+                          <div className="bg-white/95 backdrop-blur-sm rounded-lg p-2 shadow-lg space-y-1">
+                            <button
+                              onClick={handleExternalZoomIn}
+                              className="block p-1 hover:bg-blue-50 rounded transition-colors"
+                            >
+                              <MdZoomIn className="text-lg text-blue-500" />
+                            </button>
+                            <div className="border-t border-gray-200" />
+                            <button
+                              onClick={handleExternalZoomOut}
+                              className="block p-1 hover:bg-blue-50 rounded transition-colors"
+                            >
+                              <MdZoomOut className="text-lg text-blue-500" />
+                            </button>
+                            <div className="text-center text-xs text-gray-600 px-1">
+                              {externalZoomLevel.toFixed(1)}x
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Magnifying Lens */}
+                      {isExternalZooming && (
+                        <div
+                          className="absolute w-24 h-24 border-3 border-blue-500 rounded-lg pointer-events-none bg-white/5 backdrop-blur-[0.5px] shadow-2xl z-10 transition-all duration-100"
+                          style={{
+                            left: `${externalZoomPosition.x}%`,
+                            top: `${externalZoomPosition.y}%`,
+                            transform: 'translate(-50%, -50%)',
+                            boxShadow: '0 0 0 2px rgba(59, 130, 246, 0.3), 0 0 0 9999px rgba(0, 0, 0, 0.2)',
+                          }}
+                        >
+                          <div className="absolute inset-0 border-2 border-white/50 rounded-lg" />
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <div className="w-full h-full bg-gray-100 rounded-lg animate-pulse" />
+                  )}
                 </div>
               )}
 
-              {/* Zoomed Preview Panel - Responsive positioning */}
-              {showZoomPanel && previewImage && (
-                <>
-                  {/* Desktop - Right side panel */}
-                  {!isMobile && (
-                    <div
-                      ref={zoomPanelRef}
-                      className="hidden lg:block absolute left-full ml-4 top-0 w-[750px] h-[600px] bg-white rounded-md shadow-2xl overflow-hidden border-2 border-gray-200 z-50"
-                      style={{
-                        backgroundImage: `url(${previewImage})`,
-                        backgroundSize: '300%',
-                        backgroundPosition: `${zoomPosition.x}% ${zoomPosition.y}%`,
-                        backgroundRepeat: 'no-repeat',
-                      }}
-                    />
-                  )}
-
-                  {/* Mobile - Full screen overlay */}
-                  {isMobile && (
-                    <div className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4">
-                      <button
-                        onClick={() => setShowZoomPanel(false)}
-                        className="absolute top-4 right-4 bg-white rounded-md p-2 shadow-lg z-10"
-                      >
-                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                      </button>
-
-                      <div
-                        className="w-full h-full max-w-4xl max-h-4xl"
+              {/* MOBILE: Internal Zoom */}
+              {isMobile && (
+                <div
+                  className="relative flex justify-center items-center p-4 bg-white rounded-lg shadow-lg overflow-hidden"
+                  style={{ minHeight: '400px' }}
+                  onClick={!isInternalZooming ? handleInternalImageClick : undefined}
+                >
+                  {previewImage ? (
+                    <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
+                      <img
+                        src={previewImage}
+                        alt="Product preview"
+                        className="max-w-full max-h-[500px] object-contain select-none transition-transform duration-200"
+                        draggable="false"
                         style={{
-                          backgroundImage: `url(${previewImage})`,
-                          backgroundSize: '250%',
-                          backgroundPosition: `${zoomPosition.x}% ${zoomPosition.y}%`,
-                          backgroundRepeat: 'no-repeat',
+                          transform: `scale(${internalZoomLevel}) translate(${internalPosition.x / internalZoomLevel}px, ${internalPosition.y / internalZoomLevel}px)`,
+                          cursor: isInternalZooming ? 'grab' : 'zoom-in'
                         }}
+                        onTouchStart={handleTouchStart}
+                        onTouchMove={handleTouchMove}
+                        onTouchEnd={handleTouchEnd}
                       />
 
-                      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white/90 px-4 py-2 rounded-md text-sm">
-                        Move finger to explore
-                      </div>
+                      {/* Mobile Zoom Controls */}
+                      {isInternalZooming && (
+                        <div className="absolute top-4 right-4 flex flex-col gap-2 z-20">
+                          <button
+                            onClick={handleInternalClose}
+                            className="bg-white/95 backdrop-blur-sm rounded-lg p-2 shadow-lg"
+                          >
+                            <MdClose className="text-xl text-red-500" />
+                          </button>
+                          <button
+                            onClick={handleInternalZoomIn}
+                            className="bg-white/95 backdrop-blur-sm rounded-lg p-2 shadow-lg"
+                          >
+                            <MdZoomIn className="text-xl text-blue-500" />
+                          </button>
+                          <button
+                            onClick={handleInternalZoomOut}
+                            className="bg-white/95 backdrop-blur-sm rounded-lg p-2 shadow-lg"
+                          >
+                            <MdZoomOut className="text-xl text-blue-500" />
+                          </button>
+                          <div className="bg-white/95 backdrop-blur-sm rounded-lg p-2 shadow-lg text-xs text-center font-semibold">
+                            {internalZoomLevel.toFixed(1)}x
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Tap to zoom hint */}
+                      {!isInternalZooming && (
+                        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/70 text-white px-4 py-2 rounded-lg text-sm backdrop-blur-sm">
+                          Tap to zoom
+                        </div>
+                      )}
+
+                      {/* Drag hint */}
+                      {isInternalZooming && (
+                        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white/90 px-4 py-2 rounded-lg text-sm backdrop-blur-sm shadow-lg">
+                          <span className="font-semibold">{internalZoomLevel.toFixed(1)}x</span> - Drag to explore
+                        </div>
+                      )}
                     </div>
+                  ) : (
+                    <div className="w-full h-full bg-gray-100 rounded-lg animate-pulse" />
                   )}
-                </>
+                </div>
+              )}
+
+              {/* External Zoom Panel - Desktop Only */}
+              {!isMobile && showExternalPanel && previewImage && (
+                <div
+                  ref={externalPanelRef}
+                  className="absolute left-full ml-6 top-0 w-[650px] h-[580px] bg-white rounded-lg shadow-2xl overflow-hidden border-2 border-gray-200 z-50 transition-all duration-200"
+                  style={{
+                    backgroundImage: `url(${previewImage})`,
+                    backgroundSize: `${externalZoomLevel * 100}%`,
+                    backgroundPosition: `${externalZoomPosition.x}% ${externalZoomPosition.y}%`,
+                    backgroundRepeat: 'no-repeat',
+                  }}
+                >
+                  <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-md px-3 py-1.5 text-xs font-semibold text-gray-700 shadow-lg">
+                    {externalZoomLevel.toFixed(1)}x Zoom
+                  </div>
+                </div>
               )}
             </div>
-
           </div>
 
           {/* Product Info */}
@@ -509,7 +612,7 @@ export default function SingleProduct() {
             </div>
 
             {/* Features */}
-            <div className="bg-gray-50 rounded-md p-4 space-y-2">
+            <div className="bg-gradient-to-br from-gray-50 to-blue-50/30 rounded-lg p-4 space-y-2 border border-gray-100">
               <h3 className="font-semibold text-base md:text-lg mb-3">Key Features</h3>
               <ul className="space-y-2 text-sm md:text-base text-gray-700">
                 <li className="flex items-start">
@@ -531,7 +634,7 @@ export default function SingleProduct() {
 
         {/* Price Section */}
         <div className="mt-12 mb-8">
-          <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-md p-6 md:p-8">
+          <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-lg p-6 md:p-8">
             <h2 className="text-center text-2xl md:text-3xl lg:text-4xl font-bold text-[#16a34a] mb-6">
               Price in Bangladesh
             </h2>
@@ -550,8 +653,8 @@ export default function SingleProduct() {
             </p>
           </div>
 
-          {/* Sellers Table - Responsive */}
-          <div className="mt-8 overflow-x-auto shadow-xl rounded-md">
+          {/* Sellers Table */}
+          <div className="mt-8 overflow-x-auto shadow-xl rounded-lg">
             <table className="w-full text-xs md:text-sm text-left min-w-[800px]">
               <thead className="text-xs uppercase bg-gradient-to-r from-gray-50 to-gray-100">
                 <tr>
@@ -582,15 +685,16 @@ export default function SingleProduct() {
                 {getAllMatchedProducts?.products?.map((product, index) => (
                   <tr
                     key={product?._id}
-                    className={`border-b transition-colors ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'
-                      } hover:bg-blue-50`}
+                    className={`border-b transition-colors ${
+                      index % 2 === 0 ? 'bg-white' : 'bg-gray-50'
+                    } hover:bg-blue-50`}
                   >
                     <td className="px-3 md:px-6 py-3 md:py-4">
                       <div className="flex items-center gap-2 md:gap-3">
                         <img
                           src={product?.stall?.stallImage}
                           alt="seller"
-                          className="w-10 h-10 md:w-12 md:h-12 rounded-md object-cover border-2 border-gray-200 flex-shrink-0"
+                          className="w-10 h-10 md:w-12 md:h-12 rounded-lg object-cover border-2 border-gray-200 flex-shrink-0"
                         />
                         <p className="font-medium text-gray-900 text-xs md:text-sm truncate max-w-[100px] md:max-w-none">
                           {product?.stall?.stallOwnerName}
@@ -714,7 +818,7 @@ export default function SingleProduct() {
             Full Specifications
           </h2>
           <div
-            className="bg-white rounded-md shadow-xl p-4 md:p-6 lg:p-8 prose max-w-none"
+            className="bg-white rounded-lg shadow-xl p-4 md:p-6 lg:p-8 prose max-w-none"
             dangerouslySetInnerHTML={{ __html: cleanHTML }}
           />
         </div>
