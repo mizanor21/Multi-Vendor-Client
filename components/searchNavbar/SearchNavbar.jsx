@@ -177,10 +177,7 @@ export default function SearchNavbar() {
 
       {/* Main Navbar */}
       <div
-        className={`w-full fixed top-0 left-0 right-0 z-[999] transition-all duration-300 ${scrolled
-          ? "bg-white/98 backdrop-blur-xl"
-          : "bg-white"
-          }`}
+        className={`w-full fixed top-0 left-0 right-0 z-[999] transition-all duration-300 bg-white`}
       >
         <div className="container mx-auto px-4">
           {/* Mobile Layout */}
