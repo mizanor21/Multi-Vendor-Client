@@ -21,7 +21,8 @@ export default function ProductCard({ product }) {
 
   return (
     <Link href={`/client/product/${product._id}`}>
-      <div className="group relative bg-white rounded-md overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border-gray-100 cursor-pointer">
+      <div className="group relative h-full flex flex-col bg-white overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100/80 cursor-pointer">
+
         {/* Discount Badge */}
         {product.discountPercent > 0 && (
           <DiscountBadge discount={product.discountPercent} />
@@ -36,7 +37,7 @@ export default function ProductCard({ product }) {
         <ProductImage image={product.images[0]} name={product.productName} />
 
         {/* Product Info */}
-        <div className="px-3 pt-3">
+        <div className="px-4 pt-4 flex-1">
           <ProductName name={truncatedName} />
           <PriceSection
             price={product.price}
@@ -46,15 +47,15 @@ export default function ProductCard({ product }) {
           />
         </div>
 
-        {/* View Details Button - Full Width at Bottom */}
-        <div className="px-3 pb-3">
-          <div className="w-full text-center py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-md shadow-md">
+        {/* View Details Button - Fixed at Bottom */}
+        <div className="px-4 py-4 mt-auto">
+          <div className="w-full flex items-center justify-center py-2 bg-gradient-to-r from-emerald-400 to-indigo-500 text-sm text-white rounded shadow-md shadow-blue-500/25 hover:shadow-blue-500/40 transition-all duration-300">
             View Details
           </div>
         </div>
 
         {/* Bottom accent line */}
-        <div className="h-1 bg-gradient-to-r from-green-400 via-blue-400 to-purple-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+        <div className="h-1 bg-gradient-to-r from-emerald-400 via-indigo-500 to-purple-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
       </div>
     </Link>
   );

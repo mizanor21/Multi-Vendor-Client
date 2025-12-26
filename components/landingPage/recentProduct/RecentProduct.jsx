@@ -6,7 +6,7 @@ import ProductCard from "./ProductCard";
 async function getRecentProducts() {
   try {
     const res = await fetch(
-      "https://multi-vendor-backend-orpin.vercel.app/api/products",
+      `${process.env.NEXT_PUBLIC_API_URL}/products`,
       {
         next: { revalidate: 300 }, // Revalidate every 300 seconds (ISR)
       }
@@ -102,7 +102,7 @@ export default async function RecentProduct() {
         {/* Header Section */}
         <div className="flex justify-between items-center mb-10">
           <div>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3">
+            <h2 className="text-lg md:text-xl lg:text-3xl xl:text-3xl font-bold text-gray-900 mb-3">
               Recent <span className="text-green-600">Products</span>
             </h2>
             <div className="h-1 w-24 bg-gradient-to-r from-green-600 to-green-400 rounded-md"></div>
@@ -110,9 +110,9 @@ export default async function RecentProduct() {
 
           {/* View All Button */}
           {approvedProducts?.length > 0 && (
-            <Link href="/products">
-              <button className="bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white font-bold py-4 px-10 rounded-md transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-                View All Products →
+            <Link href="#">
+              <button className="bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white px-3 py-1 lg:py-2 lg:px-5 rounded-md transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-sm lg:text-base whitespace-nowrap">
+                All Products →
               </button>
             </Link>
           )}
