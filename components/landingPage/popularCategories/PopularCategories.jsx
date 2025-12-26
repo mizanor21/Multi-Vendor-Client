@@ -24,7 +24,7 @@ export default function PopularCategories() {
   const categories = [
     {
       name: "Computers",
-      href: "/categories/computer",
+      href: "#",
       icon: ComputerIcon,
       gradient: "from-blue-500 to-cyan-500",
       bgGradient: "from-blue-50 to-cyan-50",
@@ -32,7 +32,7 @@ export default function PopularCategories() {
     },
     {
       name: "Electronics",
-      href: "/categories/electronics",
+      href: "#",
       icon: ElectronicsIcon,
       gradient: "from-purple-500 to-pink-500",
       bgGradient: "from-purple-50 to-pink-50",
@@ -40,7 +40,7 @@ export default function PopularCategories() {
     },
     {
       name: "Security",
-      href: "/categories/security",
+      href: "#",
       icon: CameraIcon,
       gradient: "from-green-500 to-emerald-500",
       bgGradient: "from-green-50 to-emerald-50",
@@ -48,7 +48,7 @@ export default function PopularCategories() {
     },
     {
       name: "Travel",
-      href: "/categories/travel",
+      href: "#",
       icon: TravelIcon,
       gradient: "from-orange-500 to-amber-500",
       bgGradient: "from-orange-50 to-amber-50",
@@ -56,7 +56,7 @@ export default function PopularCategories() {
     },
     {
       name: "Health",
-      href: "/categories/health",
+      href: "#",
       icon: HealthIcon,
       gradient: "from-red-500 to-rose-500",
       bgGradient: "from-red-50 to-rose-50",
@@ -64,7 +64,7 @@ export default function PopularCategories() {
     },
     {
       name: "Car & Bike",
-      href: "/categories/car-bike",
+      href: "#",
       icon: CarIcon,
       gradient: "from-slate-600 to-slate-800",
       bgGradient: "from-slate-50 to-slate-100",
@@ -72,7 +72,7 @@ export default function PopularCategories() {
     },
     {
       name: "Furniture",
-      href: "/categories/furniture",
+      href: "#",
       icon: FurnitureIcon,
       gradient: "from-amber-600 to-yellow-600",
       bgGradient: "from-amber-50 to-yellow-50",
@@ -80,7 +80,7 @@ export default function PopularCategories() {
     },
     {
       name: "Real Estate",
-      href: "/categories/real-estate",
+      href: "#",
       icon: BuildingIcon,
       gradient: "from-indigo-500 to-blue-500",
       bgGradient: "from-indigo-50 to-blue-50",
@@ -88,7 +88,7 @@ export default function PopularCategories() {
     },
     {
       name: "Books",
-      href: "/categories/books",
+      href: "#",
       icon: BookIcon,
       gradient: "from-teal-500 to-cyan-500",
       bgGradient: "from-teal-50 to-cyan-50",
@@ -101,12 +101,8 @@ export default function PopularCategories() {
       {/* Header Section */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
-          <div className="relative">
-            <Sparkles className="w-8 h-8 text-yellow-500 animate-pulse" />
-            <div className="absolute inset-0 bg-yellow-500/20 blur-xl rounded-md"></div>
-          </div>
           <div>
-            <h2 className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+            <h2 className="text-lg md:text-xl lg:text-3xl xl:text-3xl font-bold text-gray-900">
               Popular Categories
             </h2>
             <p className="text-sm text-gray-500 mt-1">
@@ -114,12 +110,10 @@ export default function PopularCategories() {
             </p>
           </div>
         </div>
-        <Link
-          href="/categories"
-          className="hidden md:flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold group transition-colors"
-        >
-          View All
-          <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+        <Link href="#">
+          <button className="bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white px-3 py-1 lg:py-2 lg:px-5 rounded-md transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-sm lg:text-base whitespace-nowrap">
+            All Categories →
+          </button>
         </Link>
       </div>
 
@@ -166,9 +160,8 @@ export default function PopularCategories() {
             <SwiperSlide key={index}>
               <Link href={category.href}>
                 <Card
-                  className={`group cursor-pointer border-2 border-transparent transition-all duration-300 h-full ${
-                    hoveredIndex === index ? " scale-105" : "shadow-md"
-                  }`}
+                  className={`group cursor-pointer border-2 border-transparent transition-all duration-300 h-full ${hoveredIndex === index ? " scale-105" : "shadow-md"
+                    }`}
                   onMouseEnter={() => setHoveredIndex(index)}
                   onMouseLeave={() => setHoveredIndex(null)}
                 >
