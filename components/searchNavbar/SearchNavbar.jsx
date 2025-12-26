@@ -4,7 +4,6 @@ import { Input } from "@heroui/input";
 import { Image } from "@heroui/image";
 import Link from "next/link";
 import { Button, Tooltip } from "@heroui/react";
-import SearchIcon from "@/public/SearchIcon";
 import LoginIcon from "@/public/LoginIcon";
 import SellIcon from "@/public/SellIcon";
 import CartIcon from "@/public/CartIcon";

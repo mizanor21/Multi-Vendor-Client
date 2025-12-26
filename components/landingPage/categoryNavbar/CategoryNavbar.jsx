@@ -102,7 +102,7 @@ export default function CategoryNavbar() {
         className={`w-full fixed left-0 z-50 transition-all duration-300 ${
           scrolled
             ? "lg:top-[80px] lg:bg-white/98 lg:backdrop-blur-xl lg:shadow-md"
-            : "lg:top-[80px] lg:bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 lg:shadow-lg"
+            : "lg:top-[80px] lg:bg-gradient-to-r from-emerald-400 to-indigo-400 text-sm lg:shadow-lg"
         }`}
       >
         <div className="container mx-auto px-2">
