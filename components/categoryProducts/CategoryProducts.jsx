@@ -4,6 +4,7 @@ import { useGetAllCategoriesProductQuery } from "@/app/api/productSlice";
 import React, { useState, useMemo, useEffect } from "react";
 import { Breadcrumbs, BreadcrumbItem } from "@heroui/breadcrumbs";
 import ProductCard from "../products/productCard/ProductCard";
+import Loader from "@/utils/loader/Loader";
 
 export default function CategoryProducts({
   categoryId,

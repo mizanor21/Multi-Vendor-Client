@@ -1,7 +1,9 @@
 import CategoryProducts from "@/components/categoryProducts/CategoryProducts";
 
-export default function page({ params }) {
-  const [categoryId, subcategoryId, microCategoryId] = params?.slug;
+export default async function page({ params }) {
+  const { slug } = await params;
+  const [categoryId, subcategoryId, microCategoryId] = slug || [];
+  
   return (
     <div>
       <CategoryProducts
