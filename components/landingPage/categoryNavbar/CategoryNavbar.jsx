@@ -101,8 +101,8 @@ export default function CategoryNavbar() {
       <nav
         className={`w-full fixed left-0 z-50 transition-all duration-300 ${
           scrolled
-            ? "lg:top-[80px] lg:bg-white/98 lg:backdrop-blur-xl lg:shadow-md"
-            : "lg:top-[80px] lg:bg-gradient-to-r from-emerald-400 to-indigo-400 text-sm lg:shadow-lg"
+            ? "lg:top-[80px] lg:backdrop-blur-3xl lg:shadow-md"
+            : "lg:top-[80px] lg:bg-gradient-to-r from-[#5478F7] to-[#766AF6] text-sm lg:shadow-lg"
         }`}
       >
         <div className="container mx-auto px-2">
@@ -163,13 +163,7 @@ export default function CategoryNavbar() {
                         onMouseLeave={handleCategoryMouseLeave}
                       >
                         <div className="w-80 bg-white rounded-md shadow-2xl border border-gray-100 overflow-hidden animate-slideDown">
-                          {/* Header */}
-                          <div className="px-5 py-3 bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-blue-100">
-                            <h3 className="font-bold text-gray-800 flex items-center gap-2">
-                              <Tag className="w-4 h-4 text-blue-600" />
-                              {category.name}
-                            </h3>
-                          </div>
+                          
                           
                           <div className="p-2 max-h-[70vh] overflow-y-auto custom-scrollbar">
                             {category.subcategories?.map((subcategory, index) => (
@@ -238,15 +232,6 @@ export default function CategoryNavbar() {
                               </div>
                             ))}
                           </div>
-
-                          {/* Footer - View All */}
-                          <Link
-                            href={`/category/${category._id}`}
-                            className="block px-5 py-3 bg-gradient-to-r from-blue-50 to-indigo-50 border-t border-blue-100 text-center text-blue-600 hover:text-blue-700 font-semibold text-sm transition-colors"
-                            onClick={handleNavigationClick}
-                          >
-                            View All in {category.name}
-                          </Link>
                         </div>
                       </div>
                     )}

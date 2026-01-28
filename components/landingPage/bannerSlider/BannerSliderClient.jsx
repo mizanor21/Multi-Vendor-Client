@@ -157,7 +157,7 @@ export default function BannerSliderClient({ sliders }) {
                 <Image
                   alt={slider?.title || `Slide ${index + 1}`}
                   src={slider.image}
-                  className="w-full h-full object-cover transform transition-all duration-[8000ms] ease-out group-hover:scale-110"
+                  className="w-full h-full object-cover transform transition-all duration-[8000ms] ease-out group-hover:scale-105"
                   loading={index === 0 ? "eager" : "lazy"}
                   priority={index === 0}
                   removeWrapper
@@ -232,7 +232,7 @@ export default function BannerSliderClient({ sliders }) {
         {/* Enhanced Navigation Buttons */}
         <button
           onClick={goPrev}
-          className="hidden lg:flex absolute left-4 xl:left-6 top-1/2 -translate-y-1/2 z-30 items-center justify-center w-14 h-14 rounded-md bg-white/90 backdrop-blur-md border border-white/50 text-gray-900 hover:bg-white transition-all duration-300 opacity-0 group-hover:opacity-100 hover:scale-110 shadow-xl hover:shadow-2xl"
+          className="hidden lg:flex absolute left-4 xl:left-6 top-1/2 -translate-y-1/2 z-30 items-center justify-center w-14 h-14 rounded-full bg-white/90 backdrop-blur-md border border-white/50 text-gray-900 hover:bg-white transition-all duration-300 opacity-0 group-hover:opacity-100 hover:scale-110 shadow-xl hover:shadow-2xl"
           aria-label="Previous slide"
         >
           <ChevronLeft className="w-6 h-6" strokeWidth={2.5} />
@@ -240,36 +240,11 @@ export default function BannerSliderClient({ sliders }) {
 
         <button
           onClick={goNext}
-          className="hidden lg:flex absolute right-4 xl:right-6 top-1/2 -translate-y-1/2 z-30 items-center justify-center w-14 h-14 rounded-md bg-white/90 backdrop-blur-md border border-white/50 text-gray-900 hover:bg-white transition-all duration-300 opacity-0 group-hover:opacity-100 hover:scale-110 shadow-xl hover:shadow-2xl"
+          className="hidden lg:flex absolute right-4 xl:right-6 top-1/2 -translate-y-1/2 z-30 items-center justify-center w-14 h-14 rounded-full bg-white/90 backdrop-blur-md border border-white/50 text-gray-900 hover:bg-white transition-all duration-300 opacity-0 group-hover:opacity-100 hover:scale-110 shadow-xl hover:shadow-2xl"
           aria-label="Next slide"
         >
           <ChevronRight className="w-6 h-6" strokeWidth={2.5} />
         </button>
-
-        {/* Thumbnail navigation for desktop */}
-        {sliders.length > 1 && (
-          <div className="hidden lg:flex absolute bottom-6 left-1/2 -translate-x-1/2 z-30 items-center gap-3 px-6 py-3 rounded-md bg-black/40 backdrop-blur-xl border border-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            {sliders.map((slider, index) => (
-              <button
-                key={slider._id || index}
-                onClick={() => goToSlide(index)}
-                className={`relative w-16 h-10 rounded-md overflow-hidden transition-all duration-300 border-2 ${
-                  activeIndex === index
-                    ? "border-white scale-110 shadow-xl"
-                    : "border-white/30 hover:border-white/60 hover:scale-105 opacity-70"
-                }`}
-                aria-label={`Go to slide ${index + 1}`}
-              >
-                <Image
-                  src={slider.image}
-                  alt={`Thumbnail ${index + 1}`}
-                  className="w-full h-full object-cover"
-                  removeWrapper
-                />
-              </button>
-            ))}
-          </div>
-        )}
 
         {/* Mobile slide indicators */}
         <div className="flex lg:hidden absolute bottom-4 left-1/2 -translate-x-1/2 z-30 items-center gap-2">

@@ -8,7 +8,6 @@ import LoginIcon from "@/public/LoginIcon";
 import SellIcon from "@/public/SellIcon";
 import CartIcon from "@/public/CartIcon";
 import { Badge } from "@heroui/badge";
-import PointsIcon from "@/public/PointsIcon";
 import { useRouter } from "next/navigation";
 import { useSearchProductsQuery } from "@/app/api/productSlice";
 import { Spinner } from "@heroui/spinner";
@@ -745,17 +744,6 @@ export default function SearchNavbar() {
                   onPress={() => router.push("/client/cart")}
                 >
                   Cart
-                </Button>
-              </Badge>
-
-              {/* Points Button */}
-              <Badge color="warning" content="0" shape="circle" className="font-bold">
-                <Button
-                  startContent={<PointsIcon />}
-                  className="bg-gradient-to-br from-amber-500 to-orange-500 text-white font-semibold hover:shadow-lg transition-all hover:scale-105 px-6 rounded-md"
-                  size="lg"
-                >
-                  Points
                 </Button>
               </Badge>
 

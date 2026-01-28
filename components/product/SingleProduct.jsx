@@ -560,7 +560,7 @@ export default function SingleProduct() {
             </h1>
 
             {/* Rating Section */}
-            {getSingleProductData?.product?.ratingsAndReviews?.length > 0 ? (
+            {getSingleProductData?.product?.ratingsAndReviews?.length > 0 && (
               <div className="flex flex-wrap items-center gap-3 py-3 border-y border-gray-200">
                 <div className="flex gap-1">
                   {renderStars(average.toFixed(1))}
@@ -572,10 +572,6 @@ export default function SingleProduct() {
                   ({getSingleProductData?.product?.ratingsAndReviews?.length} reviews)
                 </span>
               </div>
-            ) : (
-              <p className="text-danger-500 text-sm py-3 border-y border-gray-200">
-                This product has no rating yet. Be the first to rate this product.
-              </p>
             )}
 
             {/* Tags */}
@@ -837,14 +833,14 @@ export default function SingleProduct() {
         </div>
 
         {/* Brand Products */}
-        <div className="mt-12 mb-12">
+        {/* <div className="mt-12 mb-12">
           <div className="mb-6">
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#16a34a]">
               Popular Speaker List
             </h2>
           </div>
           <BrandProducts brandName="JBL" />
-        </div>
+        </div> */}
 
         {/* Comments Section */}
         <div className="mt-12 mb-12">
